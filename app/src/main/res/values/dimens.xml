@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="recyclerview_news">20sp</dimen>
+    <dimen name="recyclerview_margin_all">5dp</dimen>
+    <dimen name="recyclerview_size_title">16sp</dimen>
+    <dimen name="recyclerview_size_date">15sp</dimen>
+</resources>
