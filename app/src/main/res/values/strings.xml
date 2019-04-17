@@ -3,4 +3,6 @@
     <string name="news_item_title_default">Title</string>
     <string name="new_item_date_default">01/01/01</string>
     <string name="news_item_news_default">No news</string>
+    <string name="toolbar_search">Search</string>
+    <string name="toolbar_settings">Settings</string>
 </resources>
