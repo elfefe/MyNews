@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout
-
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,21 +10,20 @@
     tools:context=".controllers.fragments.MainFragment"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/main_toolbar"
-
+    <android.support.design.widget.TabLayout
+        android:id="@+id/main_tablayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
 
-        app:titleTextColor="@android:color/white"
-        android:background="@color/colorPrimary"/>
+        app:tabIndicatorColor="#F5F0E9"
+        app:tabSelectedTextColor="#FFF"
+        app:tabTextColor="#F3F3F3" />
 
-    <FrameLayout
-        android:id="@+id/framelayout_main"
-
+    <android.support.v4.view.ViewPager
+        android:id="@+id/main_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-    />
+        />
 
 </LinearLayout>

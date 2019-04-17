@@ -1,23 +1,15 @@
 package com.elfefe.mynews.controllers;
 
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
-import android.widget.ProgressBar;
 
 import com.elfefe.mynews.R;
-import com.elfefe.mynews.adapters.PageAdapter;
-import com.elfefe.mynews.utils.NewsHandlerThread;
-
-import java.util.ArrayList;
+import com.elfefe.mynews.controllers.fragments.MainFragment;
 
 public class MainActivity extends AppCompatActivity {
-
-    private NewsHandlerThread handlerThread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,29 +19,15 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
 
-        ViewPager pager = (ViewPager) findViewById(R.id.main_viewpager);
+        MainFragment mainFragment = (MainFragment) getSupportFragmentManager().findFragmentById(R.id.framelayout_main);
 
-        ArrayList<String> pageTitles = new ArrayList<>();
-        pageTitles.add("TopStories");
-        pageTitles.add("Most Popular");
-        pageTitles.add("Favorites");
+        if(mainFragment == null){
+            mainFragment = new MainFragment();
 
-        pager.setAdapter(new PageAdapter(getSupportFragmentManager(), pageTitles));
-
-        TabLayout tabs = (TabLayout) findViewById(R.id.main_tablayout);
-
-        tabs.setupWithViewPager(pager);
-
-        tabs.setTabMode(TabLayout.MODE_FIXED);
-
-        handlerThread = new NewsHandlerThread("Loading ...", new ProgressBar(this));
-        handlerThread.startHandler();
-    }
-
-    @Override
-    protected void onDestroy() {
-        handlerThread.quit();
-        super.onDestroy();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.framelayout_main, mainFragment)
+                    .commit();
+        }
     }
 
     @Override

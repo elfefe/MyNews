@@ -1,4 +1,4 @@
-package com.elfefe.mynews.fragments;
+package com.elfefe.mynews.controllers.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,14 +12,20 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.elfefe.mynews.R;
-import com.elfefe.mynews.adapters.PageRecyclerviewAdapter;
+import com.elfefe.mynews.controllers.adapters.PageRecyclerviewAdapter;
+
+import java.util.ArrayList;
 
 public class PageFragment extends Fragment {
 
+    private ArrayList<String> titles = new ArrayList<>();
+
     public PageFragment() { }
 
-    public static PageFragment newInstance(){
+    public static PageFragment newInstance(ArrayList<String> titles){
         PageFragment frag = new PageFragment();
+
+        frag.titles = titles;
 
         Bundle args = new Bundle();
 
@@ -37,7 +43,7 @@ public class PageFragment extends Fragment {
         ConstraintLayout layoutView = (ConstraintLayout) result.findViewById(R.id.page_layout);
         RecyclerView recyclerView = (RecyclerView) result.findViewById(R.id.page_recyclerview);
 
-        recyclerView.setAdapter(new PageRecyclerviewAdapter());
+        recyclerView.setAdapter(new PageRecyclerviewAdapter(titles));
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
         return result;
