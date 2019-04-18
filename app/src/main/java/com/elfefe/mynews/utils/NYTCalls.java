@@ -1,43 +1,44 @@
 package com.elfefe.mynews.utils;
 
-import android.support.annotation.Nullable;
+import com.elfefe.mynews.models.News;
 
-import com.elfefe.mynews.models.NYTTitle;
-
-import java.lang.ref.WeakReference;
+import java.io.IOException;
 import java.util.List;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
-public class NYTCalls {
-    public interface  CallBacks {
-        void onResponse(@Nullable List<NYTTitle> titles);
-        void onFailure();
+class NYTCalls {
+
+    private Retrofit retrofit;
+
+    NYTCalls() {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl("https://api.github.com/")
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
     }
 
-    public static void fetchTitleFollowing(CallBacks callBacks, String title) {
-        final WeakReference<CallBacks> callBacksWeakReference = new WeakReference<CallBacks>(callBacks);
+    List<News> fetchTitleFollowing(String title) {
 
-        NYTService nytService = NYTService.retrofit.create(NYTService.class);
+        NYTService nytService = retrofit.create(NYTService.class);
 
-        Call<List<NYTTitle>> call = nytService.getFollowing(title);
+        Call<List<News>> call = nytService.getFollowing(title);
 
-        call.enqueue(new Callback<List<NYTTitle>>() {
-            @Override
-            public void onResponse(Call<List<NYTTitle>> call, Response<List<NYTTitle>> response) {
-                if(callBacksWeakReference.get() != null)
-                    callBacksWeakReference.get().onResponse(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<List<NYTTitle>> call, Throwable t) {
-
-                if(callBacksWeakReference.get() != null)
-
-                    callBacksWeakReference.get().onFailure();
-            }
-        });
+        try {
+            return call.execute().body();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

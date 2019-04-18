@@ -1,6 +1,5 @@
 package com.elfefe.mynews.controllers.adapters;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,15 +9,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.elfefe.mynews.R;
+import com.elfefe.mynews.models.News;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class PageRecyclerviewAdapter extends RecyclerView.Adapter<PageRecyclerviewAdapter.PageViewHolder> {
 
-    private ArrayList<String> titles;
+    private List<News> news;
 
-    public PageRecyclerviewAdapter(ArrayList<String> titles) {
-        this.titles = titles;
+    public PageRecyclerviewAdapter(List<News> news) {
+        this.news = news;
     }
 
     @NonNull
@@ -26,7 +26,7 @@ public class PageRecyclerviewAdapter extends RecyclerView.Adapter<PageRecyclervi
     public PageViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         PageViewHolder holder = new PageViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recyclerview_item, viewGroup,false));
         TextView title = holder.view.findViewById(R.id.news_item_title);
-        title.setText(titles.get(i));
+        title.setText(news.get(i).getTitle());
         return holder;
     }
 
@@ -37,7 +37,7 @@ public class PageRecyclerviewAdapter extends RecyclerView.Adapter<PageRecyclervi
 
     @Override
     public int getItemCount() {
-        return titles.size();
+        return news.size();
     }
 
 

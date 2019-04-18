@@ -2,9 +2,12 @@ package com.elfefe.mynews.utils;
 
 import android.os.AsyncTask;
 
-import java.lang.ref.WeakReference;
+import com.elfefe.mynews.models.News;
 
-public class NewsAsyncTask extends AsyncTask<String,Void,String> {
+import java.lang.ref.WeakReference;
+import java.util.List;
+
+public class NewsAsyncTask extends AsyncTask<String,Void, List<News>> {
 
     private final WeakReference<Listeners> callback;
 
@@ -13,28 +16,18 @@ public class NewsAsyncTask extends AsyncTask<String,Void,String> {
     }
 
     public interface Listeners{
-        void onPreExecute();
-        void onPostExecute(String success);
-        void doInBackground();
+        void onResult(List<News> nytTitles);
     }
 
     @Override
-    protected String doInBackground(String... url) {
-        this.callback.get().doInBackground();
-        return NewsHttpURLConnection.startHttprequest(url[0]);
+    protected List<News> doInBackground(String... url) {
+        NYTCalls nytCalls = new NYTCalls();
+        return nytCalls.fetchTitleFollowing(url[0]);
     }
 
     @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-        this.callback.get().onPreExecute();
+    protected void onPostExecute(List<News> nytTitles) {
+        callback.get().onResult(nytTitles);
     }
-
-    @Override
-    protected void onPostExecute(String success) {
-        super.onPostExecute(success);
-        this.callback.get().onPostExecute(success);
-    }
-
 }
 

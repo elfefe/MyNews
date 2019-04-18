@@ -13,16 +13,18 @@ import android.view.ViewGroup;
 
 import com.elfefe.mynews.R;
 import com.elfefe.mynews.controllers.adapters.PageRecyclerviewAdapter;
+import com.elfefe.mynews.models.News;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PageFragment extends Fragment {
 
-    private ArrayList<String> titles = new ArrayList<>();
+    private List<News> titles = new ArrayList<>();
 
     public PageFragment() { }
 
-    public static PageFragment newInstance(ArrayList<String> titles){
+    public static PageFragment newInstance(List<News> titles){
         PageFragment frag = new PageFragment();
 
         frag.titles = titles;
