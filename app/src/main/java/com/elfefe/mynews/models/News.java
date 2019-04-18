@@ -6,16 +6,16 @@ import com.google.gson.annotations.SerializedName;
 public class News {
 
 
-    @SerializedName("login")
+    @SerializedName("starred_url")
     @Expose
     private String url;
 
-    @SerializedName("0")
+    @SerializedName("gravatar_id")
     @Expose
     private String img;
 
 
-    @SerializedName("1")
+    @SerializedName("login")
     @Expose
     private String title;
 
@@ -25,7 +25,7 @@ public class News {
 
     @SerializedName("3")
     @Expose
-    private String content;
+    private String article;
 
 
     public String getUrl() {
@@ -61,11 +61,11 @@ public class News {
     }
 
     public String getContent() {
-        return content;
+        return article;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setContent(String article) {
+        this.article = article;
     }
 
 }

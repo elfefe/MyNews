@@ -1,5 +1,8 @@
 package com.elfefe.mynews.controllers.adapters;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -24,7 +27,7 @@ public class PageRecyclerviewAdapter extends RecyclerView.Adapter<PageRecyclervi
     @NonNull
     @Override
     public PageViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        PageViewHolder holder = new PageViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recyclerview_item, viewGroup,false));
+        PageViewHolder holder = new PageViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recyclerview_item, viewGroup,false),news.get(i).getTitle());
         TextView title = holder.view.findViewById(R.id.news_item_title);
         title.setText(news.get(i).getTitle());
         return holder;
@@ -43,13 +46,13 @@ public class PageRecyclerviewAdapter extends RecyclerView.Adapter<PageRecyclervi
 
     static class PageViewHolder extends RecyclerView.ViewHolder {
         View view;
+        private String text;
 
-        PageViewHolder(@NonNull View itemView) {
+        PageViewHolder(@NonNull View itemView, String text) {
             super(itemView);
 
             view = itemView;
-
-            view.setOnClickListener(v -> Log.d("[********]",view.getContext().getClass().getName()));
+            this.text = text;
         }
     }
 }

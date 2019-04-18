@@ -1,5 +1,6 @@
 package com.elfefe.mynews.controllers.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -7,6 +8,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,14 +22,15 @@ import java.util.List;
 
 public class PageFragment extends Fragment {
 
-    private List<News> titles = new ArrayList<>();
+    private List<News> news;
 
     public PageFragment() { }
 
-    public static PageFragment newInstance(List<News> titles){
+    public static PageFragment newInstance(List<News> news){
         PageFragment frag = new PageFragment();
 
-        frag.titles = titles;
+        frag.news = news;
+
 
         Bundle args = new Bundle();
 
@@ -42,10 +45,9 @@ public class PageFragment extends Fragment {
 
         View result = inflater.inflate(R.layout.fragment_page, container, false);
 
-        ConstraintLayout layoutView = (ConstraintLayout) result.findViewById(R.id.page_layout);
         RecyclerView recyclerView = (RecyclerView) result.findViewById(R.id.page_recyclerview);
 
-        recyclerView.setAdapter(new PageRecyclerviewAdapter(titles));
+        recyclerView.setAdapter(new PageRecyclerviewAdapter(news));
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
         return result;

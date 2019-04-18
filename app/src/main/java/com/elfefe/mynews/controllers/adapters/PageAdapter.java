@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
 import com.elfefe.mynews.controllers.fragments.PageFragment;
 import com.elfefe.mynews.models.News;
@@ -16,23 +17,23 @@ public class PageAdapter extends FragmentPagerAdapter {
 
 
     private final ArrayList<String> pageTitle;
-    private List<News> titles;
+    private List<News> news;
 
-    public PageAdapter(FragmentManager fm, ArrayList<String> pageTitle, List<News> titles) {
+    public PageAdapter(FragmentManager fm, ArrayList<String> pageTitle, List<News> news) {
         super(fm);
 
         this.pageTitle = pageTitle;
-        this.titles = titles;
+        this.news = news;
     }
 
     @Override
     public Fragment getItem(int i) {
-        return PageFragment.newInstance(titles);
+        return PageFragment.newInstance(news);
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return pageTitle.size();
     }
 
     @Override

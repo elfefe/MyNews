@@ -5,4 +5,7 @@
     <string name="news_item_news_default">No news</string>
     <string name="toolbar_search">Search</string>
     <string name="toolbar_settings">Settings</string>
+    <string name="page_title_topstories">TopStories</string>
+    <string name="page_title_mostpopular">Most Popular</string>
+    <string name="page_title_favorites">Favorites</string>
 </resources>

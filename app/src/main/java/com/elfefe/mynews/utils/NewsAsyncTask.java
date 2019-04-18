@@ -16,7 +16,7 @@ public class NewsAsyncTask extends AsyncTask<String,Void, List<News>> {
     }
 
     public interface Listeners{
-        void onResult(List<News> nytTitles);
+        void onResult(List<News> news);
     }
 
     @Override
@@ -26,8 +26,8 @@ public class NewsAsyncTask extends AsyncTask<String,Void, List<News>> {
     }
 
     @Override
-    protected void onPostExecute(List<News> nytTitles) {
-        callback.get().onResult(nytTitles);
+    protected void onPostExecute(List<News> news) {
+        callback.get().onResult(news);
     }
 }
 
