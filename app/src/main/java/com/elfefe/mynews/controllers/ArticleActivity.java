@@ -16,6 +16,8 @@ public class ArticleActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.article_toolbar);
         setSupportActionBar(toolbar);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         MainFragment mainFragment = (MainFragment) getSupportFragmentManager().findFragmentById(R.id.article_framelayout);
 
         if(mainFragment == null){

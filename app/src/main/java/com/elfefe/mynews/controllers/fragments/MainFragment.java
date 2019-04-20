@@ -26,8 +26,11 @@ import java.util.Objects;
 public class MainFragment extends Fragment implements NewsAsyncTask.Listeners{
 
     ViewPager pager;
-    List<News> news = new ArrayList<>();
-    ArrayList<String> pageTitles = new ArrayList<>();
+    PageAdapter adapter;
+    List<News> news;
+    ArrayList<String> pageTitles;
+
+
 
     public MainFragment(){}
 
@@ -38,6 +41,11 @@ public class MainFragment extends Fragment implements NewsAsyncTask.Listeners{
         View result = inflater.inflate(R.layout.fragment_main, container, false);
 
         pager = (ViewPager) result.findViewById(R.id.main_viewpager);
+        TabLayout tabs = (TabLayout) result.findViewById(R.id.main_tablayout);
+
+
+        news = new ArrayList<>();
+        pageTitles = new ArrayList<>();
 
         new NewsAsyncTask(this).execute("JakeWharton");
 
@@ -45,18 +53,11 @@ public class MainFragment extends Fragment implements NewsAsyncTask.Listeners{
         pageTitles.add(getString(R.string.page_title_mostpopular));
         pageTitles.add(getString(R.string.page_title_favorites));
 
-        News test = new News();
-        test.setTitle("TEST");
-
-        news.add(test);
-
-        Log.d("[********]",news.get(0).getTitle());
-
-        pager.setAdapter(new PageAdapter(Objects.requireNonNull(getActivity()).getSupportFragmentManager(),
+        adapter = new PageAdapter(getActivity().getSupportFragmentManager(),
                 pageTitles,
-                news));
+                news);
 
-        TabLayout tabs = (TabLayout) result.findViewById(R.id.main_tablayout);
+        pager.setAdapter(adapter);
 
         tabs.setupWithViewPager(pager);
 
@@ -67,8 +68,8 @@ public class MainFragment extends Fragment implements NewsAsyncTask.Listeners{
 
     @Override
     public void onResult(List<News> news) {
-        this.news = news;
-        pager.getAdapter().notifyDataSetChanged();
+        this.news.addAll(news);
+        adapter.notifyDataSetChanged();
     }
 
 

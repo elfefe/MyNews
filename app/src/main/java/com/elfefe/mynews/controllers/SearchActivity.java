@@ -26,6 +26,8 @@ public class SearchActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.search_toolbar);
         setSupportActionBar(toolbar);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         editText = (EditText) findViewById(R.id.search_search);
         arts = (AppCompatCheckBox) findViewById(R.id.search_cb_arts);
         buisness = (AppCompatCheckBox) findViewById(R.id.search_cb_buisness);
@@ -39,21 +41,16 @@ public class SearchActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_activity_main, menu);
+        getMenuInflater().inflate(R.menu.menu_activity_search, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.main_settings:
+        if (item.getItemId() == R.id.search_back) {
 
-                return true;
-            case R.id.main_search:
-                startActivity(new Intent(this, SearchActivity.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 }
