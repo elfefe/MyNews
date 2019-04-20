@@ -22,6 +22,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/search_search"
 
+        app:navigationIcon="@drawable/baseline_arrow_back_white_24"
+
         app:title="Search Articles"
 
         app:titleTextColor="@android:color/white"

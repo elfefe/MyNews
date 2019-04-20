@@ -21,6 +21,8 @@
 
         app:layout_constraintTop_toTopOf="parent"
 
+        app:navigationIcon="@drawable/baseline_arrow_back_white_24"
+
         app:title="Article"
 
         app:titleTextColor="@android:color/white"
