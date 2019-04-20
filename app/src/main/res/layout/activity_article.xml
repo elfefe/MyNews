@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
+<android.support.constraint.ConstraintLayout
 
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,7 +10,7 @@
     android:layout_height="match_parent"
 
     tools:context=".controllers.fragments.MainFragment"
-    android:orientation="vertical">
+    >
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/article_toolbar"
@@ -19,17 +19,20 @@
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
 
-        app:title="Type"
-        app:subtitle="Article"
+        app:layout_constraintTop_toTopOf="parent"
+
+        app:title="Article"
 
         app:titleTextColor="@android:color/white"
-        android:background="@color/colorPrimary"/>
+        android:background="@color/PrimaryMyNewsLight"/>
 
     <FrameLayout
         android:id="@+id/article_framelayout"
 
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-    />
+        android:layout_height="500dp"
 
-</LinearLayout>
+        app:layout_constraintTop_toBottomOf="@id/article_toolbar"
+        />
+
+</android.support.constraint.ConstraintLayout>
