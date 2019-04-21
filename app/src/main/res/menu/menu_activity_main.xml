@@ -12,13 +12,22 @@
 
     </item>
 
-    <item
-        android:id="@+id/main_settings"
-        android:icon="@drawable/baseline_more_vert_white_24"
+        <group
+            android:id="@+id/main_settings"
+            android:icon="@drawable/baseline_more_vert_white_24"
 
-        app:showAsAction="ifRoom"
+            app:showAsAction="never"
 
-        android:title="@string/toolbar_settings">
-
-    </item>
+            android:actionLayout="@layout/main_action_layout"
+            >
+            <item
+                android:title="Setting"
+                />
+            <item
+                android:title="About"
+                />
+            <item
+                android:title="Help"
+                />
+        </group>
 </menu>
