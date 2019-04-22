@@ -2,6 +2,7 @@ package com.elfefe.mynews.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.internal.LinkedTreeMap;
 
 public class News {
 
@@ -9,6 +10,10 @@ public class News {
     @SerializedName("starred_url")
     @Expose
     private String url;
+
+    @SerializedName("results")
+    @Expose
+    private Object[] results;
 
     @SerializedName("gravatar_id")
     @Expose
@@ -19,7 +24,7 @@ public class News {
     @Expose
     private String title;
 
-    @SerializedName("2")
+    @SerializedName("last_updated")
     @Expose
     private String date;
 
@@ -68,4 +73,12 @@ public class News {
         this.article = article;
     }
 
+    public Object[] getResults() {
+        return results;
+    }
+
+    public void setResults(Object[] results) {
+        this.results = results;
+    }
 }
+

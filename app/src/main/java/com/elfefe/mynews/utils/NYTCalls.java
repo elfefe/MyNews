@@ -22,17 +22,17 @@ class NYTCalls {
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.github.com/")
+                .baseUrl("https://api.nytimes.com/svc/")
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }
 
-    List<News> fetchTitleFollowing(String title) {
+    News fetchTitleFollowing(String type, String subject, String key) {
 
         NYTService nytService = retrofit.create(NYTService.class);
 
-        Call<List<News>> call = nytService.getFollowing(title);
+        Call<News> call = nytService.getFollowing(type, subject, key);
 
         try {
             return call.execute().body();

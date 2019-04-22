@@ -15,8 +15,12 @@ import android.widget.TextView;
 import com.elfefe.mynews.R;
 import com.elfefe.mynews.controllers.ArticleActivity;
 import com.elfefe.mynews.models.News;
+import com.google.gson.Gson;
+import com.google.gson.internal.LinkedTreeMap;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PageRecyclerviewAdapter extends RecyclerView.Adapter<PageRecyclerviewAdapter.PageViewHolder> {
 
@@ -36,8 +40,16 @@ public class PageRecyclerviewAdapter extends RecyclerView.Adapter<PageRecyclervi
                     .inflate(R.layout.recyclerview_item, viewGroup,false),
                 news.get(i).getTitle(),
                 context);
+
+        TextView date = holder.view.findViewById(R.id.news_item_date);
         TextView title = holder.view.findViewById(R.id.news_item_title);
-        title.setText(news.get(i).getTitle());
+
+        LinkedTreeMap<String, String> results = (LinkedTreeMap<String, String>) news.get(i).getResults()[0];
+
+        String string = String.format("%s" ,results.get("title"));
+
+        date.setText(news.get(i).getDate());
+        title.setText(results.get(string));
         return holder;
     }
 
@@ -54,7 +66,6 @@ public class PageRecyclerviewAdapter extends RecyclerView.Adapter<PageRecyclervi
 
     static class PageViewHolder extends RecyclerView.ViewHolder {
         View view;
-        private String text;
 
         PageViewHolder(@NonNull View itemView, String text, Context context) {
             super(itemView);
@@ -62,7 +73,6 @@ public class PageRecyclerviewAdapter extends RecyclerView.Adapter<PageRecyclervi
             view = itemView;
 
             view.setOnClickListener(view -> context.startActivity(new Intent(context, ArticleActivity.class)));
-            this.text = text;
         }
     }
 }

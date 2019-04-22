@@ -7,8 +7,9 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface NYTService {
-    @GET("users/{username}/following")
-    Call<List<News>> getFollowing(@Path("username") String title);
+    @GET("{type}/v2/{subject}.json")
+    Call<News> getFollowing(@Path("type") String type, @Path("subject") String subject, @Query("api-key") String key);
 }
