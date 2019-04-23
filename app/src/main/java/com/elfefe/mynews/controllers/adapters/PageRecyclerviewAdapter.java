@@ -43,13 +43,18 @@ public class PageRecyclerviewAdapter extends RecyclerView.Adapter<PageRecyclervi
 
         TextView date = holder.view.findViewById(R.id.news_item_date);
         TextView title = holder.view.findViewById(R.id.news_item_title);
+        TextView article = holder.view.findViewById(R.id.news_item_news);
+
 
         LinkedTreeMap<String, String> results = (LinkedTreeMap<String, String>) news.get(i).getResults()[0];
 
-        String string = String.format("%s" ,results.get("title"));
+        String dateQuery = results.get("updated_date").substring(0, 10);
+        String titleQuery = results.get("title").substring(0, 20) + "...";
+        String articleQuery = results.get("abstract");
 
-        date.setText(news.get(i).getDate());
-        title.setText(results.get(string));
+        date.setText(dateQuery);
+        title.setText(titleQuery);
+        article.setText(articleQuery);
         return holder;
     }
 
