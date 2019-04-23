@@ -9,7 +9,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-public interface NYTService {
+public interface TopStoriesService {
     @GET("{type}/v2/{subject}.json")
     Call<News> getFollowing(@Path("type") String type, @Path("subject") String subject, @Query("api-key") String key);
 }

@@ -15,18 +15,20 @@ import android.view.ViewGroup;
 
 import com.elfefe.mynews.R;
 import com.elfefe.mynews.controllers.adapters.PageRecyclerviewAdapter;
+import com.elfefe.mynews.models.Article;
 import com.elfefe.mynews.models.News;
+import com.google.gson.internal.LinkedTreeMap;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PageFragment extends Fragment {
 
-    private List<News> news;
+    private List<Article> news;
 
     public PageFragment() { }
 
-    public static PageFragment newInstance(List<News> news){
+    public static PageFragment newInstance(List<Article> news){
         PageFragment frag = new PageFragment();
 
         frag.news = news;

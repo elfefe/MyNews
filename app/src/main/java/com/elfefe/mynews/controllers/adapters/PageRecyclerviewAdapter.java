@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.elfefe.mynews.R;
 import com.elfefe.mynews.controllers.ArticleActivity;
+import com.elfefe.mynews.models.Article;
 import com.elfefe.mynews.models.News;
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
@@ -24,10 +25,10 @@ import java.util.Map;
 
 public class PageRecyclerviewAdapter extends RecyclerView.Adapter<PageRecyclerviewAdapter.PageViewHolder> {
 
-    private List<News> news;
+    private List<Article> news;
     private Context context;
 
-    public PageRecyclerviewAdapter(Context context,List<News> news) {
+    public PageRecyclerviewAdapter(Context context, List<Article> news) {
         this.news = news;
         this.context = context;
     }
@@ -38,19 +39,15 @@ public class PageRecyclerviewAdapter extends RecyclerView.Adapter<PageRecyclervi
         PageViewHolder holder = new PageViewHolder(LayoutInflater
                     .from(viewGroup.getContext())
                     .inflate(R.layout.recyclerview_item, viewGroup,false),
-                news.get(i).getTitle(),
                 context);
 
         TextView date = holder.view.findViewById(R.id.news_item_date);
         TextView title = holder.view.findViewById(R.id.news_item_title);
         TextView article = holder.view.findViewById(R.id.news_item_news);
 
-
-        LinkedTreeMap<String, String> results = (LinkedTreeMap<String, String>) news.get(i).getResults()[0];
-
-        String dateQuery = results.get("updated_date").substring(0, 10);
-        String titleQuery = results.get("title").substring(0, 20) + "...";
-        String articleQuery = results.get("abstract");
+        String dateQuery = news.get(i).getDate().substring(0, 10);
+        String titleQuery = news.get(i).getTitle().substring(0, 20) + "...";
+        String articleQuery = news.get(i).getArticle();
 
         date.setText(dateQuery);
         title.setText(titleQuery);
@@ -72,7 +69,7 @@ public class PageRecyclerviewAdapter extends RecyclerView.Adapter<PageRecyclervi
     static class PageViewHolder extends RecyclerView.ViewHolder {
         View view;
 
-        PageViewHolder(@NonNull View itemView, String text, Context context) {
+        PageViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
 
             view = itemView;

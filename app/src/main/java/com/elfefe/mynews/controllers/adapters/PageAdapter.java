@@ -8,7 +8,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 
 import com.elfefe.mynews.controllers.fragments.PageFragment;
+import com.elfefe.mynews.models.Article;
 import com.elfefe.mynews.models.News;
+import com.google.gson.internal.LinkedTreeMap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +19,9 @@ public class PageAdapter extends FragmentPagerAdapter {
 
 
     private final ArrayList<String> pageTitle;
-    private List<News> news;
+    private List<Article> news;
 
-    public PageAdapter(FragmentManager fm, ArrayList<String> pageTitle, List<News> news) {
+    public PageAdapter(FragmentManager fm, ArrayList<String> pageTitle, List<Article> news) {
         super(fm);
 
         this.pageTitle = pageTitle;

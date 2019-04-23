@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import com.elfefe.mynews.models.News;
 
 import java.lang.ref.WeakReference;
-import java.util.List;
 
 public class NewsAsyncTask extends AsyncTask<String,Void, News> {
 
@@ -21,7 +20,7 @@ public class NewsAsyncTask extends AsyncTask<String,Void, News> {
     @Override
     protected News doInBackground(String... url) {
         NYTCalls nytCalls = new NYTCalls();
-        return nytCalls.fetchTitleFollowing(url[0],url[1],url[2]);
+        return nytCalls.fetchTopStoriesFollowing(url[0],url[1], url[2]);
     }
 
     @Override
