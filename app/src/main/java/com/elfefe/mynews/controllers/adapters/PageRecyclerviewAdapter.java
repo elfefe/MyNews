@@ -41,6 +41,11 @@ public class PageRecyclerviewAdapter extends RecyclerView.Adapter<PageRecyclervi
                     .inflate(R.layout.recyclerview_item, viewGroup,false),
                 context);
 
+        return holder;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull PageViewHolder holder, int i) {
         TextView date = holder.view.findViewById(R.id.news_item_date);
         TextView title = holder.view.findViewById(R.id.news_item_title);
         TextView article = holder.view.findViewById(R.id.news_item_news);
@@ -52,12 +57,6 @@ public class PageRecyclerviewAdapter extends RecyclerView.Adapter<PageRecyclervi
         date.setText(dateQuery);
         title.setText(titleQuery);
         article.setText(articleQuery);
-        return holder;
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull PageViewHolder pageViewHolder, int i) {
-
     }
 
     @Override

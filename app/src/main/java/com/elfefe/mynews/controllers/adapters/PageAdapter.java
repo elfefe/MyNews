@@ -19,18 +19,16 @@ public class PageAdapter extends FragmentPagerAdapter {
 
 
     private final ArrayList<String> pageTitle;
-    private List<Article> news;
 
-    public PageAdapter(FragmentManager fm, ArrayList<String> pageTitle, List<Article> news) {
+    public PageAdapter(FragmentManager fm, ArrayList<String> pageTitle) {
         super(fm);
 
         this.pageTitle = pageTitle;
-        this.news = news;
     }
 
     @Override
     public Fragment getItem(int i) {
-        return PageFragment.newInstance(news);
+        return PageFragment.newInstance();
     }
 
     @Override

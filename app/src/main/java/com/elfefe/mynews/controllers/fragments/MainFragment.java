@@ -37,11 +37,10 @@ import java.util.Objects;
 
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MainFragment extends Fragment implements NewsAsyncTask.Listeners{
+public class MainFragment extends Fragment {
 
     ViewPager pager;
     PageAdapter adapter;
-    List<Article> news;
     ArrayList<String> pageTitles;
     TabLayout tabs;
 
@@ -58,43 +57,20 @@ public class MainFragment extends Fragment implements NewsAsyncTask.Listeners{
         pager = (ViewPager) result.findViewById(R.id.main_viewpager);
         tabs = (TabLayout) result.findViewById(R.id.main_tablayout);
 
-        news = new ArrayList<>();
         pageTitles = new ArrayList<>();
-
-        new NewsAsyncTask(this).execute("topstories","arts","7beqz304Fmqzmbi3GxAQxanKShTgNCRb");
 
         pageTitles.add(getString(R.string.page_title_topstories));
         pageTitles.add(getString(R.string.page_title_mostpopular));
         pageTitles.add(getString(R.string.page_title_favorites));
 
         adapter = new PageAdapter(getActivity().getSupportFragmentManager(),
-                pageTitles,
-                news);
+                pageTitles);
 
         pager.setAdapter(adapter);
 
         tabs.setupWithViewPager(pager);
         tabs.setTabMode(TabLayout.MODE_FIXED);
         return result;
-    }
-
-    @Override
-    public void onResult(News news) {
-
-        JsonElement jsonTree = new GsonBuilder().create().toJsonTree(news.getResults());
-
-        Type articleType = new TypeToken<List<Article>>(){}.getType();
-
-        List<Article> article = new GsonBuilder().create().fromJson(jsonTree,articleType);
-
-        this.news.addAll(article);
-
-        Log.d("SIIIIIIIZE", Integer.toString(article.size()));
-        Log.d("CONTEEEENT", this.news.get(1).getTitle());
-
-
-
-        adapter.notifyDataSetChanged();
     }
 
 
