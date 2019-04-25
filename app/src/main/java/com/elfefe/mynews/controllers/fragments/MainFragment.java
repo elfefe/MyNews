@@ -42,10 +42,8 @@ import static android.app.Activity.RESULT_OK;
 
 public class MainFragment extends Fragment implements NewsAsyncTask.Listeners{
 
-    ViewPager pager;
     PageAdapter adapter;
     List<Article> news;
-    ArrayList<String> pageTitles;
     TabLayout tabs;
 
 
@@ -58,13 +56,13 @@ public class MainFragment extends Fragment implements NewsAsyncTask.Listeners{
 
         View result = inflater.inflate(R.layout.fragment_main, container, false);
 
-        pager = (ViewPager) result.findViewById(R.id.main_viewpager);
+        ViewPager pager = (ViewPager) result.findViewById(R.id.main_viewpager);
         tabs = (TabLayout) result.findViewById(R.id.main_tablayout);
 
         news = new ArrayList<>();
-        pageTitles = new ArrayList<>();
+        ArrayList<String> pageTitles = new ArrayList<>();
 
-        new NewsAsyncTask(this).execute("topstories","arts","7beqz304Fmqzmbi3GxAQxanKShTgNCRb");
+        new NewsAsyncTask(this).execute();
 
         pageTitles.add(getString(R.string.page_title_topstories));
         pageTitles.add(getString(R.string.page_title_mostpopular));
@@ -89,6 +87,7 @@ public class MainFragment extends Fragment implements NewsAsyncTask.Listeners{
         List<Article> article = new GsonBuilder().create().fromJson(jsonArticle, typeArticle);
 
         this.news.addAll(article);
+
         adapter.notifyDataSetChanged();
     }
 
