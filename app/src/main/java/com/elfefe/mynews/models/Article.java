@@ -21,6 +21,12 @@ public class Article {
     @Expose
     private Object[] multimedia;
 
+    @SerializedName("short_url")
+    @Expose
+    private String url;
+
+
+
     public String getTitle() {
         return title;
     }
@@ -51,5 +57,13 @@ public class Article {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

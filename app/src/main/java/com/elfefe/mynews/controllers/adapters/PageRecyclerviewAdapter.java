@@ -47,12 +47,10 @@ public class PageRecyclerviewAdapter extends RecyclerView.Adapter<PageRecyclervi
     @NonNull
     @Override
     public PageViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        PageViewHolder holder = new PageViewHolder(LayoutInflater
+        return new PageViewHolder(LayoutInflater
                     .from(viewGroup.getContext())
                     .inflate(R.layout.recyclerview_item, viewGroup,false),
                 context);
-
-        return holder;
     }
 
     @Override
@@ -65,12 +63,19 @@ public class PageRecyclerviewAdapter extends RecyclerView.Adapter<PageRecyclervi
         String dateQuery = news.get(i).getDate().substring(0, 10);
         String titleQuery = news.get(i).getTitle().substring(0, 20) + "...";
         String articleQuery = news.get(i).getArticle();
+
         LinkedTreeMap<String, String> imgQuery =(LinkedTreeMap<String, String>) news.get(i).getMultimedia()[0];
 
         date.setText(dateQuery);
         title.setText(titleQuery);
         article.setText(articleQuery);
         Picasso.get().load(imgQuery.get("url")).into(img);
+
+
+        Intent intent = new Intent(context, ArticleActivity.class);
+        intent.putExtra("url", news.get(i).getUrl());
+
+        holder.view.setOnClickListener(view -> context.startActivity(intent));
 
     }
 
@@ -85,10 +90,7 @@ public class PageRecyclerviewAdapter extends RecyclerView.Adapter<PageRecyclervi
 
         PageViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
-
             view = itemView;
-
-            view.setOnClickListener(view -> context.startActivity(new Intent(context, ArticleActivity.class)));
         }
     }
 }
