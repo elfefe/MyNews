@@ -49,6 +49,8 @@ public class PageFragment extends Fragment {
 
         RecyclerView recyclerView = (RecyclerView) result.findViewById(R.id.page_recyclerview);
 
+
+
         recyclerView.setAdapter(new PageRecyclerviewAdapter(this.getContext(),news));
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
