@@ -30,23 +30,9 @@ class NYTCalls {
 
     News fetchTopStoriesFollowing(String type, String subject, String key) {
 
-        TopStoriesService topStoriesService = retrofit.create(TopStoriesService.class);
+        NYTService NYTService = retrofit.create(NYTService.class);
 
-        Call<News> call = topStoriesService.getFollowing(type, subject, key);
-
-        try {
-            return call.execute().body();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    News fetchMostPopularFollowing(String type, String period, String key) {
-
-        MostPopularService mostPopularService = retrofit.create(MostPopularService.class);
-
-        Call<News> call = mostPopularService.getFollowing(type, period, key);
+        Call<News> call = NYTService.getTopStories(type, subject, key);
 
         try {
             return call.execute().body();
@@ -56,11 +42,25 @@ class NYTCalls {
         return null;
     }
 
-    News fetchTSearchArticleFollowing(String period, String key, Map<String, String> search) {
+    News fetchMostPopularFollowing(String type, String subject, String key) {
 
-        SearchArticleService searchArticleService = retrofit.create(SearchArticleService.class);
+        NYTService NYTService = retrofit.create(NYTService.class);
 
-        Call<News> call = searchArticleService.getFollowing(period, key, search);
+        Call<News> call = NYTService.getMostPopular(type, subject, key);
+
+        try {
+            return call.execute().body();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    News fetchSearchArticleFollowing(String type, String key, Map<String, String> search) {
+
+        NYTService NYTService = retrofit.create(NYTService.class);
+
+        Call<News> call = NYTService.getSearchArticle(type, key, search);
 
         try {
             return call.execute().body();

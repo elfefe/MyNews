@@ -62,7 +62,7 @@ public class MainFragment extends Fragment implements NewsAsyncTask.Listeners{
         news = new ArrayList<>();
         ArrayList<String> pageTitles = new ArrayList<>();
 
-        new NewsAsyncTask(this).execute();
+        new NewsAsyncTask(this).execute("topstories","arts","7beqz304Fmqzmbi3GxAQxanKShTgNCRb");
 
         pageTitles.add(getString(R.string.page_title_topstories));
         pageTitles.add(getString(R.string.page_title_mostpopular));
