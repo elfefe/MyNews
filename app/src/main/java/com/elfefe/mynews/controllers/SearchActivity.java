@@ -6,17 +6,17 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.elfefe.mynews.R;
 
 public class SearchActivity extends AppCompatActivity {
-
-    EditText editText;
-    AppCompatCheckBox arts, buisness, entrepreneurs, politics, sports, travel;
-
+    
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,16 +27,45 @@ public class SearchActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
 
-        editText = (EditText) findViewById(R.id.search_search);
-        arts = (AppCompatCheckBox) findViewById(R.id.search_cb_arts);
-        buisness = (AppCompatCheckBox) findViewById(R.id.search_cb_buisness);
-        entrepreneurs = (AppCompatCheckBox) findViewById(R.id.search_cb_entrepreneurs);
-        politics = (AppCompatCheckBox) findViewById(R.id.search_cb_politics);
-        sports = (AppCompatCheckBox) findViewById(R.id.searche_cb_sports);
-        travel = (AppCompatCheckBox) findViewById(R.id.search_cb_travel);
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+        EditText text = (EditText) findViewById(R.id.search_search);
+        AppCompatCheckBox arts = (AppCompatCheckBox) findViewById(R.id.search_cb_arts);
+        AppCompatCheckBox buisness = (AppCompatCheckBox) findViewById(R.id.search_cb_buisness);
+        AppCompatCheckBox entrepreneurs = (AppCompatCheckBox) findViewById(R.id.search_cb_entrepreneurs);
+        AppCompatCheckBox politics = (AppCompatCheckBox) findViewById(R.id.search_cb_politics);
+        AppCompatCheckBox sports = (AppCompatCheckBox) findViewById(R.id.searche_cb_sports);
+        AppCompatCheckBox travel = (AppCompatCheckBox) findViewById(R.id.search_cb_travel);
+        Button search = (Button) findViewById(R.id.search_button_search);
 
+        Bundle bundle = new Bundle();
+
+        String searched = text.getText().toString();
+
+        boolean[] options = {
+                arts.isChecked(),
+                buisness.isChecked(),
+                entrepreneurs.isChecked(),
+                politics.isChecked(),
+                sports.isChecked(),
+                travel.isChecked()
+        };
+
+        bundle.putString("searched", searched);
+        bundle.putBooleanArray("options", options);
+
+        search.setOnClickListener(v -> {
+            
+            Log.d("BUNNNNDLED3", searched);
+
+            getIntent().putExtra("bundle",bundle);
+            setResult(RESULT_OK, getIntent());
+            finish();
+        });
     }
 
     @Override

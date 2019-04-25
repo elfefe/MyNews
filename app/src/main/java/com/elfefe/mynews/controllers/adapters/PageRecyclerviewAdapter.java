@@ -65,13 +65,12 @@ public class PageRecyclerviewAdapter extends RecyclerView.Adapter<PageRecyclervi
         String dateQuery = news.get(i).getDate().substring(0, 10);
         String titleQuery = news.get(i).getTitle().substring(0, 20) + "...";
         String articleQuery = news.get(i).getArticle();
-
-        LinkedTreeMap<String, String> imgMap =(LinkedTreeMap<String, String>) news.get(i).getMultimedia()[0];
+        LinkedTreeMap<String, String> imgQuery =(LinkedTreeMap<String, String>) news.get(i).getMultimedia()[0];
 
         date.setText(dateQuery);
         title.setText(titleQuery);
         article.setText(articleQuery);
-        Picasso.get().load(imgMap.get("url")).into(img);
+        Picasso.get().load(imgQuery.get("url")).into(img);
 
     }
 

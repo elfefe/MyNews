@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -19,6 +20,11 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         MainFragment mainFragment = (MainFragment) getSupportFragmentManager().findFragmentById(R.id.framelayout_main);
 
@@ -28,6 +34,15 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.framelayout_main, mainFragment)
                     .commit();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d("BUNNNNDLED1", String.valueOf(data.getBundleExtra("bundle")));
+        if(resultCode == RESULT_OK && requestCode == 2404){
+                Log.d("BUNNNNDLED2", data.getBundleExtra("bundle").getString("searched"));
         }
     }
 
@@ -44,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
                 return true;
             case R.id.main_search:
-                startActivity(new Intent(this, SearchActivity.class));
+                startActivityForResult(new Intent(this, SearchActivity.class), 2404);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
