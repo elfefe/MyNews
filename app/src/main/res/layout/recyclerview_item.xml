@@ -47,14 +47,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/news_item_title"
-            app:layout_constraintRight_toRightOf="parent"
 
             android:layout_margin="@dimen/recyclerview_margin_all"
+            android:paddingEnd="@dimen/news_item_date_paddingleft"
 
             android:text="@string/new_item_date_default"
-            android:textSize="@dimen/recyclerview_size_date"/>
+            android:textSize="@dimen/recyclerview_size_date"
+            tools:ignore="RtlSymmetry" />
 
         <TextView
             android:id="@+id/news_item_news"

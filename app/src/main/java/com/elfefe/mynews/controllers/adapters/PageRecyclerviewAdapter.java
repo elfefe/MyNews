@@ -2,6 +2,8 @@ package com.elfefe.mynews.controllers.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -10,6 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.URLUtil;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.elfefe.mynews.R;
@@ -18,10 +22,17 @@ import com.elfefe.mynews.models.Article;
 import com.elfefe.mynews.models.News;
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
+import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import retrofit2.http.Url;
 
 public class PageRecyclerviewAdapter extends RecyclerView.Adapter<PageRecyclerviewAdapter.PageViewHolder> {
 
@@ -49,14 +60,19 @@ public class PageRecyclerviewAdapter extends RecyclerView.Adapter<PageRecyclervi
         TextView date = holder.view.findViewById(R.id.news_item_date);
         TextView title = holder.view.findViewById(R.id.news_item_title);
         TextView article = holder.view.findViewById(R.id.news_item_news);
+        ImageView img = holder.view.findViewById(R.id.news_item_img);
 
         String dateQuery = news.get(i).getDate().substring(0, 10);
         String titleQuery = news.get(i).getTitle().substring(0, 20) + "...";
         String articleQuery = news.get(i).getArticle();
 
+        LinkedTreeMap<String, String> imgMap =(LinkedTreeMap<String, String>) news.get(i).getMultimedia()[0];
+
         date.setText(dateQuery);
         title.setText(titleQuery);
         article.setText(articleQuery);
+        Picasso.get().load(imgMap.get("url")).into(img);
+
     }
 
     @Override
