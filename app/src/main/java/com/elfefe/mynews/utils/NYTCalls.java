@@ -13,7 +13,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 class NYTCalls {
 
-    private Retrofit retrofit;
+    private NYTService nytService;
+    private String key;
 
     NYTCalls() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -21,18 +22,19 @@ class NYTCalls {
 
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
-        retrofit = new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.nytimes.com/svc/")
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+
+        nytService = retrofit.create(NYTService.class);
+
+        key = "7beqz304Fmqzmbi3GxAQxanKShTgNCRb";
     }
 
-    News fetchTopStoriesFollowing(String type, String subject, String key) {
-
-        NYTService NYTService = retrofit.create(NYTService.class);
-
-        Call<News> call = NYTService.getTopStories(type, subject, key);
+    News fetchTopStoriesFollowing(String subject) {
+        Call<News> call = nytService.getTopStories(subject, key);
 
         try {
             return call.execute().body();
@@ -42,11 +44,8 @@ class NYTCalls {
         return null;
     }
 
-    News fetchMostPopularFollowing(String type, String subject, String key) {
-
-        NYTService NYTService = retrofit.create(NYTService.class);
-
-        Call<News> call = NYTService.getMostPopular(type, subject, key);
+    News fetchMostPopularFollowing() {
+        Call<News> call = nytService.getMostPopular(key);
 
         try {
             return call.execute().body();
@@ -56,11 +55,8 @@ class NYTCalls {
         return null;
     }
 
-    News fetchSearchArticleFollowing(String type, String key, Map<String, String> search) {
-
-        NYTService NYTService = retrofit.create(NYTService.class);
-
-        Call<News> call = NYTService.getSearchArticle(type, key, search);
+    News fetchSearchArticleFollowing(Map<String, String> search) {
+        Call<News> call = nytService.getSearchArticle(key, search);
 
         try {
             return call.execute().body();

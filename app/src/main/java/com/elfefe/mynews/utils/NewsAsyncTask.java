@@ -20,7 +20,16 @@ public class NewsAsyncTask extends AsyncTask<String,Void, News> {
     @Override
     protected News doInBackground(String... url) {
         NYTCalls nytCalls = new NYTCalls();
-        return nytCalls.fetchTopStoriesFollowing(url[0],url[1], url[2]);
+        switch (url[0]){
+            case "Top Stories":
+                return nytCalls.fetchTopStoriesFollowing("politics");
+            case "Most Popular":
+                return nytCalls.fetchTopStoriesFollowing("obituaries");
+            case "Favorites":
+                return nytCalls.fetchTopStoriesFollowing("sports");
+            default:
+                return null;
+        }
     }
 
     @Override

@@ -25,6 +25,10 @@ public class Article {
     @Expose
     private String url;
 
+    @SerializedName("section")
+    @Expose
+    private String section;
+
 
 
     public String getTitle() {
@@ -65,5 +69,13 @@ public class Article {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getSection() {
+        return section;
+    }
+
+    public void setSection(String section) {
+        this.section = section;
     }
 }

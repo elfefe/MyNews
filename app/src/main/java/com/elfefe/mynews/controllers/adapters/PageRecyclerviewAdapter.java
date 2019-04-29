@@ -21,10 +21,14 @@ import com.elfefe.mynews.controllers.ArticleActivity;
 import com.elfefe.mynews.models.Article;
 import com.elfefe.mynews.models.News;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
 import com.google.gson.internal.LinkedTreeMap;
+import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -34,12 +38,18 @@ import java.util.Map;
 
 import retrofit2.http.Url;
 
+import static com.elfefe.mynews.R.string.*;
+
 public class PageRecyclerviewAdapter extends RecyclerView.Adapter<PageRecyclerviewAdapter.PageViewHolder> {
 
-    private List<Article> news;
+    private int articleMaxLength = 80;
+    private int dateLength = 10;
+    private int zero = 0;
+
+    private News news;
     private Context context;
 
-    public PageRecyclerviewAdapter(Context context, List<Article> news) {
+    public PageRecyclerviewAdapter(Context context, News news) {
         this.news = news;
         this.context = context;
     }
@@ -53,6 +63,7 @@ public class PageRecyclerviewAdapter extends RecyclerView.Adapter<PageRecyclervi
                 context);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void onBindViewHolder(@NonNull PageViewHolder holder, int i) {
         TextView date = holder.view.findViewById(R.id.news_item_date);
@@ -60,20 +71,28 @@ public class PageRecyclerviewAdapter extends RecyclerView.Adapter<PageRecyclervi
         TextView article = holder.view.findViewById(R.id.news_item_news);
         ImageView img = holder.view.findViewById(R.id.news_item_img);
 
-        String dateQuery = news.get(i).getDate().substring(0, 10);
-        String titleQuery = news.get(i).getTitle().substring(0, 20) + "...";
-        String articleQuery = news.get(i).getArticle();
+        Type typeArticle = new TypeToken<List<Article>>(){}.getType();
+        JsonElement jsonArticle = new GsonBuilder().create().toJsonTree(news.getResults());
+        List<Article> newsQuery = new GsonBuilder().create().fromJson(jsonArticle, typeArticle);
+            String dateQuery = newsQuery.get(i).getDate().substring(zero, dateLength);
+            String titleQuery = news.getSection() + context.getString(item_title_separator) + newsQuery.get(i).getSection();
+            String articleQuery;
+            if (newsQuery.get(i).getArticle().length() > articleMaxLength)
+                articleQuery = newsQuery.get(i).getArticle().substring(zero, articleMaxLength) + context.getString(item_article_following);
+            else
+                articleQuery = newsQuery.get(i).getArticle();
+            if(newsQuery.get(i).getMultimedia().length > 0) {
+                LinkedTreeMap<String, String> imgQuery = (LinkedTreeMap<String, String>) newsQuery.get(i).getMultimedia()[0];
+                Picasso.get().load(imgQuery.get("url")).into(img);
+            }
 
-        LinkedTreeMap<String, String> imgQuery =(LinkedTreeMap<String, String>) news.get(i).getMultimedia()[0];
 
-        date.setText(dateQuery);
-        title.setText(titleQuery);
-        article.setText(articleQuery);
-        Picasso.get().load(imgQuery.get("url")).into(img);
-
+            date.setText(dateQuery);
+            title.setText(titleQuery);
+            article.setText(articleQuery);
 
         Intent intent = new Intent(context, ArticleActivity.class);
-        intent.putExtra("url", news.get(i).getUrl());
+        intent.putExtra("url", newsQuery.get(i).getUrl());
 
         holder.view.setOnClickListener(view -> context.startActivity(intent));
 
@@ -81,7 +100,7 @@ public class PageRecyclerviewAdapter extends RecyclerView.Adapter<PageRecyclervi
 
     @Override
     public int getItemCount() {
-        return news.size();
+        return news.getResults().length;
     }
 
 

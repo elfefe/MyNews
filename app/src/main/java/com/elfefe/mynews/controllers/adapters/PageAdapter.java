@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.Log;
 
 import com.elfefe.mynews.controllers.fragments.PageFragment;
@@ -15,32 +16,31 @@ import com.google.gson.internal.LinkedTreeMap;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PageAdapter extends FragmentPagerAdapter {
+public class PageAdapter extends FragmentStatePagerAdapter {
 
 
     private final ArrayList<String> pageTitle;
-    private List<Article> news;
+    private List<Fragment> listPage = new ArrayList<>();
 
-    public PageAdapter(FragmentManager fm, ArrayList<String> pageTitle, List<Article> news) {
+    public PageAdapter(FragmentManager fm, ArrayList<String> pageTitle) {
         super(fm);
 
         this.pageTitle = pageTitle;
-        this.news = news;
+
+        for (String title : pageTitle) {
+            Log.d("TIIIITLE_PageAdapter", title);
+            listPage.add(PageFragment.newInstance(title));
+        }
     }
 
     @Override
     public Fragment getItem(int i) {
-        return PageFragment.newInstance(news);
+        return listPage.get(i);
     }
 
     @Override
     public int getCount() {
         return pageTitle.size();
-    }
-
-    @Override
-    public int getItemPosition(@NonNull Object object) {
-        return POSITION_NONE;
     }
 
     @Nullable

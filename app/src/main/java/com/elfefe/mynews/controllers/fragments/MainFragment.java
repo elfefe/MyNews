@@ -20,6 +20,7 @@ import com.elfefe.mynews.R;
 import com.elfefe.mynews.controllers.adapters.PageAdapter;
 import com.elfefe.mynews.models.Article;
 import com.elfefe.mynews.models.News;
+import com.elfefe.mynews.models.Pages;
 import com.elfefe.mynews.utils.NewsAsyncTask;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -40,15 +41,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.app.Activity.RESULT_OK;
 
-public class MainFragment extends Fragment implements NewsAsyncTask.Listeners{
+public class MainFragment extends Fragment {
 
     PageAdapter adapter;
-    List<Article> news;
     TabLayout tabs;
 
 
-
-    public MainFragment(){}
+    public MainFragment() {
+    }
 
     @Nullable
     @Override
@@ -59,37 +59,22 @@ public class MainFragment extends Fragment implements NewsAsyncTask.Listeners{
         ViewPager pager = (ViewPager) result.findViewById(R.id.main_viewpager);
         tabs = (TabLayout) result.findViewById(R.id.main_tablayout);
 
-        news = new ArrayList<>();
-        ArrayList<String> pageTitles = new ArrayList<>();
+        ArrayList<String> pageTitles = new ArrayList<String>() {{
+            add(getString(Pages.TOP_STORIES.getTitle()));
+            add(getString(Pages.MOST_POPULAR.getTitle()));
+            add(getString(Pages.SEARCH_ARTICLE.getTitle()));
 
-        new NewsAsyncTask(this).execute("topstories","arts","7beqz304Fmqzmbi3GxAQxanKShTgNCRb");
-
-        pageTitles.add(getString(R.string.page_title_topstories));
-        pageTitles.add(getString(R.string.page_title_mostpopular));
-        pageTitles.add(getString(R.string.page_title_favorites));
+        }};
 
         adapter = new PageAdapter(getActivity().getSupportFragmentManager(),
-                pageTitles,
-                news);
+                pageTitles);
 
         pager.setAdapter(adapter);
 
         tabs.setupWithViewPager(pager);
         tabs.setTabMode(TabLayout.MODE_FIXED);
+
         return result;
     }
-
-    @Override
-    public void onResult(News news) {
-        Type typeArticle = new TypeToken<List<Article>>(){}.getType();
-        JsonElement jsonArticle = new GsonBuilder().create().toJsonTree(news.getResults());
-
-        List<Article> article = new GsonBuilder().create().fromJson(jsonArticle, typeArticle);
-
-        this.news.addAll(article);
-
-        adapter.notifyDataSetChanged();
-    }
-
 
 }

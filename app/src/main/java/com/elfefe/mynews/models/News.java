@@ -15,10 +15,6 @@ public class News {
     @Expose
     private Object[] results;
 
-    @SerializedName("gravatar_id")
-    @Expose
-    private String img;
-
 
     @SerializedName("login")
     @Expose
@@ -28,9 +24,9 @@ public class News {
     @Expose
     private String date;
 
-    @SerializedName("3")
+    @SerializedName("section")
     @Expose
-    private String article;
+    private String section;
 
 
     public String getUrl() {
@@ -39,14 +35,6 @@ public class News {
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public String getImg() {
-        return img;
-    }
-
-    public void setImg(String img) {
-        this.img = img;
     }
 
     public String getTitle() {
@@ -65,20 +53,20 @@ public class News {
         this.date = date;
     }
 
-    public String getContent() {
-        return article;
-    }
-
-    public void setContent(String article) {
-        this.article = article;
-    }
-
     public Object[] getResults() {
         return results;
     }
 
     public void setResults(Object[] results) {
         this.results = results;
+    }
+
+    public String getSection() {
+        return section;
+    }
+
+    public void setSection(String section) {
+        this.section = section;
     }
 }
 

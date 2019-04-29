@@ -12,12 +12,12 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface NYTService {
-    @GET("{type}/v2/{subject}.json")
-    Call<News> getTopStories(@Path("type") String type, @Path("subject") String subject, @Query("api-key") String key);
+    @GET("topstories/v2/{subject}.json")
+    Call<News> getTopStories(@Path("subject") String subject, @Query("api-key") String key);
 
-    @GET("search/v2/{period}.json")
-    Call<News> getSearchArticle( @Path("period") String period, @Query("api-key") String key, @FieldMap Map<String, String> search);
+    @GET("v2/mostpopular/30.json")
+    Call<News> getMostPopular(@Query("api-key") String key);
 
-    @GET("v2/{type}/{period}.json")
-    Call<News> getMostPopular(@Path("type") String type,@Path("period") String period, @Query("api-key") String key);
+    @GET("search/v2/30.json")
+    Call<News> getSearchArticle(@Query("api-key") String key, @FieldMap Map<String, String> search);
 }
