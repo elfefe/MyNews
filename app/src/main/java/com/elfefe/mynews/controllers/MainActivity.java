@@ -38,15 +38,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Log.d("BUNNNNDLED1", String.valueOf(data.getBundleExtra("bundle")));
-        if(resultCode == RESULT_OK && requestCode == 2404){
-                Log.d("BUNNNNDLED2", data.getBundleExtra("bundle").getString("searched"));
-        }
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_activity_main, menu);
         return true;
@@ -59,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
                 return true;
             case R.id.main_search:
-                startActivityForResult(new Intent(this, SearchActivity.class), 2404);
+                startActivity(new Intent(this, SearchActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

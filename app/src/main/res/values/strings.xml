@@ -7,7 +7,7 @@
     <string name="toolbar_settings">Settings</string>
     <string name="page_title_topstories">Top Stories</string>
     <string name="page_title_mostpopular">Most Popular</string>
-    <string name="page_title_favorites">Favorites</string>
+    <string name="page_title_favorites">Sports</string>
     <string name="item_title_separator"><![CDATA[>]]></string>
     <string name="item_article_following">...</string>
 </resources>

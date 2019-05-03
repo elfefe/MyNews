@@ -33,8 +33,8 @@ class NYTCalls {
         key = "7beqz304Fmqzmbi3GxAQxanKShTgNCRb";
     }
 
-    News fetchTopStoriesFollowing(String subject) {
-        Call<News> call = nytService.getTopStories(subject, key);
+    News fetchTopStoriesFollowing() {
+        Call<News> call = nytService.getTopStories(key);
 
         try {
             return call.execute().body();
@@ -46,6 +46,17 @@ class NYTCalls {
 
     News fetchMostPopularFollowing() {
         Call<News> call = nytService.getMostPopular(key);
+
+        try {
+            return call.execute().body();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    News fetchFavoriteFollowing(String subject) {
+        Call<News> call = nytService.getFavorite(subject, key);
 
         try {
             return call.execute().body();

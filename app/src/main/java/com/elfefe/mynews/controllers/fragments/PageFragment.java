@@ -27,8 +27,6 @@ public class PageFragment extends Fragment implements NewsAsyncTask.Listeners {
     public static PageFragment newInstance(String title) {
         PageFragment frag = new PageFragment();
         frag.title = title;
-        if(title != null)
-            Log.d("TIIIITLE_newInstance", title);
 
         Bundle args = new Bundle();
 
@@ -47,21 +45,15 @@ public class PageFragment extends Fragment implements NewsAsyncTask.Listeners {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
-        if(title != null) {
-            Log.d("TIIIITLE_onCreate", title);
-
+        if(title != null)
             new NewsAsyncTask(this).execute(title);
-        }
 
         return result;
     }
 
     @Override
     public void onResult(News news) {
-
-
         PageRecyclerviewAdapter adapter = new PageRecyclerviewAdapter(this.getContext(), news);
-
         recyclerView.setAdapter(adapter);
     }
 

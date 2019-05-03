@@ -9,7 +9,7 @@ public class Article {
     @Expose
     private String title;
 
-    @SerializedName("updated_date")
+    @SerializedName("published_date")
     @Expose
     private String date;
 
@@ -20,6 +20,10 @@ public class Article {
     @SerializedName("multimedia")
     @Expose
     private Object[] multimedia;
+
+    @SerializedName("media")
+    @Expose
+    private Object[] media;
 
     @SerializedName("short_url")
     @Expose
@@ -77,5 +81,13 @@ public class Article {
 
     public void setSection(String section) {
         this.section = section;
+    }
+
+    public Object[] getMedia() {
+        return media;
+    }
+
+    public void setMedia(Object[] media) {
+        this.media = media;
     }
 }

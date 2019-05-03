@@ -21,12 +21,15 @@
             android:actionLayout="@layout/main_action_layout"
             >
             <item
-                android:title="Setting"
+                android:id="@+id/menu_notif"
+                android:title="Notification"
                 />
             <item
+                android:id="@+id/menu_about"
                 android:title="About"
                 />
             <item
+                android:id="@+id/menu_help"
                 android:title="Help"
                 />
         </group>
