@@ -2,13 +2,22 @@ package com.elfefe.mynews.utils;
 
 import android.os.AsyncTask;
 
+import com.elfefe.mynews.models.Article;
 import com.elfefe.mynews.models.News;
+import com.elfefe.mynews.models.Pages;
+import com.elfefe.mynews.models.mostpopular.MostPopularResults;
+import com.elfefe.mynews.models.topstory.Result;
+import com.elfefe.mynews.models.topstory.TopStoryResults;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class NewsAsyncTask extends AsyncTask<String,Void, News> {
+import static com.elfefe.mynews.models.Pages.TOP_STORIES;
+
+public class NewsAsyncTask extends AsyncTask<Pages,Void, List<Article>> {
 
     private final WeakReference<Listeners> callback;
 
@@ -16,31 +25,50 @@ public class NewsAsyncTask extends AsyncTask<String,Void, News> {
         this.callback = new WeakReference<>(callback);
     }
     public interface Listeners{
-        void onResult(News news);
+        void onResult(List<Article> articles);
     }
 
     @Override
-    protected News doInBackground(String... url) {
+    protected List<Article> doInBackground(Pages... url) {
         NYTCalls nytCalls = new NYTCalls();
         switch (url[0]){
-            case "Top Stories":
-                return nytCalls.fetchTopStoriesFollowing();
-            case "Most Popular":
-                return nytCalls.fetchMostPopularFollowing();
-            case "Sports":
-                return nytCalls.fetchFavoriteFollowing("sports");
-            case "Search Article":
-                Map<String, String> map = new HashMap<>();
-                map.put("q", url[1]);
-                return  nytCalls.fetchSearchArticleFollowing(map);
+            case TOP_STORIES:
+                List<Article> topStoryArticle = new ArrayList<>();
+                TopStoryResults topStoryResults = nytCalls.fetchTopStoriesFollowing();
+
+                for (Result result : topStoryResults.getResults()) {
+                    Article article = new Article();
+                    article.setTitle(result.getTitle());
+                    article.setArticle(result.getAbstract());
+                    article.setDate(result.getPublishedDate().substring(0, 10));
+                }
+                return  topStoryArticle;
+            case MOST_POPULAR:
+                List<Article> mostPopularArticle = new ArrayList<>();
+                MostPopularResults mostPopularResults = nytCalls.fetchMostPopularFollowing();
+
+                for (com.elfefe.mynews.models.mostpopular.Result result : mostPopularResults.getResults()) {
+                    Article article = new Article();
+
+                }
+
+                return mostPopularArticle;
+            case SEARCH_ARTICLE:
+                List<Article> favoritesArticle = new ArrayList<>();
+                TopStoryResults favoriteResults = nytCalls.fetchFavoriteFollowing("sports");
+
+                for (Result result : favoriteResults.getResults()) {
+                    Article article = new Article();
+                }
+                return  favoritesArticle;
             default:
                 return null;
         }
     }
 
     @Override
-    protected void onPostExecute(News news) {
-        callback.get().onResult(news);
+    protected void onPostExecute(List<Article> articles) {
+        callback.get().onResult(articles);
     }
 }
 

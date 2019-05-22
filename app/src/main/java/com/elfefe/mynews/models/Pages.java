@@ -7,7 +7,7 @@ public enum Pages {
     MOST_POPULAR(R.string.page_title_mostpopular),
     SEARCH_ARTICLE(R.string.page_title_favorites);
 
-    private int title;
+    public int title;
 
     Pages(int title){
 

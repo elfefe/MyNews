@@ -43,16 +43,16 @@ import static com.elfefe.mynews.R.string.*;
 
 public class PageRecyclerviewAdapter extends RecyclerView.Adapter<PageRecyclerviewAdapter.PageViewHolder> {
 
-    private int articleMaxLength = 80;
-    private int dateLength = 10;
-    private int zero = 0;
+    private final int articleMaxLength = 80;
+    private final int dateLength = 10;
+    private final int zero = 0;
 
-    private News news;
     private Context context;
+    private Article article;
 
-    public PageRecyclerviewAdapter(Context context, News news) {
-        this.news = news;
+    public PageRecyclerviewAdapter(Context context, Article article) {
         this.context = context;
+        this.article = article;
     }
 
     @NonNull
@@ -69,43 +69,37 @@ public class PageRecyclerviewAdapter extends RecyclerView.Adapter<PageRecyclervi
     public void onBindViewHolder(@NonNull PageViewHolder holder, int i) {
         TextView date = holder.view.findViewById(R.id.news_item_date);
         TextView title = holder.view.findViewById(R.id.news_item_title);
-        TextView article = holder.view.findViewById(R.id.news_item_news);
+        TextView section = holder.view.findViewById(R.id.news_item_news);
         ImageView img = holder.view.findViewById(R.id.news_item_img);
 
-        Type typeArticle = new TypeToken<List<Article>>(){}.getType();
-
-        LinkedTreeMap<String, String> results =(LinkedTreeMap<String, String>) news.getResults()[i];
-
-        if(!(results.get("multimedia") instanceof String)) {
-            JsonElement jsonArticle = new GsonBuilder().create().toJsonTree(news.getResults());
-            List<Article> newsQuery = new GsonBuilder().create().fromJson(jsonArticle, typeArticle);
-            String dateQuery = newsQuery.get(i).getDate().substring(zero, dateLength);
-            String titleQuery;
-            String articleQuery;
-            if (news.getSection() != null)
-                titleQuery = news.getSection() + context.getString(item_title_separator) + newsQuery.get(i).getSection();
+        if(article.getMultimedia() == null) {
+            String dateQuery = article.getDate();
+            String titleQuery = article.getTitle();
+            String sectionQuery = article.getSection();
+            if (article.getSection() != null)
+                titleQuery = article.getSection() + context.getString(item_title_separator) + article.getSection();
             else
-                titleQuery = newsQuery.get(i).getSection();
-            if (newsQuery.get(i).getArticle().length() > articleMaxLength)
-                articleQuery = newsQuery.get(i).getArticle().substring(zero, articleMaxLength) + context.getString(item_article_following);
+                titleQuery = null;
+            if (article.getArticle().length() > articleMaxLength)
+                sectionQuery = article.getArticle().substring(zero, articleMaxLength) + context.getString(item_article_following);
             else
-                articleQuery = newsQuery.get(i).getArticle();
+                sectionQuery = article.getArticle();
 
-            if (newsQuery.get(i).getMultimedia() != null) {
-                LinkedTreeMap<String, String> imgQuery = (LinkedTreeMap<String, String>) newsQuery.get(i).getMultimedia()[0];
+            if (article.getMultimedia() != null) {
+                LinkedTreeMap<String, String> imgQuery = (LinkedTreeMap<String, String>) article.getMultimedia()[0];
                 Picasso.get().load(imgQuery.get("url")).into(img);
-            } else if (newsQuery.get(i).getMedia() != null) {
-                LinkedTreeMap<String, String> imgQuery = (LinkedTreeMap<String, String>) newsQuery.get(i).getMedia()[0];
+            } else if (article.getMedia() != null) {
+                LinkedTreeMap<String, String> imgQuery = (LinkedTreeMap<String, String>) article.getMedia()[0];
                 Picasso.get().load(imgQuery.get("url")).into(img);
             }
 
 
             date.setText(dateQuery);
             title.setText(titleQuery);
-            article.setText(articleQuery);
+            section.setText(sectionQuery);
 
         Intent intent = new Intent(context, ArticleActivity.class);
-        intent.putExtra("url", newsQuery.get(i).getUrl());
+        intent.putExtra("url", article.getUrl());
 
         holder.view.setOnClickListener(view -> context.startActivity(intent));
         }
@@ -114,7 +108,7 @@ public class PageRecyclerviewAdapter extends RecyclerView.Adapter<PageRecyclervi
 
     @Override
     public int getItemCount() {
-        return news.getResults().length;
+        return 20;
     }
 
 

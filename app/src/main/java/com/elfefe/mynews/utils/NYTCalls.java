@@ -1,6 +1,8 @@
 package com.elfefe.mynews.utils;
 
 import com.elfefe.mynews.models.News;
+import com.elfefe.mynews.models.mostpopular.MostPopularResults;
+import com.elfefe.mynews.models.topstory.TopStoryResults;
 
 import java.io.IOException;
 import java.util.Map;
@@ -33,8 +35,8 @@ class NYTCalls {
         key = "7beqz304Fmqzmbi3GxAQxanKShTgNCRb";
     }
 
-    News fetchTopStoriesFollowing() {
-        Call<News> call = nytService.getTopStories(key);
+    TopStoryResults fetchTopStoriesFollowing() {
+        Call<TopStoryResults> call = nytService.getTopStories(key);
 
         try {
             return call.execute().body();
@@ -44,8 +46,8 @@ class NYTCalls {
         return null;
     }
 
-    News fetchMostPopularFollowing() {
-        Call<News> call = nytService.getMostPopular(key);
+    MostPopularResults fetchMostPopularFollowing() {
+        Call<MostPopularResults> call = nytService.getMostPopular(key);
 
         try {
             return call.execute().body();
@@ -55,8 +57,8 @@ class NYTCalls {
         return null;
     }
 
-    News fetchFavoriteFollowing(String subject) {
-        Call<News> call = nytService.getFavorite(subject, key);
+    TopStoryResults fetchFavoriteFollowing(String subject) {
+        Call<TopStoryResults> call = nytService.getFavorite(subject, key);
 
         try {
             return call.execute().body();
