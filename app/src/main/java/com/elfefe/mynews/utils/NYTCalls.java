@@ -57,8 +57,8 @@ class NYTCalls {
         return null;
     }
 
-    TopStoryResults fetchFavoriteFollowing(String subject) {
-        Call<TopStoryResults> call = nytService.getFavorite(subject, key);
+    TopStoryResults fetchFavoriteFollowing() {
+        Call<TopStoryResults> call = nytService.getFavorite("sports", key);
 
         try {
             return call.execute().body();

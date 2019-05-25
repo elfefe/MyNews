@@ -3,7 +3,6 @@ package com.elfefe.mynews.utils;
 import android.os.AsyncTask;
 
 import com.elfefe.mynews.models.Article;
-import com.elfefe.mynews.models.News;
 import com.elfefe.mynews.models.Pages;
 import com.elfefe.mynews.models.mostpopular.MostPopularResults;
 import com.elfefe.mynews.models.topstory.Result;
@@ -11,11 +10,7 @@ import com.elfefe.mynews.models.topstory.TopStoryResults;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import static com.elfefe.mynews.models.Pages.TOP_STORIES;
 
 public class NewsAsyncTask extends AsyncTask<Pages,Void, List<Article>> {
 
@@ -37,10 +32,7 @@ public class NewsAsyncTask extends AsyncTask<Pages,Void, List<Article>> {
                 TopStoryResults topStoryResults = nytCalls.fetchTopStoriesFollowing();
 
                 for (Result result : topStoryResults.getResults()) {
-                    Article article = new Article();
-                    article.setTitle(result.getTitle());
-                    article.setArticle(result.getAbstract());
-                    article.setDate(result.getPublishedDate().substring(0, 10));
+                    topStoryArticle.add(loadArticle(result));
                 }
                 return  topStoryArticle;
             case MOST_POPULAR:
@@ -49,13 +41,19 @@ public class NewsAsyncTask extends AsyncTask<Pages,Void, List<Article>> {
 
                 for (com.elfefe.mynews.models.mostpopular.Result result : mostPopularResults.getResults()) {
                     Article article = new Article();
+                    article.setTitle(result.getTitle());
+                    article.setArticle(result.getAbstract());
+                    article.setDate(result.getPublishedDate().substring(0, 10));
+                    article.setSection(result.getSection());
+
+                    mostPopularArticle.add(article);
 
                 }
 
                 return mostPopularArticle;
             case SEARCH_ARTICLE:
                 List<Article> favoritesArticle = new ArrayList<>();
-                TopStoryResults favoriteResults = nytCalls.fetchFavoriteFollowing("sports");
+                TopStoryResults favoriteResults = nytCalls.fetchFavoriteFollowing();
 
                 for (Result result : favoriteResults.getResults()) {
                     Article article = new Article();
@@ -69,6 +67,18 @@ public class NewsAsyncTask extends AsyncTask<Pages,Void, List<Article>> {
     @Override
     protected void onPostExecute(List<Article> articles) {
         callback.get().onResult(articles);
+    }
+
+    private Article loadArticle(Result result){
+        Article article = new Article();
+
+        article.setTitle(result.getTitle());
+        article.setArticle(result.getAbstract());
+        article.setDate(result.getPublishedDate().substring(0, 10));
+        article.setMultimedia(result.getMultimedia().get(1));
+        article.setSection(result.getSection());
+
+        return article;
     }
 }
 

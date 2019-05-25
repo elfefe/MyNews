@@ -6,27 +6,29 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.elfefe.mynews.R;
 import com.elfefe.mynews.controllers.adapters.PageRecyclerviewAdapter;
-import com.elfefe.mynews.models.News;
+import com.elfefe.mynews.models.Article;
+import com.elfefe.mynews.models.Pages;
 import com.elfefe.mynews.utils.NewsAsyncTask;
+
+import java.util.List;
 
 public class PageFragment extends Fragment implements NewsAsyncTask.Listeners {
 
-    private String title;
     private RecyclerView recyclerView;
+    private Pages page;
 
     public PageFragment() {
     }
 
-    public static PageFragment newInstance(String title) {
+    public static PageFragment newInstance(Pages page) {
         PageFragment frag = new PageFragment();
-        frag.title = title;
+        frag.page = page;
 
         Bundle args = new Bundle();
 
@@ -45,15 +47,14 @@ public class PageFragment extends Fragment implements NewsAsyncTask.Listeners {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
-        if(title != null)
-            new NewsAsyncTask(this).execute(title);
+        new NewsAsyncTask(this).execute(page);
 
         return result;
     }
 
     @Override
-    public void onResult(News news) {
-        PageRecyclerviewAdapter adapter = new PageRecyclerviewAdapter(this.getContext(), news);
+    public void onResult(List<Article> articles) {
+        PageRecyclerviewAdapter adapter = new PageRecyclerviewAdapter(this.getContext(), articles);
         recyclerView.setAdapter(adapter);
     }
 

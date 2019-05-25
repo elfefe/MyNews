@@ -1,6 +1,5 @@
 package com.elfefe.mynews.controllers;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -11,8 +10,11 @@ import android.util.Log;
 
 import com.elfefe.mynews.R;
 import com.elfefe.mynews.controllers.adapters.PageRecyclerviewAdapter;
-import com.elfefe.mynews.models.News;
+import com.elfefe.mynews.models.Article;
+import com.elfefe.mynews.models.Pages;
 import com.elfefe.mynews.utils.NewsAsyncTask;
+
+import java.util.List;
 
 public class FilteredActivity extends AppCompatActivity implements NewsAsyncTask.Listeners{
     RecyclerView recyclerView;
@@ -36,7 +38,7 @@ public class FilteredActivity extends AppCompatActivity implements NewsAsyncTask
         if (bundle != null)
             Log.d( "onCreate: ", bundle.getString(SearchActivity.KEY_SEARCHED));
 
-        new NewsAsyncTask(this).execute("Sports");
+        new NewsAsyncTask(this).execute(Pages.SEARCH_ARTICLE);
 
         setSupportActionBar(toolbar);
 
@@ -44,8 +46,8 @@ public class FilteredActivity extends AppCompatActivity implements NewsAsyncTask
     }
 
     @Override
-    public void onResult(News news) {
-        PageRecyclerviewAdapter adapter = new PageRecyclerviewAdapter(this, news);
+    public void onResult(List<Article> articles) {
+        PageRecyclerviewAdapter adapter = new PageRecyclerviewAdapter(this, articles);
         recyclerView.setAdapter(adapter);
     }
 }

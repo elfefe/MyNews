@@ -4,7 +4,6 @@ import com.elfefe.mynews.models.News;
 import com.elfefe.mynews.models.mostpopular.MostPopularResults;
 import com.elfefe.mynews.models.topstory.TopStoryResults;
 
-import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -14,7 +13,7 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface NYTService {
-    @GET("news/v3/content/all/all.json ")
+    @GET("topstories/v2/home.json ")
     Call<TopStoryResults> getTopStories(@Query("api-key") String key);
 
     @GET("mostpopular/v2/viewed/30.json")

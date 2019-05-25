@@ -1,17 +1,13 @@
 package com.elfefe.mynews.controllers.adapters;
 
-import android.support.annotation.NonNull;
+import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.util.Log;
 
 import com.elfefe.mynews.controllers.fragments.PageFragment;
-import com.elfefe.mynews.models.Article;
-import com.elfefe.mynews.models.News;
-import com.google.gson.internal.LinkedTreeMap;
+import com.elfefe.mynews.models.Pages;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,17 +15,18 @@ import java.util.List;
 public class PageAdapter extends FragmentStatePagerAdapter {
 
 
-    private final ArrayList<String> pageTitle;
+    private final Pages[] pages;
+    private Context context;
     private List<Fragment> listPage = new ArrayList<>();
 
-    public PageAdapter(FragmentManager fm, ArrayList<String> pageTitle) {
+    public PageAdapter(FragmentManager fm, Pages[] pages, Context context) {
         super(fm);
 
-        this.pageTitle = pageTitle;
+        this.pages = pages;
+        this.context = context;
 
-        for (String title : pageTitle) {
-            Log.d("TIIIITLE_PageAdapter", title);
-            listPage.add(PageFragment.newInstance(title));
+        for (Pages page : pages) {
+            listPage.add(PageFragment.newInstance(page));
         }
     }
 
@@ -40,12 +37,12 @@ public class PageAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return pageTitle.size();
+        return pages.length;
     }
 
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return pageTitle.get(position);
+        return context.getString(pages[position].getTitle());
     }
 }

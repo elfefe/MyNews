@@ -1,5 +1,6 @@
 package com.elfefe.mynews.models;
 
+import com.elfefe.mynews.models.topstory.Multimedium;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -19,7 +20,7 @@ public class Article {
 
     @SerializedName("multimedia")
     @Expose
-    private Object[] multimedia;
+    private Multimedium multimedia;
 
     @SerializedName("media")
     @Expose
@@ -43,11 +44,11 @@ public class Article {
         this.title = title;
     }
 
-    public Object[] getMultimedia() {
+    public Multimedium getMultimedia() {
         return multimedia;
     }
 
-    public void setMultimedia(Object[] multimedia) {
+    public void setMultimedia(Multimedium multimedia) {
         this.multimedia = multimedia;
     }
 

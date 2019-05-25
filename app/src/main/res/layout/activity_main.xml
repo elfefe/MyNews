@@ -21,7 +21,6 @@
 
         android:minHeight="?attr/actionBarSize"
         app:titleTextColor="@android:color/white" />
-
     <FrameLayout
         android:id="@+id/framelayout_main"
 
