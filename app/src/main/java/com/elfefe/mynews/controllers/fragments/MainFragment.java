@@ -14,6 +14,9 @@ import com.elfefe.mynews.R;
 import com.elfefe.mynews.controllers.adapters.PageAdapter;
 import com.elfefe.mynews.models.Pages;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainFragment extends Fragment {
 
     PageAdapter adapter;
@@ -32,9 +35,15 @@ public class MainFragment extends Fragment {
         ViewPager pager = (ViewPager) result.findViewById(R.id.main_viewpager);
         tabs = (TabLayout) result.findViewById(R.id.main_tablayout);
 
+        List<Pages> pages = new ArrayList<Pages>(){{
+            add(Pages.TOP_STORIES);
+            add(Pages.MOST_POPULAR);
+            add(Pages.FAVORITE);
+        }};
+
         if(getActivity() != null) {
             adapter = new PageAdapter(getActivity().getSupportFragmentManager(),
-                    Pages.values(), getContext());
+                    pages, getContext());
         }
 
         pager.setAdapter(adapter);

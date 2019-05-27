@@ -1,8 +1,8 @@
 package com.elfefe.mynews.utils;
 
-import com.elfefe.mynews.models.News;
-import com.elfefe.mynews.models.mostpopular.MostPopularResults;
-import com.elfefe.mynews.models.topstory.TopStoryResults;
+import com.elfefe.mynews.models.mostpopular.MostPopularQuery;
+import com.elfefe.mynews.models.search.SearchQuery;
+import com.elfefe.mynews.models.topstory.TopStoryQuery;
 
 import java.io.IOException;
 import java.util.Map;
@@ -35,8 +35,8 @@ class NYTCalls {
         key = "7beqz304Fmqzmbi3GxAQxanKShTgNCRb";
     }
 
-    TopStoryResults fetchTopStoriesFollowing() {
-        Call<TopStoryResults> call = nytService.getTopStories(key);
+    TopStoryQuery fetchTopStoriesFollowing() {
+        Call<TopStoryQuery> call = nytService.getTopStories(key);
 
         try {
             return call.execute().body();
@@ -46,8 +46,8 @@ class NYTCalls {
         return null;
     }
 
-    MostPopularResults fetchMostPopularFollowing() {
-        Call<MostPopularResults> call = nytService.getMostPopular(key);
+    MostPopularQuery fetchMostPopularFollowing() {
+        Call<MostPopularQuery> call = nytService.getMostPopular(key);
 
         try {
             return call.execute().body();
@@ -57,8 +57,8 @@ class NYTCalls {
         return null;
     }
 
-    TopStoryResults fetchFavoriteFollowing() {
-        Call<TopStoryResults> call = nytService.getFavorite("sports", key);
+    TopStoryQuery fetchFavoriteFollowing() {
+        Call<TopStoryQuery> call = nytService.getFavorite("sports", key);
 
         try {
             return call.execute().body();
@@ -68,8 +68,9 @@ class NYTCalls {
         return null;
     }
 
-    News fetchSearchArticleFollowing(Map<String, String> search) {
-        Call<News> call = nytService.getSearchArticle(key, search);
+    SearchQuery fetchSearchArticleFollowing(Map<String, String> search) {
+        Call<SearchQuery> call = nytService.getSearchArticle(key, search);
+
 
         try {
             return call.execute().body();

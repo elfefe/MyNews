@@ -4,7 +4,7 @@ package com.elfefe.mynews.models.mostpopular;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class MediaMetadatum {
+public class MostPopularMediaMetadatum {
 
     @SerializedName("url")
     @Expose

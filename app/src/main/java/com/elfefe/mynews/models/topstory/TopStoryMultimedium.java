@@ -4,7 +4,7 @@ package com.elfefe.mynews.models.topstory;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Multimedium {
+public class TopStoryMultimedium {
 
     @SerializedName("url")
     @Expose

@@ -1,11 +1,12 @@
 
 package com.elfefe.mynews.models.topstory;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class TopStoryResults {
+import java.util.List;
+
+public class TopStoryQuery {
 
     @SerializedName("status")
     @Expose
@@ -22,9 +23,9 @@ public class TopStoryResults {
     @SerializedName("num_results")
     @Expose
     private Integer numResults;
-    @SerializedName("results")
+    @SerializedName("topStoryResults")
     @Expose
-    private List<Result> results = null;
+    private List<TopStoryResult> topStoryResults = null;
 
     public String getStatus() {
         return status;
@@ -66,12 +67,12 @@ public class TopStoryResults {
         this.numResults = numResults;
     }
 
-    public List<Result> getResults() {
-        return results;
+    public List<TopStoryResult> getTopStoryResults() {
+        return topStoryResults;
     }
 
-    public void setResults(List<Result> results) {
-        this.results = results;
+    public void setTopStoryResults(List<TopStoryResult> topStoryResults) {
+        this.topStoryResults = topStoryResults;
     }
 
 }

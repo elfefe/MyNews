@@ -38,11 +38,11 @@ public class FilteredActivity extends AppCompatActivity implements NewsAsyncTask
         if (bundle != null)
             Log.d( "onCreate: ", bundle.getString(SearchActivity.KEY_SEARCHED));
 
-        new NewsAsyncTask(this).execute(Pages.SEARCH_ARTICLE);
+        new NewsAsyncTask(this).execute(Pages.FILTERED);
 
         setSupportActionBar(toolbar);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

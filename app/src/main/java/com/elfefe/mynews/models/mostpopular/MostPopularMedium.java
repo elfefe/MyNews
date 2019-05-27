@@ -5,7 +5,7 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Medium {
+public class MostPopularMedium {
 
     @SerializedName("type")
     @Expose
@@ -24,7 +24,7 @@ public class Medium {
     private Integer approvedForSyndication;
     @SerializedName("media-metadata")
     @Expose
-    private List<MediaMetadatum> mediaMetadata = null;
+    private List<MostPopularMediaMetadatum> mediaMetadata = null;
 
     public String getType() {
         return type;
@@ -66,11 +66,11 @@ public class Medium {
         this.approvedForSyndication = approvedForSyndication;
     }
 
-    public List<MediaMetadatum> getMediaMetadata() {
+    public List<MostPopularMediaMetadatum> getMediaMetadata() {
         return mediaMetadata;
     }
 
-    public void setMediaMetadata(List<MediaMetadatum> mediaMetadata) {
+    public void setMediaMetadata(List<MostPopularMediaMetadatum> mediaMetadata) {
         this.mediaMetadata = mediaMetadata;
     }
 

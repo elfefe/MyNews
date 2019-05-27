@@ -5,7 +5,9 @@ import com.elfefe.mynews.R;
 public enum Pages {
     TOP_STORIES(R.string.page_title_topstories),
     MOST_POPULAR(R.string.page_title_mostpopular),
-    SEARCH_ARTICLE(R.string.page_title_favorites);
+    FAVORITE(R.string.page_title_favorites),
+    FILTERED(R.string.page_title_filtered),
+    SEARCH(R.string.page_title_search);
 
     private int title;
 

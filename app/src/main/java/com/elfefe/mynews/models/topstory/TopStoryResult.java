@@ -1,11 +1,12 @@
 
 package com.elfefe.mynews.models.topstory;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Result {
+import java.util.List;
+
+public class TopStoryResult {
 
     @SerializedName("section")
     @Expose
@@ -57,7 +58,7 @@ public class Result {
     private List<String> geoFacet = null;
     @SerializedName("multimedia")
     @Expose
-    private List<Multimedium> multimedia = null;
+    private List<TopStoryMultimedium> multimedia = null;
     @SerializedName("short_url")
     @Expose
     private String shortUrl;
@@ -190,11 +191,11 @@ public class Result {
         this.geoFacet = geoFacet;
     }
 
-    public List<Multimedium> getMultimedia() {
+    public List<TopStoryMultimedium> getMultimedia() {
         return multimedia;
     }
 
-    public void setMultimedia(List<Multimedium> multimedia) {
+    public void setMultimedia(List<TopStoryMultimedium> multimedia) {
         this.multimedia = multimedia;
     }
 

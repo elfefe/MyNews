@@ -1,11 +1,12 @@
 
 package com.elfefe.mynews.models.mostpopular;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class MostPopularResults {
+import java.util.List;
+
+public class MostPopularQuery {
 
     @SerializedName("status")
     @Expose
@@ -18,7 +19,7 @@ public class MostPopularResults {
     private Integer numResults;
     @SerializedName("results")
     @Expose
-    private List<Result> results = null;
+    private List<MostPopularResult> results = null;
 
     public String getStatus() {
         return status;
@@ -44,12 +45,12 @@ public class MostPopularResults {
         this.numResults = numResults;
     }
 
-    public List<Result> getResults() {
+    public List<MostPopularResult> getResults() {
         return results;
     }
 
-    public void setResults(List<Result> results) {
-        this.results = results;
+    public void setResults(List<MostPopularResult> mostPopularResults) {
+        this.results = mostPopularResults;
     }
 
 }

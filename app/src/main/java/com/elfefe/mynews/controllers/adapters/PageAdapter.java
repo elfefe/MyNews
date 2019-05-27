@@ -15,11 +15,11 @@ import java.util.List;
 public class PageAdapter extends FragmentStatePagerAdapter {
 
 
-    private final Pages[] pages;
+    private final List<Pages> pages;
     private Context context;
     private List<Fragment> listPage = new ArrayList<>();
 
-    public PageAdapter(FragmentManager fm, Pages[] pages, Context context) {
+    public PageAdapter(FragmentManager fm, List<Pages> pages, Context context) {
         super(fm);
 
         this.pages = pages;
@@ -37,12 +37,12 @@ public class PageAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return pages.length;
+        return pages.size();
     }
 
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return context.getString(pages[position].getTitle());
+        return context.getString(pages.get(position).getTitle());
     }
 }

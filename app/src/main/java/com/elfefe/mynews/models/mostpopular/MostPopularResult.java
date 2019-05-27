@@ -1,11 +1,12 @@
 
 package com.elfefe.mynews.models.mostpopular;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Result {
+import java.util.List;
+
+public class MostPopularResult {
 
     @SerializedName("url")
     @Expose
@@ -60,7 +61,7 @@ public class Result {
     private String geoFacet;
     @SerializedName("media")
     @Expose
-    private List<Medium> media = null;
+    private List<MostPopularMedium> media = null;
     @SerializedName("uri")
     @Expose
     private String uri;
@@ -201,11 +202,11 @@ public class Result {
         this.geoFacet = geoFacet;
     }
 
-    public List<Medium> getMedia() {
+    public List<MostPopularMedium> getMedia() {
         return media;
     }
 
-    public void setMedia(List<Medium> media) {
+    public void setMedia(List<MostPopularMedium> media) {
         this.media = media;
     }
 
