@@ -23,7 +23,7 @@ public class TopStoryQuery {
     @SerializedName("num_results")
     @Expose
     private Integer numResults;
-    @SerializedName("topStoryResults")
+    @SerializedName("results")
     @Expose
     private List<TopStoryResult> topStoryResults = null;
 

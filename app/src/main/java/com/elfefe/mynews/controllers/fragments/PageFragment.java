@@ -14,11 +14,11 @@ import com.elfefe.mynews.R;
 import com.elfefe.mynews.controllers.adapters.PageRecyclerviewAdapter;
 import com.elfefe.mynews.models.Article;
 import com.elfefe.mynews.models.Pages;
-import com.elfefe.mynews.utils.NewsAsyncTask;
+import com.elfefe.mynews.utils.PagesAsyncTask;
 
 import java.util.List;
 
-public class PageFragment extends Fragment implements NewsAsyncTask.Listeners {
+public class PageFragment extends Fragment implements PagesAsyncTask.Listeners {
 
     private RecyclerView recyclerView;
     private Pages page;
@@ -47,7 +47,7 @@ public class PageFragment extends Fragment implements NewsAsyncTask.Listeners {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
-        new NewsAsyncTask(this).execute(page);
+        new PagesAsyncTask(this).execute(page);
 
         return result;
     }

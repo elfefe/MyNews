@@ -12,4 +12,6 @@
     <string name="item_article_following">...</string>
     <string name="page_title_search">search</string>
     <string name="page_title_filtered">filtered</string>
+    <string name="search_spinner_end">End Date</string>
+    <string name="search_spinner_begin">Begin Date</string>
 </resources>

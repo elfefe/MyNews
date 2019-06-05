@@ -32,7 +32,7 @@ public class PageRecyclerviewAdapter extends RecyclerView.Adapter<PageRecyclervi
     public PageViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         return new PageViewHolder(LayoutInflater
                     .from(viewGroup.getContext())
-                    .inflate(R.layout.recyclerview_item, viewGroup,false),
+                    .inflate(R.layout.recyclerview_adapter_item, viewGroup,false),
                 context);
     }
 
@@ -40,7 +40,8 @@ public class PageRecyclerviewAdapter extends RecyclerView.Adapter<PageRecyclervi
     public void onBindViewHolder(@NonNull PageViewHolder holder, int i) {
         TextView date = holder.view.findViewById(R.id.news_item_date);
         TextView title = holder.view.findViewById(R.id.news_item_title);
-        TextView section = holder.view.findViewById(R.id.news_item_news);
+        TextView section = holder.view.findViewById(R.id.news_item_section);
+        TextView news = holder.view.findViewById(R.id.news_item_news);
         ImageView img = holder.view.findViewById(R.id.news_item_img);
 
         Article article = articles.get(i);
@@ -48,8 +49,8 @@ public class PageRecyclerviewAdapter extends RecyclerView.Adapter<PageRecyclervi
         date.setText(article.getDate());
         title.setText(article.getTitle());
         section.setText(article.getSection());
-        Glide.with(holder.view).load(article.getMultimedia().getUrl()).into(img);
-
+        news.setText(article.getArticle());
+        Glide.with(holder.view).load(article.getMultimediaUrl()).into(img);
 
         Intent intent = new Intent(context, ArticleActivity.class);
         intent.putExtra("url", article.getUrl());

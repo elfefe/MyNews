@@ -26,6 +26,7 @@
         <activity android:name=".controllers.ArticleActivity" android:parentActivityName=".controllers.MainActivity"/>
         <activity android:name=".controllers.SearchActivity" android:parentActivityName=".controllers.MainActivity"/>
         <activity android:name=".controllers.FilteredActivity" />
+        <activity android:name=".controllers.NotificationActivity" />
     </application>
 
 </manifest>

@@ -6,32 +6,16 @@ import com.google.gson.annotations.SerializedName;
 
 public class Article {
 
-    @SerializedName("title")
-    @Expose
     private String title;
 
-    @SerializedName("published_date")
-    @Expose
     private String date;
 
-    @SerializedName("abstract")
-    @Expose
     private String article;
 
-    @SerializedName("multimedia")
-    @Expose
-    private TopStoryMultimedium multimedia;
+    private String multimediaUrl;
 
-    @SerializedName("media")
-    @Expose
-    private Object[] media;
-
-    @SerializedName("short_url")
-    @Expose
     private String url;
 
-    @SerializedName("section")
-    @Expose
     private String section;
 
 
@@ -44,12 +28,12 @@ public class Article {
         this.title = title;
     }
 
-    public TopStoryMultimedium getMultimedia() {
-        return multimedia;
+    public String getMultimediaUrl() {
+        return multimediaUrl;
     }
 
-    public void setMultimedia(TopStoryMultimedium multimedia) {
-        this.multimedia = multimedia;
+    public void setMultimediaUrl(String multimediaUrl) {
+        this.multimediaUrl = multimediaUrl;
     }
 
     public String getArticle() {
@@ -82,13 +66,5 @@ public class Article {
 
     public void setSection(String section) {
         this.section = section;
-    }
-
-    public Object[] getMedia() {
-        return media;
-    }
-
-    public void setMedia(Object[] media) {
-        this.media = media;
     }
 }

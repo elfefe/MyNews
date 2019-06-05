@@ -1,7 +1,9 @@
 
 package com.elfefe.mynews.models.mostpopular;
 
+import com.elfefe.mynews.utils.EmptyStringAsNullTypeAdapter;
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -16,7 +18,7 @@ public class MostPopularResult {
     private String adxKeywords;
     @SerializedName("column")
     @Expose
-    private Object column;
+    private String column;
     @SerializedName("section")
     @Expose
     private String section;
@@ -40,10 +42,10 @@ public class MostPopularResult {
     private String source;
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private Long id;
     @SerializedName("asset_id")
     @Expose
-    private Integer assetId;
+    private Long assetId;
     @SerializedName("views")
     @Expose
     private Integer views;
@@ -51,15 +53,19 @@ public class MostPopularResult {
     @Expose
     private List<String> desFacet = null;
     @SerializedName("org_facet")
+    @JsonAdapter(EmptyStringAsNullTypeAdapter.class)
     @Expose
     private List<String> orgFacet = null;
     @SerializedName("per_facet")
+    @JsonAdapter(EmptyStringAsNullTypeAdapter.class)
     @Expose
-    private String perFacet;
+    private List<String> perFacet = null;
     @SerializedName("geo_facet")
+    @JsonAdapter(EmptyStringAsNullTypeAdapter.class)
     @Expose
-    private String geoFacet;
+    private List<String> geoFacet;
     @SerializedName("media")
+    @JsonAdapter(EmptyStringAsNullTypeAdapter.class)
     @Expose
     private List<MostPopularMedium> media = null;
     @SerializedName("uri")
@@ -82,11 +88,11 @@ public class MostPopularResult {
         this.adxKeywords = adxKeywords;
     }
 
-    public Object getColumn() {
+    public String getColumn() {
         return column;
     }
 
-    public void setColumn(Object column) {
+    public void setColumn(String column) {
         this.column = column;
     }
 
@@ -146,19 +152,19 @@ public class MostPopularResult {
         this.source = source;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getAssetId() {
+    public Long getAssetId() {
         return assetId;
     }
 
-    public void setAssetId(Integer assetId) {
+    public void setAssetId(Long assetId) {
         this.assetId = assetId;
     }
 
@@ -186,19 +192,19 @@ public class MostPopularResult {
         this.orgFacet = orgFacet;
     }
 
-    public String getPerFacet() {
+    public List<String> getPerFacet() {
         return perFacet;
     }
 
-    public void setPerFacet(String perFacet) {
+    public void setPerFacet(List<String> perFacet) {
         this.perFacet = perFacet;
     }
 
-    public String getGeoFacet() {
+    public List<String> getGeoFacet() {
         return geoFacet;
     }
 
-    public void setGeoFacet(String geoFacet) {
+    public void setGeoFacet(List<String> geoFacet) {
         this.geoFacet = geoFacet;
     }
 

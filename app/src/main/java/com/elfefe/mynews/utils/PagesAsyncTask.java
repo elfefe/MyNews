@@ -1,9 +1,13 @@
 package com.elfefe.mynews.utils;
 
 import android.os.AsyncTask;
+import android.os.Bundle;
+import android.util.Log;
 
+import com.elfefe.mynews.controllers.MainActivity;
 import com.elfefe.mynews.models.Article;
 import com.elfefe.mynews.models.Pages;
+import com.elfefe.mynews.models.mostpopular.MostPopularMedium;
 import com.elfefe.mynews.models.mostpopular.MostPopularQuery;
 import com.elfefe.mynews.models.mostpopular.MostPopularResult;
 import com.elfefe.mynews.models.search.Docs;
@@ -17,11 +21,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class NewsAsyncTask extends AsyncTask<Pages,Void, List<Article>> {
+public class PagesAsyncTask extends AsyncTask<Pages,Void, List<Article>> {
 
     private final WeakReference<Listeners> callback;
 
-    public NewsAsyncTask(Listeners callback) {
+    public PagesAsyncTask(Listeners callback) {
         this.callback = new WeakReference<>(callback);
     }
     public interface Listeners{
@@ -60,18 +64,6 @@ public class NewsAsyncTask extends AsyncTask<Pages,Void, List<Article>> {
                     favoritesArticle.add(loadArticle(topStoryResult));
                 }
                 return  favoritesArticle;
-
-            case SEARCH:
-                Map<String, String> map = new HashMap<>();
-                map.put("", "");
-
-                List<Article> searchArticle = new ArrayList<>();
-                SearchQuery searchResponse = nytCalls.fetchSearchArticleFollowing(map);
-
-                for (Docs doc : searchResponse.getResponse().getDocs()){
-                    searchArticle.add(loadArticle(doc));
-                }
-                return searchArticle;
             default:
                 return null;
         }
@@ -85,22 +77,27 @@ public class NewsAsyncTask extends AsyncTask<Pages,Void, List<Article>> {
     private Article loadArticle(TopStoryResult result){
         Article article = new Article();
 
-        article.setTitle(result.getTitle());
+        article.setTitle(result.getTitle().substring(0,15));
         article.setArticle(result.getAbstract());
         article.setDate(result.getPublishedDate().substring(0, 10));
-        article.setMultimedia(result.getMultimedia().get(0));
         article.setSection(result.getSection());
+        article.setUrl(result.getUrl());
+        if(result.getMultimedia() != null && result.getMultimedia().size() > 0) {
+            Float screenDensity = MainActivity.SCREEN_DENSITY;
 
-        return article;
-    }
-
-    private Article loadArticle(Docs result){
-        Article article = new Article();
-
-        article.setTitle(result.getSnippet());
-        article.setArticle(result.getAbstract());
-        article.setDate(result.getPubDate().substring(0, 10));
-        article.setSection(result.getSectionName());
+            if (screenDensity <= 1f) {
+                article.setMultimediaUrl(result.getMultimedia().get(0).getUrl());
+                Log.d("SIZE", String.valueOf(screenDensity));
+            } else if (screenDensity < 2f && screenDensity > 1f) {
+                article.setMultimediaUrl(result.getMultimedia().get(2).getUrl());
+                Log.d("SIZE", String.valueOf(screenDensity));
+            } else if (screenDensity >= 2f) {
+                article.setMultimediaUrl(result.getMultimedia().get(3).getUrl());
+                Log.d("SIZE", String.valueOf(screenDensity));
+            }  else {
+                article.setMultimediaUrl(result.getMultimedia().get(0).getUrl());
+            }
+        }
 
         return article;
     }
@@ -108,10 +105,29 @@ public class NewsAsyncTask extends AsyncTask<Pages,Void, List<Article>> {
     private Article loadArticle(MostPopularResult result){
         Article article = new Article();
 
-        article.setTitle(result.getTitle());
+        article.setTitle(result.getTitle().substring(0,15));
         article.setArticle(result.getAbstract());
         article.setDate(result.getPublishedDate().substring(0, 10));
         article.setSection(result.getSection());
+        article.setUrl(result.getUrl());
+
+        MostPopularMedium media = result.getMedia().get(0);
+        if(media != null && media.getMediaMetadata().size() > 0) {
+            Float screenDensity = MainActivity.SCREEN_DENSITY;
+
+            if (screenDensity <= 1f) {
+                article.setMultimediaUrl(media.getMediaMetadata().get(0).getUrl());
+                Log.d("SIZE", String.valueOf(screenDensity));
+            } else if (screenDensity < 2f && screenDensity > 1f) {
+                article.setMultimediaUrl(media.getMediaMetadata().get(1).getUrl());
+                Log.d("SIZE", String.valueOf(screenDensity));
+            } else if (screenDensity >= 2f) {
+                article.setMultimediaUrl(media.getMediaMetadata().get(2).getUrl());
+                Log.d("SIZE", String.valueOf(screenDensity));
+            }  else {
+                article.setMultimediaUrl(media.getMediaMetadata().get(0).getUrl());
+            }
+        }
 
         return article;
     }

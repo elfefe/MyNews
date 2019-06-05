@@ -1,27 +1,36 @@
 package com.elfefe.mynews.controllers;
 
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckBox;
+import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.elfefe.mynews.R;
+import com.elfefe.mynews.controllers.adapters.SpinnerAdapter;
+import com.elfefe.mynews.models.Search;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SearchActivity extends AppCompatActivity {
 
-    public static String KEY_SEARCHED = "SEARCHED";
-    public static String KEY_OPTIONS = "OPTIONS";
+    public static String KEY_SEARCH = "SEARCH_BUNDLE";
 
     EditText text;
+    AppCompatSpinner dateEnd,dateBegin;
     AppCompatCheckBox arts, buisness, entrepreneurs, politics, sports, travel;
     Button search;
 
@@ -29,36 +38,79 @@ public class SearchActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_search);
+        setContentView(R.layout.layout_query);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.search_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.query_toolbar);
         setSupportActionBar(toolbar);
 
-        text = (EditText) findViewById(R.id.search_search);
-        arts = (AppCompatCheckBox) findViewById(R.id.search_cb_arts);
-        buisness = (AppCompatCheckBox) findViewById(R.id.search_cb_buisness);
-        entrepreneurs = (AppCompatCheckBox) findViewById(R.id.search_cb_entrepreneurs);
-        politics = (AppCompatCheckBox) findViewById(R.id.search_cb_politics);
-        sports = (AppCompatCheckBox) findViewById(R.id.searche_cb_sports);
-        travel = (AppCompatCheckBox) findViewById(R.id.search_cb_travel);
-        search = (Button) findViewById(R.id.search_button_search);
+        text = (EditText) findViewById(R.id.query_query);
+        arts = (AppCompatCheckBox) findViewById(R.id.query_cb_arts);
+        buisness = (AppCompatCheckBox) findViewById(R.id.query_cb_buisness);
+        entrepreneurs = (AppCompatCheckBox) findViewById(R.id.query_cb_entrepreneurs);
+        politics = (AppCompatCheckBox) findViewById(R.id.query_cb_politics);
+        sports = (AppCompatCheckBox) findViewById(R.id.querye_cb_sports);
+        travel = (AppCompatCheckBox) findViewById(R.id.query_cb_travel);
+        search = (Button) findViewById(R.id.query_button_query);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        LinearLayout layoutBegin = (LinearLayout)  findViewById(R.id.query_layout_begin);
+        LinearLayout layoutEnd = (LinearLayout)  findViewById(R.id.query_layout_end);
+
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+
+        View spinnerViewBegin = inflater.inflate(R.layout.spinner_items,layoutBegin,false);
+        View spinnerViewEnd = inflater.inflate(R.layout.spinner_items,layoutEnd,false);
+
+        TextView titleBegin = spinnerViewBegin.findViewById(R.id.spinner_tv);
+        TextView titleEnd = spinnerViewEnd.findViewById(R.id.spinner_tv);
+
+        dateBegin = spinnerViewBegin.findViewById(R.id.spinner_elv);
+        dateEnd = spinnerViewEnd.findViewById(R.id.spinner_elv);
+
+
+        titleBegin.setText("Begin date");
+        titleEnd.setText("End date");
+
+        List<String> periods = new ArrayList<>();
+
+        periods.add("01/01/1999");
+        periods.add("01/01/2000");
+        periods.add("01/01/2001");
+        periods.add("01/01/2002");
+
+        SpinnerAdapter adapter = new SpinnerAdapter(this,R.layout.spinner_adapter_item,periods);
+
+        dateBegin.setAdapter(adapter);
+        dateEnd.setAdapter(adapter);
+
+        layoutBegin.addView(spinnerViewBegin, 0);
+        layoutEnd.addView(spinnerViewEnd, 0);
+
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        text.setWidth(0);
-
-        Bundle bundle = new Bundle();
-
+        //Log.d("SPINNER", dateBegin.getSelectedItem().toString());
         search.setOnClickListener(v -> {
 
-            String searched = text.getText().toString();
+            Bundle bundle = new Bundle();
 
-            boolean[] options = {
+            ArrayList<String> sectionsList = new ArrayList<String>(){{
+                add("arts");
+                add("buisness");
+                add("entrepreneurs");
+                add("politics");
+                add("sports");
+                add("travel");
+            }};
+
+            boolean[] checkList = {
                     arts.isChecked(),
                     buisness.isChecked(),
                     entrepreneurs.isChecked(),
@@ -67,8 +119,15 @@ public class SearchActivity extends AppCompatActivity {
                     travel.isChecked()
             };
 
-            bundle.putString(KEY_SEARCHED, searched);
-            bundle.putBooleanArray(KEY_OPTIONS, options);
+            Search searchData = new Search(
+                    search.getText().toString(),
+                    dateBegin.getSelectedItem().toString(),
+                    dateEnd.getSelectedItem().toString(),
+                    sectionsList,
+                    checkList
+            );
+
+            bundle.putParcelable(KEY_SEARCH, searchData);
 
             Intent intent = new Intent(this, FilteredActivity.class);
 

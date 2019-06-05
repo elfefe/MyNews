@@ -12,6 +12,7 @@ import com.elfefe.mynews.R;
 import com.elfefe.mynews.controllers.fragments.MainFragment;
 
 public class MainActivity extends AppCompatActivity {
+    public static Float SCREEN_DENSITY;
 
         @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
+
+            SCREEN_DENSITY = getResources().getDisplayMetrics().density;
     }
 
     @Override
@@ -46,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.main_settings:
-
+            case R.id.menu_notif:
+                startActivity(new Intent(this,NotificationActivity.class));
                 return true;
             case R.id.main_search:
                 startActivity(new Intent(this, SearchActivity.class));
