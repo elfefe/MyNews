@@ -34,6 +34,8 @@ public class SearchActivity extends AppCompatActivity {
     AppCompatCheckBox arts, buisness, entrepreneurs, politics, sports, travel;
     Button search;
 
+    List<String> periods = new ArrayList<>();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,8 +76,6 @@ public class SearchActivity extends AppCompatActivity {
         titleBegin.setText("Begin date");
         titleEnd.setText("End date");
 
-        List<String> periods = new ArrayList<>();
-
         periods.add("01/01/1999");
         periods.add("01/01/2000");
         periods.add("01/01/2001");
@@ -89,14 +89,15 @@ public class SearchActivity extends AppCompatActivity {
         layoutBegin.addView(spinnerViewBegin, 0);
         layoutEnd.addView(spinnerViewEnd, 0);
 
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        //Log.d("SPINNER", dateBegin.getSelectedItem().toString());
+        Log.d("SPINNER ADAPTER: ", String.valueOf(dateBegin.getAdapter().getCount()));
+
+        Log.d("SPINNER BEG", "0 " + dateBegin.getSelectedItem().toString());
         search.setOnClickListener(v -> {
 
             Bundle bundle = new Bundle();
@@ -120,7 +121,7 @@ public class SearchActivity extends AppCompatActivity {
             };
 
             Search searchData = new Search(
-                    search.getText().toString(),
+                    text.getText().toString(),
                     dateBegin.getSelectedItem().toString(),
                     dateEnd.getSelectedItem().toString(),
                     sectionsList,
