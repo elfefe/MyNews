@@ -1,5 +1,6 @@
 package com.elfefe.mynews.utils;
 
+import com.elfefe.mynews.models.Search;
 import com.elfefe.mynews.models.mostpopular.MostPopularQuery;
 import com.elfefe.mynews.models.search.SearchQuery;
 import com.elfefe.mynews.models.topstory.TopStoryQuery;
@@ -24,4 +25,7 @@ public interface NYTService {
 
     @GET("search/v2/30.json")
     Call<SearchQuery> getSearchArticle(@Query("api-key") String key, @FieldMap Map<String, String> search);
+
+    @GET("news/v3/content/{source}/{section}/{time-period}.json")
+    Call<SearchQuery> getNotification(@Query("source") String source, @Query("section") String section, @Query("time-period") Integer timePeriod);
 }

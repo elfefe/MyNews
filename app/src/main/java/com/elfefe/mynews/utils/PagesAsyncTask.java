@@ -77,8 +77,12 @@ public class PagesAsyncTask extends AsyncTask<Pages,Void, List<Article>> {
     private Article loadArticle(TopStoryResult result){
         Article article = new Article();
 
-        article.setTitle(result.getTitle().substring(0,15));
-        article.setArticle(result.getAbstract());
+        if(result.getTitle().length() > 15) {
+            article.setTitle(result.getTitle().substring(0, 15));
+        }else {
+            article.setTitle(result.getTitle());
+        }
+            article.setArticle(result.getAbstract());
         article.setDate(result.getPublishedDate().substring(0, 10));
         article.setSection(result.getSection());
         article.setUrl(result.getUrl());

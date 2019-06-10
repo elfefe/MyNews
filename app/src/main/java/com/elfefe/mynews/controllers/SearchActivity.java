@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -97,7 +98,18 @@ public class SearchActivity extends AppCompatActivity {
 
         Log.d("SPINNER ADAPTER: ", String.valueOf(dateBegin.getAdapter().getCount()));
 
-        Log.d("SPINNER BEG", "0 " + dateBegin.getSelectedItem().toString());
+        dateBegin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("SELECTED", String.valueOf(position));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Log.d("SELECTED", "null");
+            }
+        });
+
         search.setOnClickListener(v -> {
 
             Bundle bundle = new Bundle();
