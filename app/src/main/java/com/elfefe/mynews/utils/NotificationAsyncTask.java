@@ -4,6 +4,8 @@ import android.os.AsyncTask;
 
 import com.elfefe.mynews.models.Article;
 import com.elfefe.mynews.models.Search;
+import com.elfefe.mynews.models.notification.NotificationQuery;
+import com.elfefe.mynews.models.notification.Result;
 import com.elfefe.mynews.models.search.Docs;
 import com.elfefe.mynews.models.search.SearchQuery;
 
@@ -31,24 +33,14 @@ public class NotificationAsyncTask extends AsyncTask<Search,Void, List<Article>>
         Map<String, String> map = new HashMap<>();
 
         Search search = url[0];
-        for(int x = 0;x < search.getSections().size();x++){
-            if (search.getChecked()[x]){
-                map.put("fq",search.getSections().get(x));
-            }
+
+        List<Article> notificationArticle = new ArrayList<>();
+        NotificationQuery notificationResponse = nytCalls.fetchNotificationFollowing(search.getSearch(),search.getSections().get(0),0);
+
+        for (Result result : notificationResponse.getResults()){
+            notificationArticle.add(loadArticle(result));
         }
-
-        map.put("q",search.getSearch());
-
-        map.put("begin-date",search.getDateBegin());
-        map.put("end-date",search.getDateEnd());
-
-        List<Article> searchArticle = new ArrayList<>();
-        SearchQuery searchResponse = nytCalls.fetchSearchArticleFollowing(map);
-
-        for (Docs doc : searchResponse.getResponse().getDocs()){
-            searchArticle.add(loadArticle(doc));
-        }
-        return searchArticle;
+        return notificationArticle;
     }
 
     @Override
@@ -56,13 +48,13 @@ public class NotificationAsyncTask extends AsyncTask<Search,Void, List<Article>>
         callback.get().onResult(articles);
     }
 
-    private Article loadArticle(Docs result){
+    private Article loadArticle(Result result){
         Article article = new Article();
 
-        article.setTitle(result.getSnippet().substring(0,15));
+        article.setTitle(result.getTitle().substring(0,15));
         article.setArticle(result.getAbstract());
-        article.setSection(result.getSectionName());
-        article.setUrl(result.getWebUrl());
+        article.setSection(result.getSection());
+        article.setUrl(result.getUrl());
 
         if(result.getMultimedia() != null && result.getMultimedia().size() > 0) {
         }

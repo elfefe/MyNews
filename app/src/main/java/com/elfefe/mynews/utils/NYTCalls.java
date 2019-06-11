@@ -1,10 +1,13 @@
 package com.elfefe.mynews.utils;
 
+import com.elfefe.mynews.models.Notification;
 import com.elfefe.mynews.models.mostpopular.MostPopularQuery;
+import com.elfefe.mynews.models.notification.NotificationQuery;
 import com.elfefe.mynews.models.search.SearchQuery;
 import com.elfefe.mynews.models.topstory.TopStoryQuery;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.OkHttpClient;
@@ -70,6 +73,18 @@ class NYTCalls {
 
     SearchQuery fetchSearchArticleFollowing(Map<String, String> search) {
         Call<SearchQuery> call = nytService.getSearchArticle(key, search);
+
+
+        try {
+            return call.execute().body();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    NotificationQuery fetchNotificationFollowing(String source, String section, Integer timePeriod){
+        Call<NotificationQuery> call = nytService.getNotification(source, section, timePeriod,key);
 
 
         try {
