@@ -1,7 +1,9 @@
 package com.elfefe.mynews.utils;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
+import com.elfefe.mynews.controllers.MainActivity;
 import com.elfefe.mynews.models.Article;
 import com.elfefe.mynews.models.Search;
 import com.elfefe.mynews.models.notification.NotificationQuery;
@@ -57,6 +59,20 @@ public class NotificationAsyncTask extends AsyncTask<Search,Void, List<Article>>
         article.setUrl(result.getUrl());
 
         if(result.getMultimedia() != null && result.getMultimedia().size() > 0) {
+            Float screenDensity = MainActivity.SCREEN_DENSITY;
+
+            if (screenDensity <= 1f) {
+                article.setMultimediaUrl(result.getMultimedia().get(0).getUrl());
+                Log.d("SIZE", String.valueOf(screenDensity));
+            } else if (screenDensity < 2f && screenDensity > 1f) {
+                article.setMultimediaUrl(result.getMultimedia().get(2).getUrl());
+                Log.d("SIZE", String.valueOf(screenDensity));
+            } else if (screenDensity >= 2f) {
+                article.setMultimediaUrl(result.getMultimedia().get(3).getUrl());
+                Log.d("SIZE", String.valueOf(screenDensity));
+            }  else {
+                article.setMultimediaUrl(result.getMultimedia().get(0).getUrl());
+            }
         }
 
         return article;

@@ -35,8 +35,9 @@ public class FilteredActivity extends AppCompatActivity implements PagesAsyncTas
 
         Search search = getIntent().getParcelableExtra(SearchActivity.KEY_SEARCH);
 
-        if(search != null)
-        new SearchAsyncTask(this).execute(search);
+        if(search != null) {
+            new SearchAsyncTask(this).execute(search);
+        }
     }
 
     @Override

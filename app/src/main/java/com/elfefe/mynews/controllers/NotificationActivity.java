@@ -68,9 +68,9 @@ public class NotificationActivity extends AppCompatActivity implements PagesAsyn
                 travel.isChecked(),
         };
 
-        Search search = new Search(text.getText().toString(),"","",sections,checked);
+        Search searched = new Search(text.getText().toString(),"","",sections,checked);
 
-        new NotificationAsyncTask(this).execute(search);
+        new NotificationAsyncTask(this).execute(searched);
     }
 
 

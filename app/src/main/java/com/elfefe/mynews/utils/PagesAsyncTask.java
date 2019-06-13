@@ -41,8 +41,10 @@ public class PagesAsyncTask extends AsyncTask<Pages,Void, List<Article>> {
                 List<Article> topStoryArticle = new ArrayList<>();
                 TopStoryQuery topStoryQuery = nytCalls.fetchTopStoriesFollowing();
 
-                for (TopStoryResult topStoryResult : topStoryQuery.getTopStoryResults()) {
-                    topStoryArticle.add(loadArticle(topStoryResult));
+                if(topStoryQuery.getTopStoryResults() != null) {
+                    for (TopStoryResult topStoryResult : topStoryQuery.getTopStoryResults()) {
+                        topStoryArticle.add(loadArticle(topStoryResult));
+                    }
                 }
                 return  topStoryArticle;
 
