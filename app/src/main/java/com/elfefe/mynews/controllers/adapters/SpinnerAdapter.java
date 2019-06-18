@@ -11,20 +11,16 @@ import android.widget.TextView;
 
 import com.elfefe.mynews.R;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.List;
 
 public class SpinnerAdapter extends ArrayAdapter<String> {
-    @NonNull
-    private final Context context;
+
     private int resource;
     private List<String> periods;
     private LayoutInflater inflater;
 
     public SpinnerAdapter(@NonNull Context context, int resource, List<String> periods) {
         super(context, resource);
-        this.context = context;
         this.resource = resource;
         this.periods = periods;
 
@@ -41,9 +37,9 @@ public class SpinnerAdapter extends ArrayAdapter<String> {
         return periods.get(position);
     }
 
-    @NotNull
+    @NonNull
     @Override
-    public View getView(int position, View view, @NotNull ViewGroup parent) {
+    public View getView(int position, View view, @NonNull ViewGroup parent) {
         return createItemView(position, view, parent);
     }
 
