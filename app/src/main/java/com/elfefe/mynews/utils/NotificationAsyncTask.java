@@ -6,6 +6,7 @@ import android.util.Log;
 import com.elfefe.mynews.controllers.MainActivity;
 import com.elfefe.mynews.models.Article;
 import com.elfefe.mynews.models.Search;
+import com.elfefe.mynews.models.notification.Multimedium;
 import com.elfefe.mynews.models.notification.NotificationQuery;
 import com.elfefe.mynews.models.notification.Result;
 import com.elfefe.mynews.models.search.Docs;
@@ -20,9 +21,11 @@ import java.util.Map;
 public class NotificationAsyncTask extends AsyncTask<Search,Void, List<Article>> {
 
     private final WeakReference<PagesAsyncTask.Listeners> callback;
+    private int pixelDimension;
 
-    public NotificationAsyncTask(PagesAsyncTask.Listeners callback) {
+    public NotificationAsyncTask(PagesAsyncTask.Listeners callback, int pixelDimension) {
         this.callback = new WeakReference<>(callback);
+        this.pixelDimension = pixelDimension;
     }
 
     public interface Listeners{
@@ -59,22 +62,13 @@ public class NotificationAsyncTask extends AsyncTask<Search,Void, List<Article>>
         article.setUrl(result.getUrl());
 
         if(result.getMultimedia() != null && result.getMultimedia().size() > 0) {
-            Float screenDensity = MainActivity.SCREEN_DENSITY;
-
-            if (screenDensity <= 1f) {
-                article.setMultimediaUrl(result.getMultimedia().get(0).getUrl());
-                Log.d("SIZE", String.valueOf(screenDensity));
-            } else if (screenDensity < 2f && screenDensity > 1f) {
-                article.setMultimediaUrl(result.getMultimedia().get(2).getUrl());
-                Log.d("SIZE", String.valueOf(screenDensity));
-            } else if (screenDensity >= 2f) {
-                article.setMultimediaUrl(result.getMultimedia().get(3).getUrl());
-                Log.d("SIZE", String.valueOf(screenDensity));
-            }  else {
-                article.setMultimediaUrl(result.getMultimedia().get(0).getUrl());
+            for(Multimedium multimedia : result.getMultimedia()){
+                if (multimedia.getHeight() >= pixelDimension -5){
+                    article.setMultimediaUrl(multimedia.getUrl());
+                    break;
+                }
             }
         }
-
         return article;
     }
 }

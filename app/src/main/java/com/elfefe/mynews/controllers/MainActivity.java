@@ -12,8 +12,6 @@ import com.elfefe.mynews.R;
 import com.elfefe.mynews.controllers.fragments.MainFragment;
 
 public class MainActivity extends AppCompatActivity {
-    public static Float SCREEN_DENSITY;
-
         @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,8 +19,6 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
-
-            SCREEN_DENSITY = getResources().getDisplayMetrics().density;
     }
 
     @Override

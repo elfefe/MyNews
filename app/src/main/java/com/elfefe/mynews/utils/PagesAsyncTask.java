@@ -7,11 +7,13 @@ import android.util.Log;
 import com.elfefe.mynews.controllers.MainActivity;
 import com.elfefe.mynews.models.Article;
 import com.elfefe.mynews.models.Pages;
+import com.elfefe.mynews.models.mostpopular.MostPopularMediaMetadatum;
 import com.elfefe.mynews.models.mostpopular.MostPopularMedium;
 import com.elfefe.mynews.models.mostpopular.MostPopularQuery;
 import com.elfefe.mynews.models.mostpopular.MostPopularResult;
 import com.elfefe.mynews.models.search.Docs;
 import com.elfefe.mynews.models.search.SearchQuery;
+import com.elfefe.mynews.models.topstory.TopStoryMultimedium;
 import com.elfefe.mynews.models.topstory.TopStoryQuery;
 import com.elfefe.mynews.models.topstory.TopStoryResult;
 
@@ -24,9 +26,11 @@ import java.util.Map;
 public class PagesAsyncTask extends AsyncTask<Pages,Void, List<Article>> {
 
     private final WeakReference<Listeners> callback;
+    private int pixelDimension;
 
-    public PagesAsyncTask(Listeners callback) {
+    public PagesAsyncTask(Listeners callback, int pixelDimension) {
         this.callback = new WeakReference<>(callback);
+        this.pixelDimension = pixelDimension;
     }
     public interface Listeners{
         void onResult(List<Article> articles);
@@ -89,19 +93,11 @@ public class PagesAsyncTask extends AsyncTask<Pages,Void, List<Article>> {
         article.setSection(result.getSection());
         article.setUrl(result.getUrl());
         if(result.getMultimedia() != null && result.getMultimedia().size() > 0) {
-            Float screenDensity = MainActivity.SCREEN_DENSITY;
-
-            if (screenDensity <= 1f) {
-                article.setMultimediaUrl(result.getMultimedia().get(0).getUrl());
-                Log.d("SIZE", String.valueOf(screenDensity));
-            } else if (screenDensity < 2f && screenDensity > 1f) {
-                article.setMultimediaUrl(result.getMultimedia().get(2).getUrl());
-                Log.d("SIZE", String.valueOf(screenDensity));
-            } else if (screenDensity >= 2f) {
-                article.setMultimediaUrl(result.getMultimedia().get(3).getUrl());
-                Log.d("SIZE", String.valueOf(screenDensity));
-            }  else {
-                article.setMultimediaUrl(result.getMultimedia().get(0).getUrl());
+            for(TopStoryMultimedium multimedia : result.getMultimedia()){
+                if (multimedia.getHeight() >= pixelDimension -5){
+                    article.setMultimediaUrl(multimedia.getUrl());
+                    break;
+                }
             }
         }
 
@@ -116,22 +112,15 @@ public class PagesAsyncTask extends AsyncTask<Pages,Void, List<Article>> {
         article.setDate(result.getPublishedDate().substring(0, 10));
         article.setSection(result.getSection());
         article.setUrl(result.getUrl());
-
-        MostPopularMedium media = result.getMedia().get(0);
-        if(media != null && media.getMediaMetadata().size() > 0) {
-            Float screenDensity = MainActivity.SCREEN_DENSITY;
-
-            if (screenDensity <= 1f) {
-                article.setMultimediaUrl(media.getMediaMetadata().get(0).getUrl());
-                Log.d("SIZE", String.valueOf(screenDensity));
-            } else if (screenDensity < 2f && screenDensity > 1f) {
-                article.setMultimediaUrl(media.getMediaMetadata().get(1).getUrl());
-                Log.d("SIZE", String.valueOf(screenDensity));
-            } else if (screenDensity >= 2f) {
-                article.setMultimediaUrl(media.getMediaMetadata().get(2).getUrl());
-                Log.d("SIZE", String.valueOf(screenDensity));
-            }  else {
-                article.setMultimediaUrl(media.getMediaMetadata().get(0).getUrl());
+        if (result.getMedia() != null && result.getMedia().size() > 0) {
+            MostPopularMedium media = result.getMedia().get(0);
+            if (media.getMediaMetadata() != null && media.getMediaMetadata().size() > 0) {
+                for (MostPopularMediaMetadatum multimedia : media.getMediaMetadata()) {
+                    if (multimedia.getHeight() >= pixelDimension - 5) {
+                        article.setMultimediaUrl(multimedia.getUrl());
+                        break;
+                    }
+                }
             }
         }
 

@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +48,7 @@ public class PageFragment extends Fragment implements PagesAsyncTask.Listeners {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
-        new PagesAsyncTask(this).execute(page);
+        new PagesAsyncTask(this, 10).execute(page);
 
         return result;
     }

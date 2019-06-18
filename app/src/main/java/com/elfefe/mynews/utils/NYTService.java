@@ -11,9 +11,11 @@ import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.FieldMap;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 
 public interface NYTService {
     @GET("topstories/v2/home.json")
@@ -26,7 +28,7 @@ public interface NYTService {
     Call<TopStoryQuery> getFavorite(@Path("subject") String subject, @Query("api-key") String key);
 
     @GET("search/v2/30.json")
-    Call<SearchQuery> getSearchArticle(@Query("api-key") String key, @FieldMap Map<String, String> search);
+    Call<SearchQuery> getSearchArticle(@Query("api-key") String key, @QueryMap Map<String, String> search);
 
     @GET("news/v3/content/{source}/{section}/{time-period}.json")
     Call<NotificationQuery> getNotification(@Path("source") String source,

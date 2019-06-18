@@ -70,7 +70,7 @@ public class NotificationActivity extends AppCompatActivity implements PagesAsyn
 
         Search searched = new Search(text.getText().toString(),"","",sections,checked);
 
-        new NotificationAsyncTask(this).execute(searched);
+        new NotificationAsyncTask(this, 10).execute(searched);
     }
 
 

@@ -58,6 +58,8 @@ public class PageRecyclerviewAdapter extends RecyclerView.Adapter<PageRecyclervi
         holder.view.setOnClickListener(view -> context.startActivity(intent));
     }
 
+
+
     @Override
     public int getItemCount() {
         return articles.size();

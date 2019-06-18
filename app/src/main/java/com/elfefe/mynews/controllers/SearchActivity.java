@@ -9,11 +9,13 @@ import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.TimeUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -25,6 +27,7 @@ import com.elfefe.mynews.models.Search;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SimpleTimeZone;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -82,10 +85,14 @@ public class SearchActivity extends AppCompatActivity {
         periods.add("01/01/2001");
         periods.add("01/01/2002");
 
-        SpinnerAdapter adapter = new SpinnerAdapter(this,R.layout.spinner_adapter_item,periods);
+        ArrayAdapter<String> adapterB = new ArrayAdapter<String>(this,R.layout.spinner_adapter_item,periods);
+        ArrayAdapter<String> adapterE = new ArrayAdapter<String>(this,R.layout.spinner_adapter_item,periods);
 
-        dateBegin.setAdapter(adapter);
-        dateEnd.setAdapter(adapter);
+        SpinnerAdapter adapterBegin = new SpinnerAdapter(this,R.layout.spinner_adapter_item,periods);
+        SpinnerAdapter adapterEnd = new SpinnerAdapter(this,R.layout.spinner_adapter_item,periods);
+
+        dateBegin.setAdapter(adapterBegin);
+        dateEnd.setAdapter(adapterEnd);
 
         layoutBegin.addView(spinnerViewBegin, 0);
         layoutEnd.addView(spinnerViewEnd, 0);
@@ -98,7 +105,7 @@ public class SearchActivity extends AppCompatActivity {
 
         Log.d("SPINNER ADAPTER: ", String.valueOf(dateBegin.getAdapter().getCount()));
 
-        dateBegin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        dateEnd.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Log.d("SELECTED", String.valueOf(position));
@@ -139,6 +146,8 @@ public class SearchActivity extends AppCompatActivity {
                     sectionsList,
                     checkList
             );
+
+            //getApplicationContext().getResources().getDimensionPixelSize(0);
 
             bundle.putParcelable(KEY_SEARCH, searchData);
 

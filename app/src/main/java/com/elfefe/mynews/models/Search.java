@@ -52,7 +52,7 @@ public class Search implements Parcelable {
         dest.writeString(search);
         dest.writeString(dateBegin);
         dest.writeString(dateEnd);
-        dest.writeList(sections);
+        dest.writeStringList(sections);
         dest.writeBooleanArray(checked);
     }
 
