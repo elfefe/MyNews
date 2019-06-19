@@ -21,6 +21,8 @@ import java.util.List;
 
 public class PageFragment extends Fragment implements PagesAsyncTask.Listeners {
 
+    private static final String KEY_PAGE = "KEY_PAGE";
+
     private RecyclerView recyclerView;
     private Pages page;
 
@@ -29,13 +31,20 @@ public class PageFragment extends Fragment implements PagesAsyncTask.Listeners {
 
     public static PageFragment newInstance(Pages page) {
         PageFragment frag = new PageFragment();
-        frag.page = page;
 
         Bundle args = new Bundle();
+        args.putSerializable(KEY_PAGE, page);
 
         frag.setArguments(args);
 
         return frag;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        page = (Pages) (getArguments() != null ? getArguments().getSerializable(KEY_PAGE) : null);
     }
 
     @Nullable
@@ -44,8 +53,7 @@ public class PageFragment extends Fragment implements PagesAsyncTask.Listeners {
 
         View result = inflater.inflate(R.layout.fragment_page, container, false);
 
-        recyclerView = (RecyclerView) result.findViewById(R.id.page_recyclerview);
-
+        recyclerView = result.findViewById(R.id.page_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
         new PagesAsyncTask(this, 10).execute(page);
