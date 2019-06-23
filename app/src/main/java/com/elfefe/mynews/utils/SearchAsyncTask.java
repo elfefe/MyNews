@@ -1,6 +1,7 @@
 package com.elfefe.mynews.utils;
 
 import android.annotation.SuppressLint;
+import android.app.DownloadManager;
 import android.os.AsyncTask;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -39,40 +40,57 @@ public class SearchAsyncTask extends AsyncTask<Search,Void, List<Article>> {
         NYTCalls nytCalls = new NYTCalls();
         Map<String, String> map = new HashMap<>();
 
+        String sectionsField = "";
+        List<String> sectionsList = new ArrayList<>();
+
+
         Search search = url[0];
-                for(int x = 0;x < search.getSections().size();x++){
-                    if (search.getChecked()[x]){
-                        map.put("fq",search.getSections().get(x));
-                        Log.d("FIELDS", x + search.getSections().get(x));
-                    }
-                }
+        for (int x = 0; x < search.getSections().size(); x++) {
+            if (search.getChecked()[x]) {
+                sectionsField += ""+search.getSections().get(x)+" ";
+                sectionsList.add(search.getSections().get(x));
+                Log.d("FIELDS", x + search.getSections().get(x));
+            }
+        }
 
-                map.put("q",search.getSearch());
+        sectionsField += ")";
 
-        String toDateBegin, toDateEnd,fromDateBegin, fromDateEnd;
+        Log.d( "SECTION", sectionsField);
+
+        map.put("fq", sectionsField);
+
+        map.put("q",search.getSearch());
+
+
+        Log.d("FIRST ", search.getDateBegin());
+
+        String toDateBegin, toDateEnd;
+        Date fromDateBegin, fromDateEnd;
+
         @SuppressLint("SimpleDateFormat") SimpleDateFormat fromSimpleDateFormat = new SimpleDateFormat("MM/dd/yy");
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat toSimpleDateFormat = new SimpleDateFormat("ddMMyy");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat toSimpleDateFormat = new SimpleDateFormat("ddMMyyyy");
 
         try {
-            fromDateBegin = fromSimpleDateFormat.parse(search.getDateBegin()).toString();
-            fromDateEnd = fromSimpleDateFormat.parse(search.getDateEnd()).toString();
+            fromDateBegin = fromSimpleDateFormat.parse(search.getDateBegin());
+            fromDateEnd = fromSimpleDateFormat.parse(search.getDateEnd());
 
-            toDateBegin = toSimpleDateFormat.parse(fromDateBegin).toString();
-            toDateEnd = toSimpleDateFormat.parse(fromDateEnd).toString();
+            toDateBegin = toSimpleDateFormat.format(fromDateBegin);
+            toDateEnd = toSimpleDateFormat.format(fromDateEnd);
 
 
 
-            //map.put("begin-date",toDateBegin);
-            //map.put("end-date",toDateEnd);
+            map.put("begin-date",toDateBegin);
+            map.put("end-date",toDateEnd);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
         List<Article> searchArticle = new ArrayList<>();
         SearchQuery searchResponse = nytCalls.fetchSearchArticleFollowing(map);
-
-        for (Docs doc : searchResponse.getResponse().getDocs()){
-            searchArticle.add(loadArticle(doc));
+        if(searchResponse.getResponse() != null) {
+            for (Docs doc : searchResponse.getResponse().getDocs()) {
+                searchArticle.add(loadArticle(doc));
+            }
         }
         return searchArticle;
     }
@@ -85,7 +103,11 @@ public class SearchAsyncTask extends AsyncTask<Search,Void, List<Article>> {
     private Article loadArticle(Docs result){
         Article article = new Article();
 
-        article.setTitle(result.getSnippet().substring(0,15));
+        if(result.getSnippet().length() > 15) {
+            article.setTitle(result.getSnippet().substring(0, 15));
+        }else{
+            article.setTitle(result.getSnippet());
+        }
         article.setArticle(result.getAbstract());
         article.setDate(result.getPubDate().substring(0, 10));
         article.setSection(result.getSectionName());

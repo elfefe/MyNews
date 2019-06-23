@@ -72,7 +72,7 @@ class NYTCalls {
     }
 
     SearchQuery fetchSearchArticleFollowing(Map<String, String> search) {
-        Call<SearchQuery> call = nytService.getSearchArticle(key, search);
+        Call<SearchQuery> call = nytService.getSearchArticle(search, key);
 
 
         try {
