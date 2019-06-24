@@ -83,8 +83,8 @@ class NYTCalls {
         return null;
     }
 
-    NotificationQuery fetchNotificationFollowing(String source, String section, Integer timePeriod){
-        Call<NotificationQuery> call = nytService.getNotification(source, section, timePeriod,key);
+    NotificationQuery fetchNotificationFollowing(String source, String section){
+        Call<NotificationQuery> call = nytService.getNotification(source, section,1,key);
 
 
         try {

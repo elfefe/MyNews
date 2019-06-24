@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.util.Log;
 
 import com.elfefe.mynews.R;
 import com.elfefe.mynews.controllers.adapters.PageRecyclerviewAdapter;
@@ -17,7 +18,7 @@ import com.elfefe.mynews.utils.SearchAsyncTask;
 
 import java.util.List;
 
-public class FilteredActivity extends AppCompatActivity implements SearchAsyncTask.Listeners{
+public class FilteredSearchActivity extends AppCompatActivity implements SearchAsyncTask.Listeners{
     RecyclerView recyclerView;
 
     @Override
@@ -40,7 +41,7 @@ public class FilteredActivity extends AppCompatActivity implements SearchAsyncTa
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
         if(search != null) {
-            new SearchAsyncTask( this, metrics.densityDpi).execute(search);
+            new SearchAsyncTask( this).execute(search);
         }
     }
 

@@ -1,5 +1,6 @@
 package com.elfefe.mynews.controllers;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -22,9 +24,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class NotificationActivity extends AppCompatActivity implements PagesAsyncTask.Listeners{
+public class NotificationActivity extends AppCompatActivity{
 
-    public static String CHANNEL_ID = "NOTIFICATION_NYT_ID";
+    private static final String KEY_SEARCH = "key_search";
 
     EditText text;
     AppCompatCheckBox arts, buisness, entrepreneurs, politics, sports, travel;
@@ -49,44 +51,41 @@ public class NotificationActivity extends AppCompatActivity implements PagesAsyn
 
         if(getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        List<String> sections = new ArrayList<String>(){{
-            add("arts");
-            add("buisness");
-            add("entrepreneurs");
-            add("politics");
-            add("sports");
-            add("search");
-        }};
-        
-        boolean[] checked = {
-                arts.isChecked(),
-                buisness.isChecked(),
-                entrepreneurs.isChecked(),
-                politics.isChecked(),
-                sports.isChecked(),
-                travel.isChecked(),
-        };
-
-        Search searched = new Search(text.getText().toString(),"","",sections,checked);
-
-        new NotificationAsyncTask(this, 10).execute(searched);
     }
-
 
     @Override
-    public void onResult(List<Article> articles) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(0)
-                .setContentTitle(articles.get(0).getTitle())
-                .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText(articles.get(0).getArticle()))
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+    protected void onResume() {
+        super.onResume();
 
-        NotificationManagerCompat.from(this).notify(1, builder.build());
+        search.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+
+            List<String> sections = new ArrayList<String>(){{
+                add("arts");
+                add("business");
+                add("entrepreneurs");
+                add("politics");
+                add("sports");
+                add("search");
+            }};
+
+            boolean[] checked = {
+                    arts.isChecked(),
+                    buisness.isChecked(),
+                    entrepreneurs.isChecked(),
+                    politics.isChecked(),
+                    sports.isChecked(),
+                    travel.isChecked(),
+            };
+
+            Search searched = new Search(text.getText().toString(),"","",sections,checked);
+
+            bundle.putParcelable(KEY_SEARCH, searched);
+
+            Intent intent = new Intent(this, NotificationService.class);
+
+            intent.putExtras(bundle);
+            startActivity(intent);
+        });
     }
-
-
-
-
 }

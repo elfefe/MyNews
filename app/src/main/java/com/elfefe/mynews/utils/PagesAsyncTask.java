@@ -94,10 +94,13 @@ public class PagesAsyncTask extends AsyncTask<Pages,Void, List<Article>> {
         article.setUrl(result.getUrl());
         if(result.getMultimedia() != null && result.getMultimedia().size() > 0) {
             for(TopStoryMultimedium multimedia : result.getMultimedia()){
-                if (multimedia.getHeight() >= pixelDimension -5){
+                if (multimedia.getHeight() >= pixelDimension * 0.9 && multimedia.getHeight() <= pixelDimension * 1.2){
                     article.setMultimediaUrl(multimedia.getUrl());
                     break;
                 }
+            }
+            if(article.getMultimediaUrl() == null){
+                article.setMultimediaUrl(result.getMultimedia().get(0).getUrl());
             }
         }
 
@@ -116,10 +119,13 @@ public class PagesAsyncTask extends AsyncTask<Pages,Void, List<Article>> {
             MostPopularMedium media = result.getMedia().get(0);
             if (media.getMediaMetadata() != null && media.getMediaMetadata().size() > 0) {
                 for (MostPopularMediaMetadatum multimedia : media.getMediaMetadata()) {
-                    if (multimedia.getHeight() >= pixelDimension - 5) {
+                    if (multimedia.getHeight() >= pixelDimension * 0.9 && multimedia.getHeight() <= pixelDimension * 1.2) {
                         article.setMultimediaUrl(multimedia.getUrl());
                         break;
                     }
+                }
+                if(article.getMultimediaUrl() == null){
+                    article.setMultimediaUrl(media.getMediaMetadata().get(0).getUrl());
                 }
             }
         }

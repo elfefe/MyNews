@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.elfefe.mynews.models.Pages;
 import com.elfefe.mynews.utils.PagesAsyncTask;
 
 import java.util.List;
+import java.util.Objects;
 
 public class PageFragment extends Fragment implements PagesAsyncTask.Listeners {
 
@@ -56,7 +58,12 @@ public class PageFragment extends Fragment implements PagesAsyncTask.Listeners {
         recyclerView = result.findViewById(R.id.page_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
-        new PagesAsyncTask(this, 10).execute(page);
+        DisplayMetrics metrics = new DisplayMetrics();
+        Objects.requireNonNull(getActivity()).getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+        Log.d("FRAGGGMMEMRMRMRME", metrics.heightPixels+"");
+
+        new PagesAsyncTask(this, metrics.heightPixels).execute(page);
 
         return result;
     }

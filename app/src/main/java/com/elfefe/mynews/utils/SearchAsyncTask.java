@@ -25,11 +25,9 @@ import java.util.Map;
 public class SearchAsyncTask extends AsyncTask<Search,Void, List<Article>> {
 
     private final WeakReference<Listeners> callback;
-    private int pixelDimension;
 
-    public SearchAsyncTask(Listeners callback, int pixelDimension) {
+    public SearchAsyncTask(Listeners callback) {
         this.callback = new WeakReference<>(callback);
-        this.pixelDimension = pixelDimension;
     }
     public interface Listeners{
         void onResult(List<Article> articles);
@@ -40,35 +38,28 @@ public class SearchAsyncTask extends AsyncTask<Search,Void, List<Article>> {
         NYTCalls nytCalls = new NYTCalls();
         Map<String, String> map = new HashMap<>();
 
-        String sectionsField = "";
-        List<String> sectionsList = new ArrayList<>();
+        StringBuilder sectionsField = new StringBuilder("section_name:( ");
 
 
         Search search = url[0];
         for (int x = 0; x < search.getSections().size(); x++) {
             if (search.getChecked()[x]) {
-                sectionsField += ""+search.getSections().get(x)+" ";
-                sectionsList.add(search.getSections().get(x));
+                sectionsField.append("\"").append(search.getSections().get(x)).append("\" ");
                 Log.d("FIELDS", x + search.getSections().get(x));
             }
         }
 
-        sectionsField += ")";
+        sectionsField.append(")");
 
-        Log.d( "SECTION", sectionsField);
-
-        map.put("fq", sectionsField);
+        map.put("fq", sectionsField.toString());
 
         map.put("q",search.getSearch());
-
-
-        Log.d("FIRST ", search.getDateBegin());
 
         String toDateBegin, toDateEnd;
         Date fromDateBegin, fromDateEnd;
 
         @SuppressLint("SimpleDateFormat") SimpleDateFormat fromSimpleDateFormat = new SimpleDateFormat("MM/dd/yy");
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat toSimpleDateFormat = new SimpleDateFormat("ddMMyyyy");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat toSimpleDateFormat = new SimpleDateFormat("yyyyMMdd");
 
         try {
             fromDateBegin = fromSimpleDateFormat.parse(search.getDateBegin());
@@ -76,8 +67,6 @@ public class SearchAsyncTask extends AsyncTask<Search,Void, List<Article>> {
 
             toDateBegin = toSimpleDateFormat.format(fromDateBegin);
             toDateEnd = toSimpleDateFormat.format(fromDateEnd);
-
-
 
             map.put("begin-date",toDateBegin);
             map.put("end-date",toDateEnd);
@@ -114,10 +103,13 @@ public class SearchAsyncTask extends AsyncTask<Search,Void, List<Article>> {
         article.setUrl(result.getWebUrl());
         if(result.getMultimedia() != null && result.getMultimedia().size() > 0) {
             for(Multimedium multimedia : result.getMultimedia()){
-                if (multimedia.getHeight() >= pixelDimension -5){
-                    article.setMultimediaUrl(multimedia.getUrl());
+                if (multimedia.getSubType().equals("square640")){
+                    article.setMultimediaUrl("https://static01.nyt.com/"+multimedia.getUrl());
                     break;
                 }
+            }
+            if(article.getMultimediaUrl() == null){
+                article.setMultimediaUrl("https://static01.nyt.com/"+result.getMultimedia().get(0).getUrl());
             }
         }
 
