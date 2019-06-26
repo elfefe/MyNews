@@ -33,8 +33,15 @@ public class NotificationAsyncTask extends AsyncTask<Search,Void, Article> {
 
         Search search = url[0];
 
+        StringBuilder sections = new StringBuilder();
+        for(int x = 0;x < search.getSections().size();x++){
+            if(search.getChecked()[x]){
+                sections.append(search.getSections().get(x));
+            }
+        }
+
         Article notificationArticle = new Article();
-        NotificationQuery notificationResponse = nytCalls.fetchNotificationFollowing(search.getSearch(),search.getSections().get(0));
+        NotificationQuery notificationResponse = nytCalls.fetchNotificationFollowing((search.getSearch()!=null)?search.getSearch():" ",sections.toString());
 
         for (Result result : notificationResponse.getResults()){
             notificationArticle = loadArticle(result);

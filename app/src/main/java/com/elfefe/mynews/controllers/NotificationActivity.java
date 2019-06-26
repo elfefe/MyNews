@@ -1,28 +1,24 @@
 package com.elfefe.mynews.controllers;
 
+import android.app.Service;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckBox;
-import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.elfefe.mynews.R;
-import com.elfefe.mynews.models.Article;
 import com.elfefe.mynews.models.Search;
-import com.elfefe.mynews.utils.NotificationAsyncTask;
-import com.elfefe.mynews.utils.PagesAsyncTask;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class NotificationActivity extends AppCompatActivity{
 
@@ -31,6 +27,7 @@ public class NotificationActivity extends AppCompatActivity{
     EditText text;
     AppCompatCheckBox arts, buisness, entrepreneurs, politics, sports, travel;
     Button search;
+    private Service mService;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,9 +80,32 @@ public class NotificationActivity extends AppCompatActivity{
             bundle.putParcelable(KEY_SEARCH, searched);
 
             Intent intent = new Intent(this, NotificationService.class);
+            bindService(intent,mServiceConnection, Context.BIND_AUTO_CREATE);
 
             intent.putExtras(bundle);
-            startActivity(intent);
+            startService(intent);
         });
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        unbindService(mServiceConnection);
+        mService = null;
+    }
+
+
+
+    private ServiceConnection mServiceConnection = new ServiceConnection() {
+        public void onServiceConnected(ComponentName className, IBinder rawBinder) {
+            mService = ((NotificationService.LocalBinder) rawBinder).getService();
+
+        }
+
+        public void onServiceDisconnected(ComponentName classname) {
+            ////     mService.disconnect(mDevice);
+            mService = null;
+        }
+    };
 }

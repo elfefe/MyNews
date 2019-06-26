@@ -86,7 +86,6 @@ class NYTCalls {
     NotificationQuery fetchNotificationFollowing(String source, String section){
         Call<NotificationQuery> call = nytService.getNotification(source, section,1,key);
 
-
         try {
             return call.execute().body();
         } catch (IOException e) {

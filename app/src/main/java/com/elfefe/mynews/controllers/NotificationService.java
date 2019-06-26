@@ -1,19 +1,23 @@
 package com.elfefe.mynews.controllers;
 
+import android.app.NotificationChannel;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.util.DisplayMetrics;
+import android.util.Log;
 
 import com.bumptech.glide.Glide;
 import com.elfefe.mynews.R;
 import com.elfefe.mynews.models.Article;
+import com.elfefe.mynews.models.Notification;
 import com.elfefe.mynews.models.Search;
 import com.elfefe.mynews.utils.NotificationAsyncTask;
 
@@ -26,11 +30,18 @@ public class NotificationService extends Service implements NotificationAsyncTas
 
     private String title, section,contenu;
 
+    private final IBinder mBinder = new LocalBinder();
+
+    class LocalBinder extends Binder {
+        NotificationService getService() {
+            return NotificationService.this;
+        }
+    }
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-
-        return null;
+        return mBinder;
     }
 
     private void startForeground() {
@@ -39,18 +50,20 @@ public class NotificationService extends Service implements NotificationAsyncTas
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
                 notificationIntent, 0);
 
-        startForeground(NOTIF_ID, new NotificationCompat.Builder(this,
-                NOTIF_CHANNEL_ID) // don't forget create a notification channel first
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this,
+                NOTIF_CHANNEL_ID);
+
+        notificationBuilder
                 .setOngoing(true)
                 .setContentTitle(section + " " + title)
                 .setContentText(contenu)
-                .setContentIntent(pendingIntent)
-                .build());
+                .setContentIntent(pendingIntent);
+
+        startForeground(NOTIF_ID,notificationBuilder.build() );// don't forget create a notification channel first);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
         Search search = intent.getParcelableExtra(SearchActivity.KEY_SEARCH);
 
         new NotificationAsyncTask(this ).execute(search);
