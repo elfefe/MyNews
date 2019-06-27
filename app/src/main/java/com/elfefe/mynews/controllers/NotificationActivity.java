@@ -7,10 +7,17 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatCheckBox;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatCheckBox;
+import androidx.appcompat.widget.Toolbar;
+import androidx.work.Constraints;
+import androidx.work.Data;
+import androidx.work.NetworkType;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.impl.model.WorkTypeConverters;
+
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -19,10 +26,9 @@ import com.elfefe.mynews.models.Search;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class NotificationActivity extends AppCompatActivity{
-
-    private static final String KEY_SEARCH = "key_search";
 
     EditText text;
     AppCompatCheckBox arts, buisness, entrepreneurs, politics, sports, travel;
@@ -55,57 +61,34 @@ public class NotificationActivity extends AppCompatActivity{
         super.onResume();
 
         search.setOnClickListener(v -> {
-            Bundle bundle = new Bundle();
-
-            List<String> sections = new ArrayList<String>(){{
-                add("arts");
-                add("business");
-                add("entrepreneurs");
-                add("politics");
-                add("sports");
-                add("search");
+            List<String> sectionsList = new ArrayList<String>(){{
+                if(arts.isChecked()){add("arts");}
+                if (buisness.isChecked()){add("business");}
+                if (entrepreneurs.isChecked()){add("entrepreneurs");}
+                if (politics.isChecked()){add("politics");}
+                if (sports.isChecked()){add("sports");}
+                if (travel.isChecked()){add("search");}
             }};
 
-            boolean[] checked = {
-                    arts.isChecked(),
-                    buisness.isChecked(),
-                    entrepreneurs.isChecked(),
-                    politics.isChecked(),
-                    sports.isChecked(),
-                    travel.isChecked(),
-            };
+            String[] sections = new String[sectionsList.size()];
+            sectionsList.toArray(sections);
 
-            Search searched = new Search(text.getText().toString(),"","",sections,checked);
+            Data data = new Data.Builder()
+                    .putStringArray(NotificationWorker.KEY_SECTION,  sections)
+                    .putString(NotificationWorker.KEY_SEARCH,text.getText().toString())
+                    .build();
 
-            bundle.putParcelable(KEY_SEARCH, searched);
+            Constraints constraints = new Constraints.Builder()
+                    .setRequiredNetworkType(NetworkType.CONNECTED)
+                    .build();
 
-            Intent intent = new Intent(this, NotificationService.class);
-            bindService(intent,mServiceConnection, Context.BIND_AUTO_CREATE);
+            PeriodicWorkRequest notificationWorker = new PeriodicWorkRequest.Builder(NotificationWorker.class, 1, TimeUnit.DAYS)
+                    .setConstraints(constraints)
+                    .setInputData(data)
+                    .build();
 
-            intent.putExtras(bundle);
-            startService(intent);
+            WorkManager.getInstance()
+                    .enqueue(notificationWorker);
         });
     }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        unbindService(mServiceConnection);
-        mService = null;
-    }
-
-
-
-    private ServiceConnection mServiceConnection = new ServiceConnection() {
-        public void onServiceConnected(ComponentName className, IBinder rawBinder) {
-            mService = ((NotificationService.LocalBinder) rawBinder).getService();
-
-        }
-
-        public void onServiceDisconnected(ComponentName classname) {
-            ////     mService.disconnect(mDevice);
-            mService = null;
-        }
-    };
 }

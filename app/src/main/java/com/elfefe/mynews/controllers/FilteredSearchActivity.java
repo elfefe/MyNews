@@ -1,19 +1,17 @@
 package com.elfefe.mynews.controllers;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 import android.util.DisplayMetrics;
-import android.util.Log;
 
 import com.elfefe.mynews.R;
 import com.elfefe.mynews.controllers.adapters.PageRecyclerviewAdapter;
 import com.elfefe.mynews.models.Article;
 import com.elfefe.mynews.models.Search;
-import com.elfefe.mynews.utils.PagesAsyncTask;
 import com.elfefe.mynews.utils.SearchAsyncTask;
 
 import java.util.List;

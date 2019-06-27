@@ -1,5 +1,7 @@
 package com.elfefe.mynews.utils;
 
+import androidx.annotation.Nullable;
+
 import com.elfefe.mynews.models.Notification;
 import com.elfefe.mynews.models.mostpopular.MostPopularQuery;
 import com.elfefe.mynews.models.notification.NotificationQuery;
@@ -16,12 +18,12 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-class NYTCalls {
+public class NYTCalls {
 
     private NYTService nytService;
     private String key;
 
-    NYTCalls() {
+    public NYTCalls() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
@@ -71,7 +73,7 @@ class NYTCalls {
         return null;
     }
 
-    SearchQuery fetchSearchArticleFollowing(Map<String, String> search) {
+    public SearchQuery fetchSearchArticleFollowing(Map<String, String> search) {
         Call<SearchQuery> call = nytService.getSearchArticle(search, key);
 
 
@@ -83,7 +85,8 @@ class NYTCalls {
         return null;
     }
 
-    NotificationQuery fetchNotificationFollowing(String source, String section){
+    @Nullable
+    public NotificationQuery fetchNotificationFollowing(String source, String section){
         Call<NotificationQuery> call = nytService.getNotification(source, section,1,key);
 
         try {

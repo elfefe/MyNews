@@ -17,12 +17,12 @@
 
             android:text="@string/search_spinner_begin" />
 
-        <android.support.v7.widget.AppCompatSpinner
+        <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/spinner_elv"
 
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        </android.support.v7.widget.AppCompatSpinner>
+        </androidx.appcompat.widget.AppCompatSpinner>
 
     </LinearLayout>

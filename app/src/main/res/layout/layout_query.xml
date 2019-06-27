@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.constraint.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
 
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -12,7 +12,7 @@
     tools:context=".controllers.fragments.MainFragment"
     >
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/query_toolbar"
 
         android:layout_width="match_parent"
@@ -60,7 +60,7 @@
 
             android:orientation="vertical">
 
-            <android.support.v7.widget.AppCompatCheckBox
+            <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/query_cb_buisness"
 
                 android:layout_width="wrap_content"
@@ -70,7 +70,7 @@
 
                 android:text="Buisness" />
 
-            <android.support.v7.widget.AppCompatCheckBox
+            <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/query_cb_arts"
 
                 android:layout_width="wrap_content"
@@ -80,7 +80,7 @@
 
                 android:text="Arts" />
 
-            <android.support.v7.widget.AppCompatCheckBox
+            <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/query_cb_entrepreneurs"
 
                 android:layout_width="wrap_content"
@@ -102,7 +102,7 @@
 
             android:orientation="vertical">
 
-            <android.support.v7.widget.AppCompatCheckBox
+            <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/querye_cb_sports"
 
                 android:layout_width="wrap_content"
@@ -112,7 +112,7 @@
 
                 android:text="Sports" />
 
-            <android.support.v7.widget.AppCompatCheckBox
+            <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/query_cb_travel"
 
                 android:layout_width="wrap_content"
@@ -122,7 +122,7 @@
 
                 android:text="Travel" />
 
-            <android.support.v7.widget.AppCompatCheckBox
+            <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/query_cb_politics"
 
                 android:layout_width="wrap_content"
@@ -150,4 +150,4 @@
         android:text="SEARCH"
         android:textColor="#FFFFFF"/>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

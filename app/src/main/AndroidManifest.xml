@@ -28,7 +28,6 @@
         <activity android:name=".controllers.SearchActivity" android:parentActivityName=".controllers.MainActivity"/>
         <activity android:name=".controllers.FilteredSearchActivity" android:parentActivityName=".controllers.SearchActivity"/>
         <activity android:name=".controllers.NotificationActivity" />
-        <service android:name=".controllers.NotificationService"  android:parentActivityName=".controllers.NotificationActivity"/>
     </application>
 
 </manifest>
