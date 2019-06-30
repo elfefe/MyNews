@@ -1,37 +1,40 @@
 package com.elfefe.mynews.controllers;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-import com.elfefe.mynews.models.Article;
-import com.elfefe.mynews.models.Notification;
-import com.elfefe.mynews.models.notification.Multimedium;
-import com.elfefe.mynews.models.notification.NotificationQuery;
-import com.elfefe.mynews.models.notification.Result;
+import com.elfefe.mynews.R;
 import com.elfefe.mynews.models.search.Docs;
 import com.elfefe.mynews.models.search.SearchQuery;
 import com.elfefe.mynews.utils.NYTCalls;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class NotificationWorker extends Worker {
     public static final String KEY_SEARCH = "key_search";
     public static final String KEY_SECTION = "key_section";
+    public static final String PREF_NAME= "notification_preferences";
     private static final String NOTIF_CHANNEL_ID = "Channel_id";
+    private static final int NOTIF_ID = 1;
     private Context context;
-    String searchQuery;
-    String[] sections;
+   /* String searchQuery;
+    String[] sections;*/
 
     public NotificationWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
         this.context = context;
-        searchQuery = workerParams.getInputData().getString(KEY_SEARCH);
-        sections = workerParams.getInputData().getStringArray(KEY_SECTION);
+        //searchQuery = workerParams.getInputData().getString(KEY_SEARCH);
+        //sections = workerParams.getInputData().getStringArray(KEY_SECTION);
     }
 
     @NonNull
@@ -40,11 +43,30 @@ public class NotificationWorker extends Worker {
 
         Map<String, String> query = new HashMap<>();
 
-        query.put("q", searchQuery);
+        SharedPreferences preferences = context.getSharedPreferences(PREF_NAME,Context.MODE_PRIVATE);
 
-        for (String section:sections) {
-            query.put("fq", section);
+        Set<String> sectionSet = preferences.getStringSet(KEY_SECTION, null);
+        String prefSearch = preferences.getString(KEY_SEARCH, "");
+
+        ArrayList<String> sectionList = new ArrayList<>();
+
+        if (sectionSet != null) {
+            sectionList = new ArrayList<>(sectionSet);
         }
+
+        if (prefSearch != null) {
+            query.put("q", prefSearch);
+        }
+
+        StringBuilder sections = new StringBuilder();
+
+        sections.append("section_name:( ");
+
+        for (String section : sectionList) {
+            sections.append("\"").append(section).append("\" ");
+        }
+        sections.append(")");
+        query.put("fq", sections.toString());
 
         NYTCalls nytCalls = new NYTCalls();
         SearchQuery response = nytCalls.fetchSearchArticleFollowing(query);
@@ -65,31 +87,15 @@ public class NotificationWorker extends Worker {
 
             notification
                     .setOngoing(true)
+                    .setSmallIcon(R.drawable.baseline_arrow_back_24)
                     .setContentTitle(section + " " + title)
-                    .setContentText(contenu)
-                    .build();
+                    .setContentText(contenu);
+
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+
+            notificationManager.notify(NOTIF_ID, notification.build());
         }
 
         return Result.success();
-    }
-
-
-    private Article loadArticle(com.elfefe.mynews.models.notification.Result result){
-        Article article = new Article();
-
-        article.setTitle(result.getTitle().substring(0,15));
-        article.setArticle(result.getAbstract());
-        article.setSection(result.getSection());
-        article.setUrl(result.getUrl());
-
-        if(result.getMultimedia() != null && result.getMultimedia().size() > 0) {
-            for(Multimedium multimedia : result.getMultimedia()){
-                if (multimedia.getFormat().equals("Normal")){
-                    article.setMultimediaUrl(multimedia.getUrl());
-                    break;
-                }
-            }
-        }
-        return article;
     }
 }

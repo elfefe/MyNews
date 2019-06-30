@@ -35,7 +35,7 @@ public class WebFragment extends Fragment {
 
         View result = inflater.inflate(R.layout.fragment_web, container, false);
 
-        WebView webView = (WebView) result.findViewById(R.id.web_layout);
+        WebView webView = result.findViewById(R.id.web_layout);
 
         webView.setWebViewClient(new WebViewClient());
 

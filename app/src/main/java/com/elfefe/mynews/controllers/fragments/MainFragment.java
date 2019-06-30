@@ -32,8 +32,8 @@ public class MainFragment extends Fragment {
 
         View result = inflater.inflate(R.layout.fragment_main, container, false);
 
-        ViewPager pager = (ViewPager) result.findViewById(R.id.main_viewpager);
-        tabs = (TabLayout) result.findViewById(R.id.main_tablayout);
+        ViewPager pager = result.findViewById(R.id.main_viewpager);
+        tabs = result.findViewById(R.id.main_tablayout);
 
         List<Pages> pages = new ArrayList<Pages>(){{
             add(Pages.TOP_STORIES);

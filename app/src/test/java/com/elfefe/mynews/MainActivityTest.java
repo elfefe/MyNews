@@ -24,10 +24,7 @@ public class MainActivityTest {
     @After
     public void tearDown(){}
 
-    /*@Test
-    public void getSupportFragmentManger_not_null_after_initiate() throws Exception{
-        mainActivity.create().start();
+    public void item_selection_work(){
 
-        Assert.assertNotNull(mainActivity.get().getSupportFragmentManager().findFragmentById(R.id.framelayout_main));
-    }*/
+    }
 }

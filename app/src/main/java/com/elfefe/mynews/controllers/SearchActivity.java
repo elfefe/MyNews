@@ -44,23 +44,23 @@ public class SearchActivity extends AppCompatActivity {
 
         setContentView(R.layout.layout_query);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.query_toolbar);
+        Toolbar toolbar = findViewById(R.id.query_toolbar);
         setSupportActionBar(toolbar);
 
-        text = (EditText) findViewById(R.id.query_query);
-        arts = (AppCompatCheckBox) findViewById(R.id.query_cb_arts);
-        buisness = (AppCompatCheckBox) findViewById(R.id.query_cb_buisness);
-        entrepreneurs = (AppCompatCheckBox) findViewById(R.id.query_cb_entrepreneurs);
-        politics = (AppCompatCheckBox) findViewById(R.id.query_cb_politics);
-        sports = (AppCompatCheckBox) findViewById(R.id.querye_cb_sports);
-        travel = (AppCompatCheckBox) findViewById(R.id.query_cb_travel);
-        search = (Button) findViewById(R.id.query_button_query);
+        text = findViewById(R.id.query_query);
+        arts = findViewById(R.id.query_cb_arts);
+        buisness = findViewById(R.id.query_cb_buisness);
+        entrepreneurs = findViewById(R.id.query_cb_entrepreneurs);
+        politics = findViewById(R.id.query_cb_politics);
+        sports = findViewById(R.id.querye_cb_sports);
+        travel = findViewById(R.id.query_cb_travel);
+        search = findViewById(R.id.query_button_query);
 
         if(getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        LinearLayout layoutBegin = (LinearLayout)  findViewById(R.id.query_layout_begin);
-        LinearLayout layoutEnd = (LinearLayout)  findViewById(R.id.query_layout_end);
+        LinearLayout layoutBegin = findViewById(R.id.query_layout_begin);
+        LinearLayout layoutEnd = findViewById(R.id.query_layout_end);
 
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 

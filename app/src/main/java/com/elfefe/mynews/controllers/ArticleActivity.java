@@ -16,8 +16,8 @@ public class ArticleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.article_toolbar);
-        WebView webView = (WebView) findViewById(R.id.article_webview);
+        Toolbar toolbar = findViewById(R.id.article_toolbar);
+        WebView webView = findViewById(R.id.article_webview);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

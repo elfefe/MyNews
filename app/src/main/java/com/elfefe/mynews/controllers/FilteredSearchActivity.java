@@ -24,8 +24,8 @@ public class FilteredSearchActivity extends AppCompatActivity implements SearchA
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filtered);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.filtered_toolbar);
-        recyclerView = (RecyclerView) findViewById(R.id.filtered_recyclerview);
+        Toolbar toolbar = findViewById(R.id.filtered_toolbar);
+        recyclerView = findViewById(R.id.filtered_recyclerview);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
