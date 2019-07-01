@@ -8,8 +8,11 @@ import android.widget.EditText;
 
 import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.work.Constraints;
+import androidx.work.Data;
 import androidx.work.NetworkType;
+import androidx.work.OneTimeWorkRequest;
 import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
 import com.elfefe.mynews.controllers.MainActivity;
@@ -30,6 +33,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+
+import static net.bytebuddy.matcher.ElementMatchers.is;
 
 @RunWith(RobolectricTestRunner.class)
 public class NotificationTest {
@@ -75,7 +80,7 @@ public class NotificationTest {
     }
 
     @Test
-    public void CheckUpThatAllTheViewsAreInitiateFalseAreEmpty(){
+    public void CheckUpThatAllTheViewsAreInitiateFalseAreEmpty() throws Exception {
 
         Assert.assertEquals(text.getText().toString(),"");
 
@@ -88,7 +93,7 @@ public class NotificationTest {
     }
 
     @Test
-    public void InitiateTheListAndConvertingItAsASetAndPutSharedPreferences(){
+    public void InitiateTheListAndConvertingItAsASetAndPutSharedPreferences() throws Exception {
 
         arts.setChecked(true);
         buisness.setChecked(true);
@@ -143,19 +148,33 @@ public class NotificationTest {
         Assert.assertEquals(testSection, sectionsSet);
     }
     @Test
-    public void SetupAndStartWorker(){
+    public void SetupAndStartWorker() throws Exception {
+
+
+
         Constraints constraints = new Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build();
 
         PeriodicWorkRequest notificationWorker = new PeriodicWorkRequest.Builder(NotificationWorker.class, 1, TimeUnit.DAYS)
                 .setConstraints(constraints)
+                // .setInputData(data)
                 .build();
 
         WorkManager.getInstance()
                 .enqueue(notificationWorker);
 
-        Assert.assertNotNull(constraints);
-        Assert.assertNotNull(notificationWorker);
+
+        OneTimeWorkRequest request =
+                new OneTimeWorkRequest.Builder(NotificationWorker.class)
+                        .build();
+
+        WorkManager workManager = WorkManager.getInstance();
+
+        workManager.enqueue(request).getResult().get();
+
+        WorkInfo workInfo = workManager.getWorkInfoById(request.getId()).get();
+
+        Assert.assertEquals(workInfo.getState(), WorkInfo.State.SUCCEEDED);
     }
 }
