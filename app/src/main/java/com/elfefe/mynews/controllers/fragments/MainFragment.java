@@ -19,11 +19,11 @@ import java.util.List;
 
 public class MainFragment extends Fragment {
 
-    PageAdapter adapter;
-    TabLayout tabs;
+    private PageAdapter adapter;
 
 
-    public MainFragment() {
+    public static MainFragment newInstance() {
+        return new MainFragment();
     }
 
     @Nullable
@@ -33,7 +33,7 @@ public class MainFragment extends Fragment {
         View result = inflater.inflate(R.layout.fragment_main, container, false);
 
         ViewPager pager = result.findViewById(R.id.main_viewpager);
-        tabs = result.findViewById(R.id.main_tablayout);
+        TabLayout tabs = result.findViewById(R.id.main_tablayout);
 
         List<Pages> pages = new ArrayList<Pages>(){{
             add(Pages.TOP_STORIES);

@@ -2,21 +2,22 @@ package com.elfefe.mynews;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.view.View;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatCheckBox;
+import androidx.work.Configuration;
 import androidx.work.Constraints;
-import androidx.work.Data;
 import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
+import androidx.work.Worker;
 
-import com.elfefe.mynews.controllers.MainActivity;
-import com.elfefe.mynews.controllers.NotificationActivity;
+import com.elfefe.mynews.controllers.Activity.NotificationActivity;
 import com.elfefe.mynews.controllers.NotificationWorker;
 
 import org.junit.After;
@@ -26,7 +27,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.android.controller.ActivityController;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -35,10 +35,14 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import static net.bytebuddy.matcher.ElementMatchers.is;
+import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(RobolectricTestRunner.class)
 public class NotificationActivityTest {
 
+    private static final String KEY_SEARCH = "key_search";
+    private static final String KEY_SECTION = "key_section";
+    private static final String PREF_NAME = "pref_name";
     private NotificationActivity notificationActivity;
 
     private SharedPreferences preferences;
@@ -48,23 +52,14 @@ public class NotificationActivityTest {
     private Button search;
 
     private String searched;
-    private List<String> sectionsList;
     private Set<String> sectionsSet;
-
-    private String defaultPrefSearch;
-    private Set<String> defaultPrefSection;
 
     @Before
     public void setup(){
         notificationActivity = Robolectric.buildActivity(NotificationActivity.class)
-                .create()
-                .resume()
-                .get();
+                .create().get();
 
-        preferences = notificationActivity.getSharedPreferences(NotificationWorker.PREF_NAME, Context.MODE_PRIVATE);
-
-        defaultPrefSearch = preferences.getString(NotificationWorker.KEY_SEARCH, "ERROR");
-        defaultPrefSection = preferences.getStringSet(NotificationWorker.KEY_SECTION, null);
+        preferences = notificationActivity.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
 
         text = notificationActivity.findViewById(R.id.query_query);
         arts = notificationActivity.findViewById(R.id.query_cb_arts);
@@ -78,11 +73,6 @@ public class NotificationActivityTest {
 
     @After
     public void tearDown(){
-        preferences
-                .edit()
-                .putString(NotificationWorker.KEY_SEARCH,defaultPrefSearch)
-                .putStringSet(NotificationWorker.KEY_SECTION,defaultPrefSection)
-                .apply();
     }
 
     @Test
@@ -108,7 +98,7 @@ public class NotificationActivityTest {
         sports.setChecked(true);
         travel.setChecked(true);
 
-        sectionsList = new ArrayList<String>() {{
+        List<String> sectionsList = new ArrayList<String>() {{
             if (arts.isChecked()) {
                 add("arts");
             }
@@ -135,8 +125,6 @@ public class NotificationActivityTest {
 
         GetSharedPreference();
 
-        SetupAndStartWorker();
-
         Assert.assertNotNull(sectionsList);
         Assert.assertNotNull(sectionsSet);
         if(text.getText().toString().isEmpty()){
@@ -147,43 +135,13 @@ public class NotificationActivityTest {
     }
 
     public void GetSharedPreference(){
-        preferences.edit().putString(NotificationWorker.KEY_SEARCH,searched).putStringSet(NotificationWorker.KEY_SECTION,sectionsSet).apply();
+        preferences.edit().putString(KEY_SEARCH,searched).putStringSet(KEY_SECTION,sectionsSet).apply();
 
-        String testSearch = preferences.getString(NotificationWorker.KEY_SEARCH, "ERROR");
-        Set<String> testSection = preferences.getStringSet(NotificationWorker.KEY_SECTION, null);
+        String testSearch = preferences.getString(KEY_SEARCH, "ERROR");
+        Set<String> testSection = preferences.getStringSet(KEY_SECTION, null);
 
         Assert.assertEquals(testSearch, searched);
         Assert.assertEquals(testSection, sectionsSet);
-    }
-
-    public void SetupAndStartWorker() {
-
-
-
-        Constraints constraints = new Constraints.Builder()
-                .setRequiredNetworkType(NetworkType.CONNECTED)
-                .build();
-
-        PeriodicWorkRequest notificationWorker = new PeriodicWorkRequest.Builder(NotificationWorker.class, 1, TimeUnit.DAYS)
-                .setConstraints(constraints)
-                .build();
-
-        WorkManager.getInstance()
-                .enqueue(notificationWorker);
-
-
-        OneTimeWorkRequest request =
-                new OneTimeWorkRequest.Builder(NotificationWorker.class)
-                        .build();
-
-        WorkManager workManager = WorkManager.getInstance();
-
-        try {
-            workManager.enqueue(request).getResult().get();
-
-            WorkInfo workInfo = workManager.getWorkInfoById(request.getId()).get();
-
-            Assert.assertEquals(workInfo.getState(), WorkInfo.State.SUCCEEDED);
-        } catch (Exception e){}
+        Assert.assertEquals(testSection, sectionsSet);
     }
 }

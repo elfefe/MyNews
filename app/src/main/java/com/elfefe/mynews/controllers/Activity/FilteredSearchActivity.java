@@ -1,4 +1,4 @@
-package com.elfefe.mynews.controllers;
+package com.elfefe.mynews.controllers.Activity;
 
 import android.os.Bundle;
 import androidx.annotation.Nullable;

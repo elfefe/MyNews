@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.elfefe.mynews.R;
-import com.elfefe.mynews.controllers.ArticleActivity;
+import com.elfefe.mynews.controllers.Activity.ArticleActivity;
 import com.elfefe.mynews.models.Article;
 
 import java.util.List;
@@ -50,7 +50,11 @@ public class PageRecyclerviewAdapter extends RecyclerView.Adapter<PageRecyclervi
         title.setText(article.getTitle());
         section.setText(article.getSection());
         news.setText(article.getArticle());
-        Glide.with(holder.view).load(article.getMultimediaUrl()).into(img);
+        if (article.getMultimediaUrl() != null) {
+            Glide.with(holder.view).load(article.getMultimediaUrl()).into(img);
+        } else {
+            //img.setImageDrawable(context.getResources().getDrawable(R.drawable.news_icon_150x150));
+        }
 
         Intent intent = new Intent(context, ArticleActivity.class);
         intent.putExtra("url", article.getUrl());

@@ -2,16 +2,15 @@ package com.elfefe.mynews;
 
 import android.webkit.WebView;
 
-import com.elfefe.mynews.controllers.ArticleActivity;
-import com.elfefe.mynews.controllers.MainActivity;
+import com.elfefe.mynews.controllers.Activity.ArticleActivity;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.android.controller.ActivityController;
 
 @RunWith(RobolectricTestRunner.class)
 public class ArticleActivityTest {
@@ -30,9 +29,7 @@ public class ArticleActivityTest {
     public void tearDown(){}
 
     @Test
-    public void webView_load_view(){
-        WebView webView = articleActivity.findViewById(R.id.article_webview);
-
-
+    public void supportActionBarIsNotNull(){
+        Assert.assertNotNull(articleActivity.getSupportActionBar());
     }
 }

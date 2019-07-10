@@ -1,4 +1,4 @@
-package com.elfefe.mynews.controllers;
+package com.elfefe.mynews.controllers.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         MainFragment mainFragment = (MainFragment) getSupportFragmentManager().findFragmentById(R.id.framelayout_main);
 
         if(mainFragment == null){
-            mainFragment = new MainFragment();
+            mainFragment = MainFragment.newInstance();
 
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.framelayout_main, mainFragment)

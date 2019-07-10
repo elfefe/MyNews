@@ -13,7 +13,6 @@
     </item>
 
         <group
-            android:id="@+id/main_settings"
             android:icon="@drawable/baseline_more_vert_white_24"
 
             app:showAsAction="never"
@@ -22,15 +21,11 @@
             >
             <item
                 android:id="@+id/menu_notif"
-                android:title="Notification"
+                android:title="@string/main_notification_menu"
                 />
-            <item
-                android:id="@+id/menu_about"
-                android:title="About"
+            <item android:title="@string/main_about_menu"
                 />
-            <item
-                android:id="@+id/menu_help"
-                android:title="Help"
+            <item android:title="@string/main_help_menu"
                 />
         </group>
 </menu>

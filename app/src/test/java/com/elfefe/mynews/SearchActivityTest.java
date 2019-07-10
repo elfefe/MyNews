@@ -1,4 +1,4 @@
-package com.elfefe.mynews.controllers.fragments;
+package com.elfefe.mynews;
 
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -6,6 +6,6 @@ import org.robolectric.RobolectricTestRunner;
 import static org.junit.Assert.*;
 
 @RunWith(RobolectricTestRunner.class)
-public class WebFragmentTest {
+public class SearchActivityTest {
 
 }

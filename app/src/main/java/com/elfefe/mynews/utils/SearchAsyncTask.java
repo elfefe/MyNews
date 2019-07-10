@@ -1,12 +1,9 @@
 package com.elfefe.mynews.utils;
 
 import android.annotation.SuppressLint;
-import android.app.DownloadManager;
 import android.os.AsyncTask;
-import android.util.DisplayMetrics;
 import android.util.Log;
 
-import com.elfefe.mynews.controllers.MainActivity;
 import com.elfefe.mynews.models.Article;
 import com.elfefe.mynews.models.Search;
 import com.elfefe.mynews.models.search.Docs;

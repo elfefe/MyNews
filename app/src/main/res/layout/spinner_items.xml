@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:id="@+id/spinner_view"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -18,7 +16,7 @@
             android:text="@string/search_spinner_begin" />
 
         <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/spinner_elv"
+            android:id="@+id/spinner_acs"
 
             android:layout_width="match_parent"
             android:layout_height="match_parent">

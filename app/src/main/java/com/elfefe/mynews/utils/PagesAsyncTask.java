@@ -1,27 +1,20 @@
 package com.elfefe.mynews.utils;
 
 import android.os.AsyncTask;
-import android.os.Bundle;
-import android.util.Log;
 
-import com.elfefe.mynews.controllers.MainActivity;
 import com.elfefe.mynews.models.Article;
 import com.elfefe.mynews.models.Pages;
 import com.elfefe.mynews.models.mostpopular.MostPopularMediaMetadatum;
 import com.elfefe.mynews.models.mostpopular.MostPopularMedium;
 import com.elfefe.mynews.models.mostpopular.MostPopularQuery;
 import com.elfefe.mynews.models.mostpopular.MostPopularResult;
-import com.elfefe.mynews.models.search.Docs;
-import com.elfefe.mynews.models.search.SearchQuery;
 import com.elfefe.mynews.models.topstory.TopStoryMultimedium;
 import com.elfefe.mynews.models.topstory.TopStoryQuery;
 import com.elfefe.mynews.models.topstory.TopStoryResult;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class PagesAsyncTask extends AsyncTask<Pages,Void, List<Article>> {
 

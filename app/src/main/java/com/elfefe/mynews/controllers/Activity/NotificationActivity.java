@@ -1,4 +1,4 @@
-package com.elfefe.mynews.controllers;
+package com.elfefe.mynews.controllers.Activity;
 
 import android.app.Service;
 import android.content.ComponentName;
@@ -14,6 +14,7 @@ import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.Toolbar;
 import androidx.work.Constraints;
 import androidx.work.Data;
+import androidx.work.ExistingPeriodicWorkPolicy;
 import androidx.work.NetworkType;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
@@ -24,6 +25,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.elfefe.mynews.R;
+import com.elfefe.mynews.controllers.NotificationWorker;
 import com.elfefe.mynews.models.Search;
 
 import java.util.ArrayList;
@@ -74,15 +76,7 @@ public class NotificationActivity extends AppCompatActivity{
                 if (travel.isChecked()){add("search");}
             }};
 
-            //String[] sections = new String[sectionsList.size()];
-            //sectionsList.toArray(sections);
-
             Set<String> sectionsSet = new HashSet<>(sectionsList);
-
-            /*Data data = new Data.Builder()
-                    .putStringArray(NotificationWorker.KEY_SECTION,  sections)
-                    .putString(NotificationWorker.KEY_SEARCH,text.getText().toString())
-                    .build();*/
 
             SharedPreferences preferences = getSharedPreferences(NotificationWorker.PREF_NAME, MODE_PRIVATE);
 
@@ -98,13 +92,14 @@ public class NotificationActivity extends AppCompatActivity{
                     .setRequiredNetworkType(NetworkType.CONNECTED)
                     .build();
 
-            PeriodicWorkRequest notificationWorker = new PeriodicWorkRequest.Builder(NotificationWorker.class, 1, TimeUnit.DAYS)
+            PeriodicWorkRequest notificationWorker = new PeriodicWorkRequest.Builder(NotificationWorker.class, 1, TimeUnit.MINUTES)
                     .setConstraints(constraints)
-                   // .setInputData(data)
                     .build();
 
             WorkManager.getInstance()
                     .enqueue(notificationWorker);
+
+            startActivity(new Intent(getApplicationContext(),MainActivity.class));
         });
     }
 }

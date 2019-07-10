@@ -58,15 +58,9 @@ public class NotificationWorker extends Worker {
             query.put("q", prefSearch);
         }
 
-        StringBuilder sections = new StringBuilder();
+        String sections = NotificationUrl.createUrl(sectionList).getUrl();
 
-        sections.append("section_name:( ");
-
-        for (String section : sectionList) {
-            sections.append("\"").append(section).append("\" ");
-        }
-        sections.append(")");
-        query.put("fq", sections.toString());
+        query.put("fq", sections);
 
         NYTCalls nytCalls = new NYTCalls();
         SearchQuery response = nytCalls.fetchSearchArticleFollowing(query);
@@ -85,15 +79,14 @@ public class NotificationWorker extends Worker {
             String contenu = result.getAbstract();
             String section = result.getSectionName();
 
-            notification
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+
+            notificationManager.notify(NOTIF_ID, notification
                     .setOngoing(true)
                     .setSmallIcon(R.drawable.baseline_arrow_back_24)
                     .setContentTitle(section + " " + title)
-                    .setContentText(contenu);
-
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-
-            notificationManager.notify(NOTIF_ID, notification.build());
+                    .setContentText(contenu)
+                    .build());
         }
 
         return Result.success();

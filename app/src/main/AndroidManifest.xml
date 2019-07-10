@@ -16,18 +16,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".controllers.MainActivity">
+        tools:ignore="GoogleAppIndexingWarning"
+        android:fullBackupContent="@xml/backup_descriptor">
+        <activity android:name=".controllers.Activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".controllers.ArticleActivity" android:parentActivityName=".controllers.MainActivity"/>
-        <activity android:name=".controllers.SearchActivity" android:parentActivityName=".controllers.MainActivity"/>
-        <activity android:name=".controllers.FilteredSearchActivity" android:parentActivityName=".controllers.SearchActivity"/>
-        <activity android:name=".controllers.NotificationActivity" />
+        <activity android:name=".controllers.Activity.ArticleActivity" android:parentActivityName=".controllers.Activity.MainActivity"/>
+        <activity android:name=".controllers.Activity.SearchActivity" android:parentActivityName=".controllers.Activity.MainActivity"/>
+        <activity android:name=".controllers.Activity.FilteredSearchActivity" android:parentActivityName=".controllers.Activity.SearchActivity"/>
+        <activity android:name=".controllers.Activity.NotificationActivity" />
     </application>
 
 </manifest>

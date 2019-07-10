@@ -1,4 +1,4 @@
-package com.elfefe.mynews.controllers;
+package com.elfefe.mynews.controllers.Activity;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,7 +20,9 @@ public class ArticleActivity extends AppCompatActivity {
         WebView webView = findViewById(R.id.article_webview);
 
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         webView.setWebViewClient(new WebViewClient());
         webView.loadUrl(getIntent().getStringExtra("url"));

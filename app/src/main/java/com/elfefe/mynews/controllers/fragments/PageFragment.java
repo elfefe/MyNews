@@ -59,9 +59,9 @@ public class PageFragment extends Fragment implements PagesAsyncTask.Listeners {
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
         DisplayMetrics metrics = new DisplayMetrics();
-        Objects.requireNonNull(getActivity()).getWindowManager().getDefaultDisplay().getMetrics(metrics);
-
-        Log.d("FRAGGGMMEMRMRMRME", metrics.heightPixels+"");
+        if(getActivity() != null) {
+            getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        }
 
         new PagesAsyncTask(this, metrics.heightPixels).execute(page);
 

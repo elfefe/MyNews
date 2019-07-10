@@ -1,4 +1,4 @@
-package com.elfefe.mynews.controllers;
+package com.elfefe.mynews.controllers.Activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,13 +14,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.elfefe.mynews.R;
+import com.elfefe.mynews.controllers.SearchSpinner;
 import com.elfefe.mynews.controllers.adapters.SpinnerAdapter;
 import com.elfefe.mynews.models.Search;
 
@@ -32,7 +31,7 @@ public class SearchActivity extends AppCompatActivity {
     public static String KEY_SEARCH = "SEARCH_BUNDLE";
 
     EditText text;
-    AppCompatSpinner dateEnd,dateBegin;
+    SearchSpinner dateEnd, dateBegin;
     AppCompatCheckBox arts, buisness, entrepreneurs, politics, sports, travel;
     Button search;
 
@@ -64,55 +63,41 @@ public class SearchActivity extends AppCompatActivity {
 
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-
-        View spinnerViewBegin = inflater.inflate(R.layout.spinner_items,layoutBegin,false);
-        View spinnerViewEnd = inflater.inflate(R.layout.spinner_items,layoutEnd,false);
-
-        TextView titleBegin = spinnerViewBegin.findViewById(R.id.spinner_tv);
-        TextView titleEnd = spinnerViewEnd.findViewById(R.id.spinner_tv);
-
-        dateBegin = spinnerViewBegin.findViewById(R.id.spinner_elv);
-        dateEnd = spinnerViewEnd.findViewById(R.id.spinner_elv);
-
-
-        titleBegin.setText("Begin date");
-        titleEnd.setText("End date");
-
         periods.add("01/01/2014");
         periods.add("01/01/2015");
         periods.add("01/01/2016");
         periods.add("01/01/2017");
         periods.add("01/01/2018");
 
-        ArrayAdapter<String> adapterB = new ArrayAdapter<String>(this,R.layout.spinner_adapter_item,periods);
-        ArrayAdapter<String> adapterE = new ArrayAdapter<String>(this,R.layout.spinner_adapter_item,periods);
+        SearchSpinner spinnerBegin = new SearchSpinner(
+                R.id.spinner_acs,
+                layoutBegin,
+                R.layout.spinner_items,
+                inflater);
 
-        SpinnerAdapter adapterBegin = new SpinnerAdapter(this,R.layout.spinner_adapter_item,periods);
-        SpinnerAdapter adapterEnd = new SpinnerAdapter(this,R.layout.spinner_adapter_item,periods);
+        spinnerBegin.setTextView(R.id.spinner_tv, getResources().getString(R.string.spinner_begin_title));
+        spinnerBegin.setAdapter(new SpinnerAdapter(this,R.layout.spinner_adapter_item,periods));
 
-        dateBegin.setAdapter(adapterBegin);
-        dateEnd.setAdapter(adapterEnd);
+        SearchSpinner spinnerEnd = new SearchSpinner(
+                R.id.spinner_acs,
+                layoutEnd,
+                R.layout.spinner_items,
+                inflater);
 
-        layoutBegin.addView(spinnerViewBegin, 0);
-        layoutEnd.addView(spinnerViewEnd, 0);
+        spinnerEnd.setTextView(R.id.spinner_tv, getResources().getString(R.string.spinner_end_title));
+        spinnerEnd.setAdapter(new SpinnerAdapter(this,R.layout.spinner_adapter_item,periods));
 
+        dateBegin = spinnerBegin;
+        dateEnd = spinnerEnd;
+
+
+        layoutBegin.addView(spinnerBegin.getView(), 0);
+        layoutEnd.addView(spinnerEnd.getView(), 0);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-        dateEnd.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("SELECTED", String.valueOf(position));
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                Log.d("SELECTED", "null");
-            }
-        });
 
         search.setOnClickListener(v -> {
 
@@ -138,8 +123,8 @@ public class SearchActivity extends AppCompatActivity {
 
             Search searchData = new Search(
                     text.getText().toString(),
-                    dateBegin.getSelectedItem().toString(),
-                    dateEnd.getSelectedItem().toString(),
+                    dateBegin.getSelectedItem(),
+                    dateEnd.getSelectedItem(),
                     sectionsList,
                     checkList
             );
