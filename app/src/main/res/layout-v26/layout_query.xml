@@ -39,7 +39,7 @@
 
         app:layout_constraintTop_toBottomOf="@id/query_toolbar"
 
-        android:hint="@string/query_search_editText"
+        android:hint="@string/title_search"
         android:inputType=""
         android:autofillHints="" />
 
@@ -71,7 +71,7 @@
 
                 android:layout_marginBottom="5dp"
 
-                android:text="@string/query_buisness_checkBox" />
+                android:text="@string/query_business_checkBox" />
 
             <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/query_cb_arts"
@@ -84,14 +84,14 @@
                 android:text="@string/query_arts_checkBox" />
 
             <androidx.appcompat.widget.AppCompatCheckBox
-                android:id="@+id/query_cb_entrepreneurs"
+                android:id="@+id/query_cb_technology"
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
                 android:layout_marginBottom="5dp"
 
-                android:text="@string/query_entrepreneurs_checkBox" />
+                android:text="@string/query_technology_checkBox" />
         </LinearLayout>
 
         <LinearLayout
@@ -116,7 +116,7 @@
                 android:text="@string/query_sports_checkBox" />
 
             <androidx.appcompat.widget.AppCompatCheckBox
-                android:id="@+id/query_cb_travel"
+                android:id="@+id/query_cb_science"
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -126,21 +126,21 @@
                 android:text="@string/query_travel_checkBox" />
 
             <androidx.appcompat.widget.AppCompatCheckBox
-                android:id="@+id/query_cb_politics"
+                android:id="@+id/query_cb_health"
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
                 android:layout_marginBottom="5dp"
 
-                android:text="@string/query_politics_checkBox" />
+                android:text="@string/query_health_checkBox" />
 
         </LinearLayout>
 
     </LinearLayout>
 
     <Button
-        android:id="@+id/query_button_query"
+        android:id="@+id/query_button_search"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

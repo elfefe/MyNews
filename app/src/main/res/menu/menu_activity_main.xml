@@ -8,24 +8,18 @@
 
         app:showAsAction="ifRoom"
 
-        android:title="@string/toolbar_search">
+        android:title="@string/title_search">
 
     </item>
-
-        <group
-            android:icon="@drawable/baseline_more_vert_white_24"
-
-            app:showAsAction="never"
-
-            android:actionLayout="@layout/main_action_layout"
-            >
-            <item
-                android:id="@+id/menu_notif"
-                android:title="@string/main_notification_menu"
-                />
-            <item android:title="@string/main_about_menu"
-                />
-            <item android:title="@string/main_help_menu"
-                />
-        </group>
+    <item
+        android:id="@+id/menu_notif"
+        android:title="@string/main_notification_menu"
+        app:showAsAction="never"
+        />
+    <item android:title="@string/main_about_menu"
+        app:showAsAction="never"
+        />
+    <item android:title="@string/main_help_menu"
+        app:showAsAction="never"
+        />
 </menu>

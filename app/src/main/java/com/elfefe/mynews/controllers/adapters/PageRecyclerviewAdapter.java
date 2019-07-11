@@ -52,8 +52,6 @@ public class PageRecyclerviewAdapter extends RecyclerView.Adapter<PageRecyclervi
         news.setText(article.getArticle());
         if (article.getMultimediaUrl() != null) {
             Glide.with(holder.view).load(article.getMultimediaUrl()).into(img);
-        } else {
-            //img.setImageDrawable(context.getResources().getDrawable(R.drawable.news_icon_150x150));
         }
 
         Intent intent = new Intent(context, ArticleActivity.class);

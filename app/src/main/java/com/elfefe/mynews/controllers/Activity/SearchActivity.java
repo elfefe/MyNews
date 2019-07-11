@@ -6,14 +6,11 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatCheckBox;
-import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.appcompat.widget.Toolbar;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -32,7 +29,7 @@ public class SearchActivity extends AppCompatActivity {
 
     EditText text;
     SearchSpinner dateEnd, dateBegin;
-    AppCompatCheckBox arts, buisness, entrepreneurs, politics, sports, travel;
+    AppCompatCheckBox arts, buisness, technology, health, sports, science;
     Button search;
 
     List<String> periods = new ArrayList<>();
@@ -49,11 +46,11 @@ public class SearchActivity extends AppCompatActivity {
         text = findViewById(R.id.query_query);
         arts = findViewById(R.id.query_cb_arts);
         buisness = findViewById(R.id.query_cb_buisness);
-        entrepreneurs = findViewById(R.id.query_cb_entrepreneurs);
-        politics = findViewById(R.id.query_cb_politics);
+        technology = findViewById(R.id.query_cb_technology);
+        health = findViewById(R.id.query_cb_health);
         sports = findViewById(R.id.querye_cb_sports);
-        travel = findViewById(R.id.query_cb_travel);
-        search = findViewById(R.id.query_button_query);
+        science = findViewById(R.id.query_cb_science);
+        search = findViewById(R.id.query_button_search);
 
         if(getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -106,19 +103,19 @@ public class SearchActivity extends AppCompatActivity {
             ArrayList<String> sectionsList = new ArrayList<String>(){{
                 add("arts");
                 add("business");
-                add("entrepreneurs");
-                add("politics");
+                add("technology");
+                add("health");
                 add("sports");
-                add("travel");
+                add("science");
             }};
 
             boolean[] checkList = {
                     arts.isChecked(),
                     buisness.isChecked(),
-                    entrepreneurs.isChecked(),
-                    politics.isChecked(),
+                    technology.isChecked(),
+                    health.isChecked(),
                     sports.isChecked(),
-                    travel.isChecked()
+                    science.isChecked()
             };
 
             Search searchData = new Search(

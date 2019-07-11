@@ -1,7 +1,10 @@
 package com.elfefe.mynews.controllers;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -27,14 +30,10 @@ public class NotificationWorker extends Worker {
     private static final String NOTIF_CHANNEL_ID = "Channel_id";
     private static final int NOTIF_ID = 1;
     private Context context;
-   /* String searchQuery;
-    String[] sections;*/
 
     public NotificationWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
         this.context = context;
-        //searchQuery = workerParams.getInputData().getString(KEY_SEARCH);
-        //sections = workerParams.getInputData().getStringArray(KEY_SECTION);
     }
 
     @NonNull
@@ -69,26 +68,46 @@ public class NotificationWorker extends Worker {
             return Result.failure();
         }
 
+
+
+
         if(response.getResponse().getDocs().size() > 0){
+
             NotificationCompat.Builder notification = new NotificationCompat.Builder(context,
                     NOTIF_CHANNEL_ID);
 
             Docs result = response.getResponse().getDocs().get(0);
 
-            String title = result.getSnippet();
+            String title = result.getSnippet().substring(0,15);
             String contenu = result.getAbstract();
             String section = result.getSectionName();
+            String date = result.getPubDate().substring(0,10);
 
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-
-            notificationManager.notify(NOTIF_ID, notification
-                    .setOngoing(true)
-                    .setSmallIcon(R.drawable.baseline_arrow_back_24)
-                    .setContentTitle(section + " " + title)
+            notification
+                    .setSmallIcon(R.drawable.news_icon_85x73)
+                    .setContentTitle(section + "    " + title)
                     .setContentText(contenu)
-                    .build());
-        }
+                    .setStyle(new NotificationCompat.BigTextStyle()
+                            .setBigContentTitle(section + "    " + title + "    " + date)
+                            .bigText(contenu));
 
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                CharSequence name = "MyNews";
+                String description = "MyNews notification";
+                int importance = NotificationManager.IMPORTANCE_DEFAULT;
+                NotificationChannel channel = new NotificationChannel(NOTIF_CHANNEL_ID, name, importance);
+                channel.setDescription(description);
+
+                NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
+                notificationManager
+                        .createNotificationChannel(channel);
+
+                notificationManager.notify(NOTIF_ID, notification.build());
+            } else {
+                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+                notificationManager.notify(NOTIF_ID,notification.build());
+            }
+        }
         return Result.success();
     }
 }

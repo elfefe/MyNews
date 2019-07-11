@@ -6,8 +6,8 @@ public enum Pages {
     TOP_STORIES(R.string.page_title_topstories),
     MOST_POPULAR(R.string.page_title_mostpopular),
     FAVORITE(R.string.page_title_favorites),
-    FILTERED(R.string.page_title_filtered),
-    SEARCH(R.string.page_title_search);
+    FILTERED(R.string.title_filtered),
+    SEARCH(R.string.title_search);
 
     private int title;
 

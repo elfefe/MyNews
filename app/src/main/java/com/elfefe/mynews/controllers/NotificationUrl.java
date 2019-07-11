@@ -15,7 +15,7 @@ public class NotificationUrl {
         sectionsBuilder.append(NotificationUrl.section_prefix);
 
         for (String section : list) {
-            sectionsBuilder.append("\"").append(section).append("\"");
+            sectionsBuilder.append("\"").append(section).append("\" ");
         }
         sectionsBuilder.append(NotificationUrl.section_suffix);
 

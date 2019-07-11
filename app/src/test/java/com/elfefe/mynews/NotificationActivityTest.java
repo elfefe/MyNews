@@ -2,23 +2,12 @@ package com.elfefe.mynews;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatCheckBox;
-import androidx.work.Configuration;
-import androidx.work.Constraints;
-import androidx.work.NetworkType;
-import androidx.work.OneTimeWorkRequest;
-import androidx.work.PeriodicWorkRequest;
-import androidx.work.WorkInfo;
-import androidx.work.WorkManager;
-import androidx.work.Worker;
 
 import com.elfefe.mynews.controllers.Activity.NotificationActivity;
-import com.elfefe.mynews.controllers.NotificationWorker;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -32,7 +21,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 import static net.bytebuddy.matcher.ElementMatchers.is;
 import static org.robolectric.Shadows.shadowOf;
@@ -64,11 +52,11 @@ public class NotificationActivityTest {
         text = notificationActivity.findViewById(R.id.query_query);
         arts = notificationActivity.findViewById(R.id.query_cb_arts);
         buisness = notificationActivity.findViewById(R.id.query_cb_buisness);
-        entrepreneurs = notificationActivity.findViewById(R.id.query_cb_entrepreneurs);
-        politics = notificationActivity.findViewById(R.id.query_cb_politics);
+        entrepreneurs = notificationActivity.findViewById(R.id.query_cb_technology);
+        politics = notificationActivity.findViewById(R.id.query_cb_health);
         sports = notificationActivity.findViewById(R.id.querye_cb_sports);
-        travel = notificationActivity.findViewById(R.id.query_cb_travel);
-        search = notificationActivity.findViewById(R.id.query_button_query);
+        travel = notificationActivity.findViewById(R.id.query_cb_science);
+        search = notificationActivity.findViewById(R.id.query_button_search);
     }
 
     @After

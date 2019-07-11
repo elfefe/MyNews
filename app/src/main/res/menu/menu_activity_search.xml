@@ -7,7 +7,7 @@
 
 
 
-        android:title="@string/toolbar_search"
+        android:title="@string/title_search"
 
         app:showAsAction="ifRoom" />
 </menu>
