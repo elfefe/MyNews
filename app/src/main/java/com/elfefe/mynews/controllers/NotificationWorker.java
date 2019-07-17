@@ -5,7 +5,6 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
@@ -29,7 +28,7 @@ public class NotificationWorker extends Worker {
     public static final String PREF_NAME= "notification_preferences";
     private static final String NOTIF_CHANNEL_ID = "Channel_id";
     private static final int NOTIF_ID = 1;
-    private Context context;
+    private final Context context;
 
     public NotificationWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
@@ -84,7 +83,7 @@ public class NotificationWorker extends Worker {
             String date = result.getPubDate().substring(0,10);
 
             notification
-                    .setSmallIcon(R.drawable.news_icon_85x73)
+                    .setSmallIcon(R.drawable.news_icon)
                     .setContentTitle(section + "    " + title)
                     .setContentText(contenu)
                     .setStyle(new NotificationCompat.BigTextStyle()

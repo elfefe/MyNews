@@ -1,4 +1,4 @@
-package com.elfefe.mynews.controllers.Activity;
+package com.elfefe.mynews.controllers.activity;
 
 import android.content.Intent;
 import android.os.Bundle;

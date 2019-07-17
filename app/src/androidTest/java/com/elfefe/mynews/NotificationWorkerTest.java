@@ -4,14 +4,13 @@ package com.elfefe.mynews;
 import android.content.Context;
 import android.util.Log;
 
-import androidx.test.InstrumentationRegistry;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.work.Configuration;
-import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 import androidx.work.impl.utils.SynchronousExecutor;
-import androidx.test.runner.*;
 
 import androidx.work.testing.WorkManagerTestInitHelper;
 
@@ -26,9 +25,10 @@ import static org.hamcrest.Matchers.is;
 
 @RunWith(AndroidJUnit4.class)
 public class NotificationWorkerTest {
+    private Context context;
     @Before
     public void setup() {
-        Context context = InstrumentationRegistry.getTargetContext();
+        context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         Configuration config = new Configuration.Builder()
             // Set log level to Log.DEBUG to
             // make it easier to see why tests failed
@@ -47,7 +47,7 @@ public class NotificationWorkerTest {
                 new OneTimeWorkRequest.Builder(NotificationWorker.class)
                         .build();
 
-        WorkManager workManager = WorkManager.getInstance();
+        WorkManager workManager = WorkManager.getInstance(context);
 
         workManager.enqueue(request).getResult().get();
 

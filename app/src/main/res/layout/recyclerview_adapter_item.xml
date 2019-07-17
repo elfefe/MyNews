@@ -21,7 +21,7 @@
 
             android:layout_margin="@dimen/recyclerview_margin_all"
 
-            android:src="@drawable/news_default_150x150"/>
+            android:src="@drawable/news_default"/>
 
         <TextView
             android:id="@+id/news_item_section"

@@ -1,7 +1,5 @@
 package com.elfefe.mynews.utils;
 
-import com.elfefe.mynews.models.Notification;
-import com.elfefe.mynews.models.Search;
 import com.elfefe.mynews.models.mostpopular.MostPopularQuery;
 import com.elfefe.mynews.models.notification.NotificationQuery;
 import com.elfefe.mynews.models.search.SearchQuery;
@@ -10,14 +8,12 @@ import com.elfefe.mynews.models.topstory.TopStoryQuery;
 import java.util.Map;
 
 import retrofit2.Call;
-import retrofit2.http.FieldMap;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
-public interface NYTService {
+interface NYTService {
     @GET("topstories/v2/home.json")
     Call<TopStoryQuery> getTopStories(@Query("api-key") String key);
 

@@ -16,8 +16,8 @@ public class PageAdapter extends FragmentStatePagerAdapter {
 
 
     private final List<Pages> pages;
-    private Context context;
-    private List<Fragment> listPage = new ArrayList<>();
+    private final Context context;
+    private final List<Fragment> listPage = new ArrayList<>();
 
     public PageAdapter(FragmentManager fm, List<Pages> pages, Context context) {
         super(fm);

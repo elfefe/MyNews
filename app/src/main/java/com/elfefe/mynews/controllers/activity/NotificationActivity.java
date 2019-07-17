@@ -1,4 +1,4 @@
-package com.elfefe.mynews.controllers.Activity;
+package com.elfefe.mynews.controllers.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -26,9 +26,14 @@ import java.util.concurrent.TimeUnit;
 
 public class NotificationActivity extends AppCompatActivity{
 
-    EditText text;
-    AppCompatCheckBox arts, buisness, technology, health, sports, science;
-    Button search;
+    private EditText text;
+    private AppCompatCheckBox arts;
+    private AppCompatCheckBox buisness;
+    private AppCompatCheckBox technology;
+    private AppCompatCheckBox health;
+    private AppCompatCheckBox sports;
+    private AppCompatCheckBox science;
+    private Button search;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,7 +91,7 @@ public class NotificationActivity extends AppCompatActivity{
                     .setConstraints(constraints)
                     .build();
 
-            WorkManager.getInstance()
+            WorkManager.getInstance(getApplicationContext())
                     .enqueue(notificationWorker);
 
             startActivity(new Intent(getApplicationContext(),MainActivity.class));

@@ -13,7 +13,7 @@ public class Search implements Parcelable {
     private List<String> sections;
     private boolean[] checked;
 
-    protected Search(Parcel in) {
+    private Search(Parcel in) {
         search = in.readString();
         dateBegin = in.readString();
         dateEnd = in.readString();

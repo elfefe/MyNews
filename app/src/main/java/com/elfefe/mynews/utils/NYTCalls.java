@@ -2,14 +2,12 @@ package com.elfefe.mynews.utils;
 
 import androidx.annotation.Nullable;
 
-import com.elfefe.mynews.models.Notification;
 import com.elfefe.mynews.models.mostpopular.MostPopularQuery;
 import com.elfefe.mynews.models.notification.NotificationQuery;
 import com.elfefe.mynews.models.search.SearchQuery;
 import com.elfefe.mynews.models.topstory.TopStoryQuery;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 import okhttp3.OkHttpClient;
@@ -20,8 +18,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NYTCalls {
 
-    private NYTService nytService;
-    private String key;
+    private final NYTService nytService;
+    private final String key;
 
     public NYTCalls() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();

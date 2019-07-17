@@ -1,4 +1,4 @@
-package com.elfefe.mynews.controllers.Activity;
+package com.elfefe.mynews.controllers.activity;
 
 import android.os.Bundle;
 import androidx.annotation.Nullable;
@@ -17,7 +17,7 @@ import com.elfefe.mynews.utils.SearchAsyncTask;
 import java.util.List;
 
 public class FilteredSearchActivity extends AppCompatActivity implements SearchAsyncTask.Listeners{
-    RecyclerView recyclerView;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

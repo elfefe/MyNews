@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,6 @@ import com.elfefe.mynews.models.Pages;
 import com.elfefe.mynews.utils.PagesAsyncTask;
 
 import java.util.List;
-import java.util.Objects;
 
 public class PageFragment extends Fragment implements PagesAsyncTask.Listeners {
 
@@ -74,8 +72,4 @@ public class PageFragment extends Fragment implements PagesAsyncTask.Listeners {
         recyclerView.setAdapter(adapter);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
 }

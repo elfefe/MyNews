@@ -4,7 +4,7 @@ package com.elfefe.mynews.models.article_search;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class SearchQuery {
+class SearchQuery {
 
     @SerializedName("status")
     @Expose

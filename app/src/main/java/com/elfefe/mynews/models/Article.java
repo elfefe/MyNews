@@ -1,9 +1,5 @@
 package com.elfefe.mynews.models;
 
-import com.elfefe.mynews.models.topstory.TopStoryMultimedium;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 public class Article {
 
     private String title;

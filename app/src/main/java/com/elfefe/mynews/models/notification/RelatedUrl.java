@@ -4,7 +4,7 @@ package com.elfefe.mynews.models.notification;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class RelatedUrl {
+class RelatedUrl {
 
     @SerializedName("suggested_link_text")
     @Expose

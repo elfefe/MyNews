@@ -1,4 +1,4 @@
-package com.elfefe.mynews.controllers.Activity;
+package com.elfefe.mynews.controllers.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -25,14 +25,20 @@ import java.util.List;
 
 public class SearchActivity extends AppCompatActivity {
 
-    public static String KEY_SEARCH = "SEARCH_BUNDLE";
+    public static final String KEY_SEARCH = "SEARCH_BUNDLE";
 
-    EditText text;
-    SearchSpinner dateEnd, dateBegin;
-    AppCompatCheckBox arts, buisness, technology, health, sports, science;
-    Button search;
+    private EditText text;
+    private SearchSpinner dateEnd;
+    private SearchSpinner dateBegin;
+    private AppCompatCheckBox arts;
+    private AppCompatCheckBox buisness;
+    private AppCompatCheckBox technology;
+    private AppCompatCheckBox health;
+    private AppCompatCheckBox sports;
+    private AppCompatCheckBox science;
+    private Button search;
 
-    List<String> periods = new ArrayList<>();
+    private final List<String> periods = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

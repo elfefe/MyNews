@@ -4,7 +4,7 @@ import android.content.Context;
 
 import java.util.List;
 
-public class Notification {
+class Notification {
     private final Context context;
     private final String search;
     private final List<String> sections;

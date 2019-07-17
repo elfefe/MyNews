@@ -7,9 +7,8 @@ import android.widget.EditText;
 
 import androidx.appcompat.widget.AppCompatCheckBox;
 
-import com.elfefe.mynews.controllers.Activity.NotificationActivity;
+import com.elfefe.mynews.controllers.activity.NotificationActivity;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,29 +21,24 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static net.bytebuddy.matcher.ElementMatchers.is;
-import static org.robolectric.Shadows.shadowOf;
-
 @RunWith(RobolectricTestRunner.class)
 public class NotificationActivityTest {
 
     private static final String KEY_SEARCH = "key_search";
     private static final String KEY_SECTION = "key_section";
     private static final String PREF_NAME = "pref_name";
-    private NotificationActivity notificationActivity;
 
     private SharedPreferences preferences;
 
     private EditText text;
     private AppCompatCheckBox arts, buisness, entrepreneurs, politics, sports, travel;
-    private Button search;
 
     private String searched;
     private Set<String> sectionsSet;
 
     @Before
     public void setup(){
-        notificationActivity = Robolectric.buildActivity(NotificationActivity.class)
+        NotificationActivity notificationActivity = Robolectric.buildActivity(NotificationActivity.class)
                 .create().get();
 
         preferences = notificationActivity.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
@@ -56,11 +50,7 @@ public class NotificationActivityTest {
         politics = notificationActivity.findViewById(R.id.query_cb_health);
         sports = notificationActivity.findViewById(R.id.querye_cb_sports);
         travel = notificationActivity.findViewById(R.id.query_cb_science);
-        search = notificationActivity.findViewById(R.id.query_button_search);
-    }
-
-    @After
-    public void tearDown(){
+        Button search = notificationActivity.findViewById(R.id.query_button_search);
     }
 
     @Test

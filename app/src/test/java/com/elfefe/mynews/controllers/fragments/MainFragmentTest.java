@@ -4,12 +4,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.PagerAdapter;
 
 import com.elfefe.mynews.controllers.adapters.PageAdapter;
 import com.elfefe.mynews.models.Pages;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,11 +36,6 @@ public class MainFragmentTest {
             add(Pages.MOST_POPULAR);
             add(Pages.FAVORITE);
         }};
-    }
-
-    @After
-    public void  tearDown(){
-
     }
 
     @Test

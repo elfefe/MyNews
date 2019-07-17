@@ -19,7 +19,7 @@ import java.util.List;
 public class PagesAsyncTask extends AsyncTask<Pages,Void, List<Article>> {
 
     private final WeakReference<Listeners> callback;
-    private int pixelDimension;
+    private final int pixelDimension;
 
     public PagesAsyncTask(Listeners callback, int pixelDimension) {
         this.callback = new WeakReference<>(callback);

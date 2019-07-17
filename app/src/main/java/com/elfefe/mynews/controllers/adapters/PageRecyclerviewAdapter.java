@@ -12,15 +12,15 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.elfefe.mynews.R;
-import com.elfefe.mynews.controllers.Activity.ArticleActivity;
+import com.elfefe.mynews.controllers.activity.ArticleActivity;
 import com.elfefe.mynews.models.Article;
 
 import java.util.List;
 
 public class PageRecyclerviewAdapter extends RecyclerView.Adapter<PageRecyclerviewAdapter.PageViewHolder> {
 
-    private Context context;
-    private List<Article> articles;
+    private final Context context;
+    private final List<Article> articles;
 
     public PageRecyclerviewAdapter(Context context, List<Article> articles) {
         this.context = context;
@@ -32,8 +32,8 @@ public class PageRecyclerviewAdapter extends RecyclerView.Adapter<PageRecyclervi
     public PageViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         return new PageViewHolder(LayoutInflater
                     .from(viewGroup.getContext())
-                    .inflate(R.layout.recyclerview_adapter_item, viewGroup,false),
-                context);
+                    .inflate(R.layout.recyclerview_adapter_item, viewGroup,false)
+        );
     }
 
     @Override
@@ -69,9 +69,9 @@ public class PageRecyclerviewAdapter extends RecyclerView.Adapter<PageRecyclervi
 
 
     static class PageViewHolder extends RecyclerView.ViewHolder {
-        View view;
+        final View view;
 
-        PageViewHolder(@NonNull View itemView, Context context) {
+        PageViewHolder(@NonNull View itemView) {
             super(itemView);
             view = itemView;
         }

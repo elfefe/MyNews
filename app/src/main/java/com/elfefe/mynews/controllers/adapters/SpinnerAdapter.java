@@ -15,9 +15,9 @@ import java.util.List;
 
 public class SpinnerAdapter extends ArrayAdapter<String> {
 
-    private int resource;
-    private List<String> periods;
-    private LayoutInflater inflater;
+    private final int resource;
+    private final List<String> periods;
+    private final LayoutInflater inflater;
 
     public SpinnerAdapter(@NonNull Context context, int resource, List<String> periods) {
         super(context, resource);
@@ -40,12 +40,12 @@ public class SpinnerAdapter extends ArrayAdapter<String> {
     @NonNull
     @Override
     public View getView(int position, View view, @NonNull ViewGroup parent) {
-        return createItemView(position, view, parent);
+        return createItemView(position, parent);
     }
 
     @Override
     public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        return createItemView(position, convertView, parent);
+        return createItemView(position, parent);
     }
 
     class SpinnerView extends View {
@@ -55,7 +55,7 @@ public class SpinnerAdapter extends ArrayAdapter<String> {
         }
     }
 
-    private View createItemView(int position, View convertView, ViewGroup parent){
+    private View createItemView(int position, ViewGroup parent){
         final View view = inflater.inflate(resource, parent, false);
 
         TextView textView = view.findViewById(R.id.spinner_item_tv);

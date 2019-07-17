@@ -9,7 +9,7 @@ public enum Pages {
     FILTERED(R.string.title_filtered),
     SEARCH(R.string.title_search);
 
-    private int title;
+    private final int title;
 
     Pages(int title){
 

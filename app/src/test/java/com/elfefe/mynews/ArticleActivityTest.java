@@ -1,10 +1,7 @@
 package com.elfefe.mynews;
 
-import android.webkit.WebView;
+import com.elfefe.mynews.controllers.activity.ArticleActivity;
 
-import com.elfefe.mynews.controllers.Activity.ArticleActivity;
-
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,9 +21,6 @@ public class ArticleActivityTest {
                 .resume()
                 .get();
     }
-
-    @After
-    public void tearDown(){}
 
     @Test
     public void supportActionBarIsNotNull(){
