@@ -6,4 +6,6 @@
     <dimen name="recyclerview_size_date">14sp</dimen>
     <dimen name="news_item_view_height">85dp</dimen>
     <dimen name="news_item_date_paddingleft">5dp</dimen>
+    <dimen name="main_header_padding">20dp</dimen>
+    <dimen name="main_header_title_right_margin">32dp</dimen>
 </resources>

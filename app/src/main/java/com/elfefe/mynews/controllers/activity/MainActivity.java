@@ -17,6 +17,7 @@ import com.elfefe.mynews.controllers.fragments.MainFragment;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    private MainFragment mainFragment;
         @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +26,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawerLayout = findViewById(R.id.activity_main_drawer_layout);
         Toolbar toolbar = findViewById(R.id.main_toolbar);
         NavigationView navigationView = findViewById(R.id.main_navigationview);
+
+        mainFragment = (MainFragment) getSupportFragmentManager().findFragmentById(R.id.framelayout_main);
+
+        if(mainFragment == null){
+            mainFragment = MainFragment.newInstance(0);
+
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.framelayout_main, mainFragment)
+                    .commit();
+        }
 
         setSupportActionBar(toolbar);
 
@@ -40,21 +52,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        MainFragment mainFragment = (MainFragment) getSupportFragmentManager().findFragmentById(R.id.framelayout_main);
-
-        if(mainFragment == null){
-            mainFragment = MainFragment.newInstance();
-
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.framelayout_main, mainFragment)
-                    .commit();
-        }
     }
 
     @Override
@@ -79,6 +76,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        return false;
+        switch (menuItem.getItemId()){
+            case R.id.topstory:
+                updateFragment(0);
+                return true;
+            case R.id.mostpopular:
+                updateFragment(1);
+                return true;
+            case R.id.favorite:
+                updateFragment(2);
+                return true;
+            case R.id.notification:
+                startActivity(new Intent(this,NotificationActivity.class));
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    private void updateFragment(int page){
+        mainFragment = MainFragment.newInstance(page);
+        getSupportFragmentManager().beginTransaction().replace(R.id.framelayout_main, mainFragment).commit();
     }
 }

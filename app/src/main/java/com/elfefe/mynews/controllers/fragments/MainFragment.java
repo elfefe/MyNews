@@ -4,11 +4,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 import android.view.LayoutInflater;
@@ -25,10 +22,13 @@ import java.util.List;
 public class MainFragment extends Fragment {
 
     private PageAdapter adapter;
+    private int page;
 
 
-    public static MainFragment newInstance() {
-        return new MainFragment();
+    public static MainFragment newInstance(int page) {
+        MainFragment mainFragment = new MainFragment();
+        mainFragment.page = page;
+        return mainFragment;
     }
 
     @Nullable
@@ -54,6 +54,8 @@ public class MainFragment extends Fragment {
 
         tabs.setupWithViewPager(pager);
         tabs.setTabMode(TabLayout.MODE_FIXED);
+
+        pager.setCurrentItem(page);
 
         return result;
     }

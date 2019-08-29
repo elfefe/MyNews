@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    android:backgroundTint="@color/PrimaryMyNewsLight">
+    android:background="@color/PrimaryMyNewsLight"
+    android:padding="@dimen/main_header_padding"
+    tools:ignore="Overdraw">
 
     <ImageView
         android:id="@+id/header_picture_imageview"
@@ -15,20 +18,25 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/header_title_textview"/>
+        app:layout_constraintRight_toLeftOf="@id/header_title_textview"
+        android:contentDescription="@string/default_mynews_picture_description" />
 
     <TextView
         android:id="@+id/header_title_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_marginRight="50dp"
+        android:layout_marginEnd="@dimen/main_header_title_right_margin"
 
         android:text="@string/app_name"
 
-        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@android:color/white"
+
+        android:textStyle="bold"
+
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/header_picture_imageview"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/header_picture_imageview"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -23,4 +23,5 @@
     <string name="news_item_section">Section</string>
     <string name="navigation_drawer_open">Open</string>
     <string name="navigation_drawer_close">Close</string>
+    <string name="default_mynews_picture_description">Default MyNews picture</string>
 </resources>

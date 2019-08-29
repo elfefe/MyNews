@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/topstory"
-        android:title="TOP STORIES"/>
+    <group android:id="@+id/pages" android:checkableBehavior="single">
+        <item
+            android:id="@+id/topstory"
+            android:title="@string/page_title_topstories"/>
+        <item
+            android:id="@+id/mostpopular"
+            android:title="@string/page_title_mostpopular"/>
+        <item
+            android:id="@+id/favorite"
+            android:title="@string/page_title_favorites"/>
+    </group>
+
+    <group android:id="@+id/parameter" android:checkableBehavior="single">
+        <item
+            android:id="@+id/notification"
+            android:title="@string/main_notification_menu"/>
+    </group>
 
 </menu>
