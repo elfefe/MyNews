@@ -1,9 +1,6 @@
 package com.elfefe.mynews.utils;
 
-import androidx.annotation.Nullable;
-
 import com.elfefe.mynews.models.mostpopular.MostPopularQuery;
-import com.elfefe.mynews.models.notification.NotificationQuery;
 import com.elfefe.mynews.models.search.SearchQuery;
 import com.elfefe.mynews.models.topstory.TopStoryQuery;
 
@@ -83,15 +80,4 @@ public class NYTCalls {
         return null;
     }
 
-    @Nullable
-    public NotificationQuery fetchNotificationFollowing(String source, String section){
-        Call<NotificationQuery> call = nytService.getNotification(source, section,1,key);
-
-        try {
-            return call.execute().body();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 }

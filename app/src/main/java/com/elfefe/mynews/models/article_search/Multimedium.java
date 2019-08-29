@@ -4,6 +4,8 @@ package com.elfefe.mynews.models.article_search;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+
+@SuppressWarnings("unused")
 class Multimedium {
 
     @SerializedName("rank")

@@ -11,6 +11,7 @@ import org.robolectric.android.controller.ActivityController;
 @RunWith(RobolectricTestRunner.class)
 public class MainActivityTest {
 
+    @SuppressWarnings("unused")
     @Before
     public void setup(){
         ActivityController<MainActivity> mainActivity = Robolectric.buildActivity(MainActivity.class).setup();

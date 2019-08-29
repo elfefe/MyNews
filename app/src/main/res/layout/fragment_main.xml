@@ -10,6 +10,7 @@
     tools:context=".controllers.fragments.MainFragment"
     android:orientation="vertical">
 
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/main_tablayout"
         android:layout_width="match_parent"

@@ -1,8 +1,6 @@
 package com.elfefe.mynews.utils;
 
-import android.annotation.SuppressLint;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.elfefe.mynews.models.Article;
 import com.elfefe.mynews.models.Search;
@@ -11,10 +9,7 @@ import com.elfefe.mynews.models.search.Multimedium;
 import com.elfefe.mynews.models.search.SearchQuery;
 
 import java.lang.ref.WeakReference;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,41 +30,16 @@ public class SearchAsyncTask extends AsyncTask<Search,Void, List<Article>> {
         NYTCalls nytCalls = new NYTCalls();
         Map<String, String> map = new HashMap<>();
 
-        StringBuilder sectionsField = new StringBuilder("section_name:( ");
 
 
         Search search = url[0];
-        for (int x = 0; x < search.getSections().size(); x++) {
-            if (search.getChecked()[x]) {
-                sectionsField.append("\"").append(search.getSections().get(x)).append("\" ");
-                Log.d("FIELDS", x + search.getSections().get(x));
-            }
-        }
 
-        sectionsField.append(")");
-
-        map.put("fq", sectionsField.toString());
-
+        map.put("fq", search.getSections());
         map.put("q",search.getSearch());
 
-        String toDateBegin, toDateEnd;
-        Date fromDateBegin, fromDateEnd;
+        map.put("begin-date",search.getDateBegin());
+        map.put("end-date",search.getDateEnd());
 
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat fromSimpleDateFormat = new SimpleDateFormat("MM/dd/yy");
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat toSimpleDateFormat = new SimpleDateFormat("yyyyMMdd");
-
-        try {
-            fromDateBegin = fromSimpleDateFormat.parse(search.getDateBegin());
-            fromDateEnd = fromSimpleDateFormat.parse(search.getDateEnd());
-
-            toDateBegin = toSimpleDateFormat.format(fromDateBegin);
-            toDateEnd = toSimpleDateFormat.format(fromDateEnd);
-
-            map.put("begin-date",toDateBegin);
-            map.put("end-date",toDateEnd);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
 
         List<Article> searchArticle = new ArrayList<>();
         SearchQuery searchResponse = nytCalls.fetchSearchArticleFollowing(map);

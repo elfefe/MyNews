@@ -17,11 +17,10 @@ import androidx.work.WorkManager;
 
 import com.elfefe.mynews.R;
 import com.elfefe.mynews.controllers.NotificationWorker;
+import com.elfefe.mynews.utils.SectionLuceneFormator;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class NotificationActivity extends AppCompatActivity{
@@ -70,7 +69,7 @@ public class NotificationActivity extends AppCompatActivity{
                 if (science.isChecked()){add("science");}
             }};
 
-            Set<String> sectionsSet = new HashSet<>(sectionsList);
+            SectionLuceneFormator sections = new SectionLuceneFormator(sectionsList);
 
             SharedPreferences preferences = getSharedPreferences(NotificationWorker.PREF_NAME, MODE_PRIVATE);
 
@@ -78,7 +77,7 @@ public class NotificationActivity extends AppCompatActivity{
 
             preferences
                     .edit()
-                    .putStringSet(NotificationWorker.KEY_SECTION,sectionsSet)
+                    .putString(NotificationWorker.KEY_SECTION,sections.createLucene())
                     .putString(NotificationWorker.KEY_SEARCH,searched)
                     .apply();
 

@@ -16,7 +16,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.elfefe.mynews.R;
-import com.elfefe.mynews.controllers.SearchSpinner;
+import com.elfefe.mynews.utils.FormatDate;
+import com.elfefe.mynews.utils.SearchSpinner;
+import com.elfefe.mynews.utils.SectionLuceneFormator;
 import com.elfefe.mynews.controllers.adapters.SpinnerAdapter;
 import com.elfefe.mynews.models.Search;
 
@@ -107,29 +109,24 @@ public class SearchActivity extends AppCompatActivity {
             Bundle bundle = new Bundle();
 
             ArrayList<String> sectionsList = new ArrayList<String>(){{
-                add("arts");
-                add("business");
-                add("technology");
-                add("health");
-                add("sports");
-                add("science");
+                if(arts.isChecked()){add("arts");}
+                if (buisness.isChecked()){add("business");}
+                if (technology.isChecked()){add("technology");}
+                if (health.isChecked()){add("health");}
+                if (sports.isChecked()){add("sports");}
+                if (science.isChecked()){add("science");}
             }};
 
-            boolean[] checkList = {
-                    arts.isChecked(),
-                    buisness.isChecked(),
-                    technology.isChecked(),
-                    health.isChecked(),
-                    sports.isChecked(),
-                    science.isChecked()
-            };
+            FormatDate formatDateBegin = new FormatDate(dateBegin.getSelectedItem());
+            FormatDate formatDateEnd = new FormatDate(dateEnd.getSelectedItem());
+
+            SectionLuceneFormator sections = new SectionLuceneFormator(sectionsList);
 
             Search searchData = new Search(
                     text.getText().toString(),
-                    dateBegin.getSelectedItem(),
-                    dateEnd.getSelectedItem(),
-                    sectionsList,
-                    checkList
+                    formatDateBegin.date(),
+                    formatDateEnd.date(),
+                    sections.createLucene()
             );
 
             bundle.putParcelable(KEY_SEARCH, searchData);

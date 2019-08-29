@@ -8,6 +8,7 @@ import com.google.gson.JsonPrimitive;
 
 import java.lang.reflect.Type;
 
+@SuppressWarnings("unused")
 public final class EmptyStringAsNullTypeAdapter<T>
         implements JsonDeserializer<T> {
 

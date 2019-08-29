@@ -7,7 +7,6 @@
     <string name="page_title_mostpopular">Most Popular</string>
     <string name="page_title_favorites">Sports</string>
     <string name="title_search">search</string>
-    <string name="title_filtered">filtered</string>
     <string name="search_spinner_begin">Begin Date</string>
     <string name="spinner_begin_title">Begin date</string>
     <string name="spinner_end_title">End date</string>
@@ -22,4 +21,6 @@
     <string name="main_about_menu">About</string>
     <string name="main_help_menu">Help</string>
     <string name="news_item_section">Section</string>
+    <string name="navigation_drawer_open">Open</string>
+    <string name="navigation_drawer_close">Close</string>
 </resources>

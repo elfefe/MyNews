@@ -3,31 +3,27 @@ package com.elfefe.mynews.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.List;
-
+@SuppressWarnings({"unused", "CanBeFinal"})
 public class Search implements Parcelable {
 
     private String search;
     private String dateBegin;
     private String dateEnd;
-    private List<String> sections;
-    private boolean[] checked;
+    private String sections;
 
     private Search(Parcel in) {
         search = in.readString();
         dateBegin = in.readString();
         dateEnd = in.readString();
-        sections = in.createStringArrayList();
-        checked = in.createBooleanArray();
+        sections = in.readString();
     }
 
-    public Search(String search,String dateBegin,String dateEnd,List<String> sections,boolean[] checked){
+    public Search(String search,String dateBegin,String dateEnd,String sections){
 
         this.search = search;
         this.dateBegin = dateBegin;
         this.dateEnd = dateEnd;
         this.sections = sections;
-        this.checked = checked;
     }
 
     public static final Creator<Search> CREATOR = new Creator<Search>() {
@@ -52,8 +48,7 @@ public class Search implements Parcelable {
         dest.writeString(search);
         dest.writeString(dateBegin);
         dest.writeString(dateEnd);
-        dest.writeStringList(sections);
-        dest.writeBooleanArray(checked);
+        dest.writeString(sections);
     }
 
 
@@ -69,31 +64,11 @@ public class Search implements Parcelable {
         return dateBegin;
     }
 
-    public void setDateBegin(String dateBegin) {
-        this.dateBegin = dateBegin;
-    }
-
     public String getDateEnd() {
         return dateEnd;
     }
 
-    public void setDateEnd(String dateEnd) {
-        this.dateEnd = dateEnd;
-    }
-
-    public List<String> getSections() {
+    public String getSections() {
         return sections;
-    }
-
-    public void setSections(List<String> sections) {
-        this.sections = sections;
-    }
-
-    public boolean[] getChecked() {
-        return checked;
-    }
-
-    public void setChecked(boolean[] checked) {
-        this.checked = checked;
     }
 }

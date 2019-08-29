@@ -17,10 +17,8 @@ import com.elfefe.mynews.models.search.Docs;
 import com.elfefe.mynews.models.search.SearchQuery;
 import com.elfefe.mynews.utils.NYTCalls;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class NotificationWorker extends Worker {
     public static final String KEY_SEARCH = "key_search";
@@ -43,22 +41,16 @@ public class NotificationWorker extends Worker {
 
         SharedPreferences preferences = context.getSharedPreferences(PREF_NAME,Context.MODE_PRIVATE);
 
-        Set<String> sectionSet = preferences.getStringSet(KEY_SECTION, null);
+        String sections = preferences.getString(KEY_SECTION, null);
         String prefSearch = preferences.getString(KEY_SEARCH, "");
-
-        ArrayList<String> sectionList = new ArrayList<>();
-
-        if (sectionSet != null) {
-            sectionList = new ArrayList<>(sectionSet);
-        }
 
         if (prefSearch != null) {
             query.put("q", prefSearch);
         }
 
-        String sections = NotificationUrl.createUrl(sectionList).getUrl();
-
-        query.put("fq", sections);
+        if (sections != null) {
+            query.put("fq", sections);
+        }
 
         NYTCalls nytCalls = new NYTCalls();
         SearchQuery response = nytCalls.fetchSearchArticleFollowing(query);

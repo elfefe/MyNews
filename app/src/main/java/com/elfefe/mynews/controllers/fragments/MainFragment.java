@@ -3,7 +3,12 @@ package com.elfefe.mynews.controllers.fragments;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
+
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 import android.view.LayoutInflater;
@@ -31,7 +36,6 @@ public class MainFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View result = inflater.inflate(R.layout.fragment_main, container, false);
-
         ViewPager pager = result.findViewById(R.id.main_viewpager);
         TabLayout tabs = result.findViewById(R.id.main_tablayout);
 

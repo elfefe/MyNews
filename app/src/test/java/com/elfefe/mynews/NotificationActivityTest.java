@@ -2,7 +2,6 @@ package com.elfefe.mynews;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.appcompat.widget.AppCompatCheckBox;
@@ -50,7 +49,6 @@ public class NotificationActivityTest {
         politics = notificationActivity.findViewById(R.id.query_cb_health);
         sports = notificationActivity.findViewById(R.id.querye_cb_sports);
         travel = notificationActivity.findViewById(R.id.query_cb_science);
-        Button search = notificationActivity.findViewById(R.id.query_button_search);
     }
 
     @Test
