@@ -20,6 +20,7 @@ import com.elfefe.mynews.utils.NYTCalls;
 import java.util.HashMap;
 import java.util.Map;
 
+@SuppressWarnings("ConstantConditions")
 public class NotificationWorker extends Worker {
     public static final String KEY_SEARCH = "key_search";
     public static final String KEY_SECTION = "key_section";
@@ -44,9 +45,7 @@ public class NotificationWorker extends Worker {
         String sections = preferences.getString(KEY_SECTION, null);
         String prefSearch = preferences.getString(KEY_SEARCH, "");
 
-        if (prefSearch != null) {
-            query.put("q", prefSearch);
-        }
+        query.put("q", prefSearch);
 
         if (sections != null) {
             query.put("fq", sections);

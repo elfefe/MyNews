@@ -25,6 +25,7 @@ import com.elfefe.mynews.models.Search;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("ConstantConditions")
 public class SearchActivity extends AppCompatActivity {
 
     public static final String KEY_SEARCH = "SEARCH_BUNDLE";

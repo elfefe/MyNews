@@ -25,6 +25,7 @@ public class FormatDate {
         try {
             fromDate = fromSimpleDateFormat.parse(date);
 
+            assert fromDate != null;
             toDate = toSimpleDateFormat.format(fromDate);
         } catch (ParseException e) {
             e.printStackTrace();

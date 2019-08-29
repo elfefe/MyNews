@@ -14,7 +14,7 @@
         android:id="@+id/header_picture_imageview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/news_default"
+        android:src="@drawable/news_default"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
